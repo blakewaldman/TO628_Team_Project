@@ -23,21 +23,21 @@ In the subsequent stage, we will integrate all complex L1 models like the advanc
 
 ```{r}
 # Load data
-test <- read.csv('../Train Test Set/test.csv')
-lr <- read.csv('../Predictions/prediction_lr_probability.csv')
-lr_complex <- read.csv('../Predictions/prediction_lr_complex_probability.csv')
-knn <- read.csv('../Predictions/prediction_knn_probability.csv')
-knn_tuned <- read.csv('../Predictions/prediction_knn_tuned_probability.csv')
-ann <- read.csv('../Predictions/prediction_ann_probability.csv')
-ann_complex <- read.csv('../Predictions/prediction_ann_complex_probability.csv')
-dt <- read.csv('../Predictions/prediction_dt.csv')
-dt_cost <- read.csv('../Predictions/prediction_dt_cost.csv')
-svm_vanilla <- read.csv('../Predictions/prediction_svm_vanilla.csv')
-svm_rbf <- read.csv('../Predictions/prediction_svm_rbf.csv')
-rf <- read.csv('../Predictions/prediction_rf.csv')
-rf_tuned <-read.csv('../Predictions/prediction_rf_tuned.csv')
-xgb <- read.csv('../Predictions/prediction_xgb_probability.csv')
-xgb_tuned <- read.csv('../Predictions/prediction_xgb_tuned.csv')
+test <- read.csv('Train Test Set/test.csv')
+lr <- read.csv('Predictions/prediction_lr_probability.csv')
+lr_complex <- read.csv('Predictions/prediction_lr_complex_probability.csv')
+knn <- read.csv('Predictions/prediction_knn_probability.csv')
+knn_tuned <- read.csv('Predictions/prediction_knn_tuned_probability.csv')
+ann <- read.csv('Predictions/prediction_ann_probability.csv')
+ann_complex <- read.csv('Predictions/prediction_ann_complex_probability.csv')
+dt <- read.csv('Predictions/prediction_dt.csv')
+dt_cost <- read.csv('Predictions/prediction_dt_cost.csv')
+svm_vanilla <- read.csv('Predictions/prediction_svm_vanilla.csv')
+svm_rbf <- read.csv('Predictions/prediction_svm_rbf.csv')
+rf <- read.csv('Predictions/prediction_rf.csv')
+rf_tuned <-read.csv('Predictions/prediction_rf_tuned.csv')
+xgb <- read.csv('Predictions/prediction_xgb_probability.csv')
+xgb_tuned <- read.csv('Predictions/prediction_xgb_tuned.csv')
 
 
 # Display statistics
@@ -212,20 +212,20 @@ With all models completed, we will now assess their performance and compile a co
 ```{r accuracy_table}
 # Load data
 file_paths <- c(
-  '../Confusion Matrix/cm_lr.csv',
-  '../Confusion Matrix/cm_lr_complex.csv',
-  '../Confusion Matrix/cm_knn.csv',
-  '../Confusion Matrix/cm_knn_tuned.csv',
-  '../Confusion Matrix/cm_ann.csv',
-  '../Confusion Matrix/cm_ann_complex.csv',
-  '../Confusion Matrix/cm_dt.csv',
-  '../Confusion Matrix/cm_dt_cost.csv',
-  '../Confusion Matrix/cm_svm_vanilla.csv',
-  '../Confusion Matrix/cm_svm_rbf.csv',
-  '../Confusion Matrix/cm_rf.csv',
-  '../Confusion Matrix/cm_rf_tuned.csv',
-  '../Confusion Matrix/cm_xgb.csv',
-  '../Confusion Matrix/cm_xgb_tuned.csv'
+  'Confusion Matrix/cm_lr.csv',
+  'Confusion Matrix/cm_lr_complex.csv',
+  'Confusion Matrix/cm_knn.csv',
+  'Confusion Matrix/cm_knn_tuned.csv',
+  'Confusion Matrix/cm_ann.csv',
+  'Confusion Matrix/cm_ann_complex.csv',
+  'Confusion Matrix/cm_dt.csv',
+  'Confusion Matrix/cm_dt_cost.csv',
+  'Confusion Matrix/cm_svm_vanilla.csv',
+  'Confusion Matrix/cm_svm_rbf.csv',
+  'Confusion Matrix/cm_rf.csv',
+  'Confusion Matrix/cm_rf_tuned.csv',
+  'Confusion Matrix/cm_xgb.csv',
+  'Confusion Matrix/cm_xgb_tuned.csv'
 )
 
 # Store confusion matrices

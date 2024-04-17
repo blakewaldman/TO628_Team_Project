@@ -347,8 +347,8 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <div id="load-data-7" class="section level2 hasAnchor" number="9.2">
 <h2><span class="header-section-number">9.2</span> Load Data<a href="xg-boost-xgb.html#load-data-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="xg-boost-xgb.html#cb179-1" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb179-2"><a href="xg-boost-xgb.html#cb179-2" tabindex="-1"></a>train_xgb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../Train Test Set/train_xgb.csv&#39;</span>)</span>
-<span id="cb179-3"><a href="xg-boost-xgb.html#cb179-3" tabindex="-1"></a>test_xgb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../Train Test Set/test_xgb.csv&#39;</span>)</span>
+<span id="cb179-2"><a href="xg-boost-xgb.html#cb179-2" tabindex="-1"></a>train_xgb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_xgb.csv&#39;</span>)</span>
+<span id="cb179-3"><a href="xg-boost-xgb.html#cb179-3" tabindex="-1"></a>test_xgb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_xgb.csv&#39;</span>)</span>
 <span id="cb179-4"><a href="xg-boost-xgb.html#cb179-4" tabindex="-1"></a></span>
 <span id="cb179-5"><a href="xg-boost-xgb.html#cb179-5" tabindex="-1"></a></span>
 <span id="cb179-6"><a href="xg-boost-xgb.html#cb179-6" tabindex="-1"></a>train_xgb_x <span class="ot">&lt;-</span> train_xgb[, <span class="sc">-</span><span class="fu">which</span>(<span class="fu">names</span>(train_xgb) <span class="sc">==</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>)]</span>

@@ -22,8 +22,8 @@ In our case, DTs are particularly effective for binary classification problems. 
 
 ```{r}
 # Load data
-train_dt <- read.csv('../Train Test Set/train_dt.csv')
-test_dt <- read.csv('../Train Test Set/test_dt.csv')
+train_dt <- read.csv('Train Test Set/train_dt.csv')
+test_dt <- read.csv('Train Test Set/test_dt.csv')
 
 # Display statistics
 str(train_dt)
@@ -119,12 +119,12 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r write_prediction_dt, echo=FALSE}
 # Write to csv
 write.csv(prediction_dt,
-          file = '../Predictions/prediction_dt.csv',
+          file = 'Predictions/prediction_dt.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_dt$table,
-          file = '../Confusion Matrix/cm_dt.csv',
+          file = 'Confusion Matrix/cm_dt.csv',
           row.names = FALSE)
 ```
 
@@ -147,12 +147,12 @@ Based on the confusion matrix, we observe that the model achieves an accuracy of
 ```{r write_prediction_dt_cost, echo=FALSE}
 # Write to csv
 write.csv(prediction_dt_cost,
-          file = '../Predictions/prediction_dt_cost.csv',
+          file = 'Predictions/prediction_dt_cost.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_dt_cost$table,
-          file = '../Confusion Matrix/cm_dt_cost.csv',
+          file = 'Confusion Matrix/cm_dt_cost.csv',
           row.names = FALSE)
 ```
 

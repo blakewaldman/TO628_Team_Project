@@ -1,2 +1,1 @@
-# TO628_Team_Project
-Obesity Project
+To view the full project, click here.

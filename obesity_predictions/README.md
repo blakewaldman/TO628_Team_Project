@@ -1,1 +1,0 @@
-To view the full project, click here.

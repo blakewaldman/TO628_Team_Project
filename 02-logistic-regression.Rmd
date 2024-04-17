@@ -23,8 +23,8 @@ Our initial model will utilize LR. With LR, we can efficiently calculate the pro
 
 ```{r}
 # Load data
-train_lr <- read.csv('../Train Test Set/train_lr.csv')
-test_lr <- read.csv('../Train Test Set/test_lr.csv')
+train_lr <- read.csv('Train Test Set/train_lr.csv')
+test_lr <- read.csv('Train Test Set/test_lr.csv')
 
 # Display statistics
 str(train_lr)
@@ -137,12 +137,12 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r write_prediction_lr_probability, echo=FALSE}
 # write to csv
 write.csv(prediction_lr_probability,
-          file = '../Predictions/prediction_lr_probability.csv',
+          file = 'Predictions/prediction_lr_probability.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_lr$table,
-          file = '../Confusion Matrix/cm_lr.csv',
+          file = 'Confusion Matrix/cm_lr.csv',
           row.names = FALSE)
 ```
 
@@ -193,12 +193,12 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r write_prediction_lr_complex_probability, echo=FALSE}
 # Write to csv
 write.csv(prediction_lr_complex_probability,
-          file = '../Predictions/prediction_lr_complex_probability.csv',
+          file = 'Predictions/prediction_lr_complex_probability.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_lr_complex$table,
-          file = '../Confusion Matrix/cm_lr_complex.csv',
+          file = 'Confusion Matrix/cm_lr_complex.csv',
           row.names = FALSE)
 ```
 

@@ -22,8 +22,8 @@ In SVM, we will use both Vanilla SVM and RBF SVM. Our objective is to evaluate t
 
 ```{r}
 # Load data
-train_svm <- read.csv('../Train Test Set/train_svm.csv')
-test_svm <- read.csv('../Train Test Set/test_svm.csv')
+train_svm <- read.csv('Train Test Set/train_svm.csv')
+test_svm <- read.csv('Train Test Set/test_svm.csv')
 
 # Display statistics
 str(train_svm)
@@ -105,12 +105,12 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r write_prediction_svm_vanilla, echo=FALSE}
 # Write to csv
 write.csv(prediction_svm_vanilla,
-          file = '../Predictions/prediction_svm_vanilla.csv',
+          file = 'Predictions/prediction_svm_vanilla.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_svm_vanilla$table,
-          file = '../Confusion Matrix/cm_svm_vanilla.csv',
+          file = 'Confusion Matrix/cm_svm_vanilla.csv',
           row.names = FALSE)
 ```
 
@@ -151,12 +151,12 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r write_prediction_svm_rbf, echo=FALSE}
 # Write to csv
 write.csv(prediction_svm_rbf,
-          file = '../Predictions/prediction_svm_rbf.csv',
+          file = 'Predictions/prediction_svm_rbf.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_svm_rbf$table,
-          file = '../Confusion Matrix/cm_svm_rbf.csv',
+          file = 'Confusion Matrix/cm_svm_rbf.csv',
           row.names = FALSE)
 ```
 

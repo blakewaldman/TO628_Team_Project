@@ -20,8 +20,8 @@ Random Forest (RF) is an ensemble learning method, combining multiple decision t
 
 ```{r}
 # Load data
-train_rf <- read.csv('../Train Test Set/train_rf.csv')
-test_rf <- read.csv('../Train Test Set/test_rf.csv')
+train_rf <- read.csv('Train Test Set/train_rf.csv')
+test_rf <- read.csv('Train Test Set/test_rf.csv')
 
 # Display statistics
 str(train_rf)
@@ -133,12 +133,12 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r write_prediction_rf, echo=FALSE}
 # Write to csv
 write.csv(prediction_rf,
-          file = '../Predictions/prediction_rf.csv',
+          file = 'Predictions/prediction_rf.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_rf$table,
-          file = '../Confusion Matrix/cm_rf.csv',
+          file = 'Confusion Matrix/cm_rf.csv',
           row.names = FALSE)
 ```
 
@@ -183,12 +183,12 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r write_prediction_rf_tuned, echo=FALSE}
 # Write to csv
 write.csv(prediction_rf_tuned,
-          file = '../Predictions/prediction_rf_tuned.csv',
+          file = 'Predictions/prediction_rf_tuned.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_rf_tuned$table,
-          file = '../Confusion Matrix/cm_rf_tuned.csv',
+          file = 'Confusion Matrix/cm_rf_tuned.csv',
           row.names = FALSE)
 ```
 

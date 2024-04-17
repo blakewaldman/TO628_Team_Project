@@ -18,7 +18,7 @@ Let's begin by loading the dataset and examining its crucial variables and value
 
 ```{r}
 # Load data
-raw <- read.csv('../obesity_level.csv')
+raw <- read.csv('obesity_level.csv')
 
 # Display statistics
 str(raw)
@@ -275,8 +275,8 @@ test <- dummied[-train_rows, ]
 
 ```{r, echo=FALSE}
 # Write to csv
-write.csv(train, '../Train Test Set/train.csv', row.names = FALSE)
-write.csv(test, '../Train Test Set/test.csv', row.names = FALSE)
+write.csv(train, 'Train Test Set/train.csv', row.names = FALSE)
+write.csv(test, 'Train Test Set/test.csv', row.names = FALSE)
 ```
 
 
@@ -290,8 +290,8 @@ test_lr <- dummied[-train_rows, ]
 
 ```{r, echo=FALSE}
 # Write to csv
-write.csv(train_lr, '../Train Test Set/train_lr.csv', row.names = FALSE)
-write.csv(test_lr, '../Train Test Set/test_lr.csv', row.names = FALSE)
+write.csv(train_lr, 'Train Test Set/train_lr.csv', row.names = FALSE)
+write.csv(test_lr, 'Train Test Set/test_lr.csv', row.names = FALSE)
 ```
 
 
@@ -304,8 +304,8 @@ test_dt <- dummied[-train_rows, ]
 ```
 
 ```{r, echo=FALSE}
-write.csv(train_dt, '../Train Test Set/train_dt.csv', row.names = FALSE)
-write.csv(test_dt, '../Train Test Set/test_dt.csv', row.names = FALSE)
+write.csv(train_dt, 'Train Test Set/train_dt.csv', row.names = FALSE)
+write.csv(test_dt, 'Train Test Set/test_dt.csv', row.names = FALSE)
 ```
 
 
@@ -318,8 +318,8 @@ test_svm <- dummied[-train_rows, ]
 ```
 
 ```{r, echo=FALSE}
-write.csv(train_svm, '../Train Test Set/train_svm.csv', row.names = FALSE)
-write.csv(test_svm, '../Train Test Set/test_svm.csv', row.names = FALSE)
+write.csv(train_svm, 'Train Test Set/train_svm.csv', row.names = FALSE)
+write.csv(test_svm, 'Train Test Set/test_svm.csv', row.names = FALSE)
 ```
 
 
@@ -332,8 +332,8 @@ test_rf <- dummied[-train_rows, ]
 ```
 
 ```{r, echo=FALSE}
-write.csv(train_rf, '../Train Test Set/train_rf.csv', row.names = FALSE)
-write.csv(test_rf, '../Train Test Set/test_rf.csv', row.names = FALSE)
+write.csv(train_rf, 'Train Test Set/train_rf.csv', row.names = FALSE)
+write.csv(test_rf, 'Train Test Set/test_rf.csv', row.names = FALSE)
 ```
 
 
@@ -346,8 +346,8 @@ test_xgb <- dummied[-train_rows, ]
 ```
 
 ```{r, echo=FALSE}
-write.csv(train_xgb, '../Train Test Set/train_xgb.csv', row.names = FALSE)
-write.csv(test_xgb, '../Train Test Set/test_xgb.csv', row.names = FALSE)
+write.csv(train_xgb, 'Train Test Set/train_xgb.csv', row.names = FALSE)
+write.csv(test_xgb, 'Train Test Set/test_xgb.csv', row.names = FALSE)
 ```
 
 
@@ -377,8 +377,8 @@ test_ann <- dummied[-train_rows, ]
 
 ```{r, echo=FALSE}
 # Write to csv
-write.csv(train_ann, '../Train Test Set/train_ann.csv', row.names = FALSE)
-write.csv(test_ann, '../Train Test Set/test_ann.csv', row.names = FALSE)
+write.csv(train_ann, 'Train Test Set/train_ann.csv', row.names = FALSE)
+write.csv(test_ann, 'Train Test Set/test_ann.csv', row.names = FALSE)
 ```
 
 
@@ -402,10 +402,10 @@ test_knn_y <- test_knn$obesity_leveloverweight
 
 ```{r, echo=FALSE}
 # Write to csv
-write.csv(train_knn_y,'../Train Test Set/train_knn_y.csv', row.names = FALSE)
-write.csv(train_knn_x,'../Train Test Set/train_knn_x.csv', row.names = FALSE)
-write.csv(test_knn_y,'../Train Test Set/test_knn_y.csv', row.names = FALSE)
-write.csv(test_knn_x,'../Train Test Set/test_knn_x.csv', row.names = FALSE)
+write.csv(train_knn_y,'Train Test Set/train_knn_y.csv', row.names = FALSE)
+write.csv(train_knn_x,'Train Test Set/train_knn_x.csv', row.names = FALSE)
+write.csv(test_knn_y,'Train Test Set/test_knn_y.csv', row.names = FALSE)
+write.csv(test_knn_x,'Train Test Set/test_knn_x.csv', row.names = FALSE)
 ```
 
 Once all train and test sets have been split, we will proceed to module 1 for L1 modeling.

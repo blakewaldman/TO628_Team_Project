@@ -23,8 +23,8 @@ We will now attempt using an ANN. Despite being considered a ‘black box’ mod
 
 ```{r}
 # Load data
-train_ann <- read.csv('../Train Test Set/train_ann.csv')
-test_ann <- read.csv('../Train Test Set/test_ann.csv')
+train_ann <- read.csv('Train Test Set/train_ann.csv')
+test_ann <- read.csv('Train Test Set/test_ann.csv')
 
 # Display statistics
 str(train_ann)
@@ -111,12 +111,12 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r, echo=FALSE}
 # write to csv
 write.csv(prediction_ann_probability,
-          file = '../Predictions/prediction_ann_probability.csv',
+          file = 'Predictions/prediction_ann_probability.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_ann$table,
-          file = '../Confusion Matrix/cm_ann.csv',
+          file = 'Confusion Matrix/cm_ann.csv',
           row.names = FALSE)
 ```
 
@@ -160,11 +160,11 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r, echo=FALSE}
 # write to csv
 write.csv(prediction_ann_complex_probability,
-          file = '../Predictions/prediction_ann_complex_probability.csv',
+          file = 'Predictions/prediction_ann_complex_probability.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_ann_complex$table,
-          file = '../Confusion Matrix/cm_ann_complex.csv',
+          file = 'Confusion Matrix/cm_ann_complex.csv',
           row.names = FALSE)
 ```

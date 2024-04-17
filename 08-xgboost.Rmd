@@ -19,8 +19,8 @@ Placeholder.
 
 ```{r}
 # Load data
-train_xgb <- read.csv('../Train Test Set/train_xgb.csv')
-test_xgb <- read.csv('../Train Test Set/test_xgb.csv')
+train_xgb <- read.csv('Train Test Set/train_xgb.csv')
+test_xgb <- read.csv('Train Test Set/test_xgb.csv')
 
 
 train_xgb_x <- train_xgb[, -which(names(train_xgb) == 'obesity_leveloverweight')]
@@ -158,12 +158,12 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r write_prediction_xgb, echo=FALSE}
 # Write to csv
 write.csv(prediction_xgb_probability,
-          file = '../Predictions/prediction_xgb_probability.csv',
+          file = 'Predictions/prediction_xgb_probability.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_xgb$table,
-          file = '../Confusion Matrix/cm_xgb.csv',
+          file = 'Confusion Matrix/cm_xgb.csv',
           row.names = FALSE)
 ```
 
@@ -207,12 +207,12 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 ```{r write_prediction_xgb_tuned, echo=FALSE}
 # Write to csv
 write.csv(prediction_xgb_tuned_probability,
-          file = '../Predictions/prediction_xgb_tuned_probability.csv',
+          file = 'Predictions/prediction_xgb_tuned_probability.csv',
           row.names = FALSE)
 
 # Extract confusion matrix
 write.csv(cm_xgb_tuned$table,
-          file = '../Confusion Matrix/cm_xgb_tuned.csv',
+          file = 'Confusion Matrix/cm_xgb_tuned.csv',
           row.names = FALSE)
 ```
 
