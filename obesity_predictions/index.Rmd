@@ -1,0 +1,54 @@
+---
+title: "Indirect Obesity Forecasting"
+author:
+- Aaron Zhao
+- Arneet Singh
+- Blake Waldman
+- Grace Coleman
+- Tyler James Phillips
+- Yousuf Altameemi
+date: "April 18, 2024"
+subtitle: Proxy Health Evaluation System (PHES)
+site: bookdown::bookdown_site
+description: "This is our team project for TO628. In this project, we are exploring
+  innovative predictive analytics methods to assess and manage obesity in the context
+  of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health
+  Evaluation System (PHES), our approach circumvents these potential limitations,
+  providing health insurance companies and medical professionals with essential insights
+  to develop proactive health programs and enhance patient outcomes.\n"
+link-citations: true
+---
+
+# Introduction
+
+## Dataset Overview {-}
+
+For our final project and presentation, we will be exploring comprehensive obesity data from [Kaggle](https://www.kaggle.com/datasets/jpkochar/obesity-risk-dataset). This dataset provides information on individuals with key attributes such as age, gender, height, weight, eating habits, physical activities, and their corresponding obesity levels.
+
+## Audience and Impact {-}
+
+The primary audience for our presentation consists of management-level policymakers and financial planning teams within health insurance companies, with a focus on those responsible for designing wellness and preventive health programs. Additionally, we aim to reach medical professionals, including primary care physicians and dieticians, who play direct roles in patient healthcare. We believe these individuals will hold significant influence in adopting and implementing predictive analytics in patient care.
+
+## Challenges in Health Insurance {-}
+
+For health insurance companies, those responsible for policy-making and health program development face a financial challenge to prevent the higher costs associated with treating obesity-related illnesses. Since insurers cannot charge extra based on an individual's obesity level, implementing health programs becomes beneficial. Our predictive model will offer potential savings by accurately identifying an individual's obesity level or potential future risk. More importantly, by implementing health programs, it enhances customer satisfaction.
+
+## Medical Professional Engagement {-}
+
+For medical professionals, particularly those in primary care, our model serves as a toolset for identifying patients with an increased risk of developing obesity. This early detection enables them to effectively initiate eating habit interventions, potentially preventing obesity and related complications.
+
+## Research Questions {-}
+
+We hope that through working with this particular dataset, we can answer the following questions:
+
+  - What is an individual's current health status regarding obesity?
+  - Which individuals are most likely to develop obesity based on extensive lifestyle assessments?
+  - How can these insights be incorporated into personalized health programs to address potential obesity proactively, leading to cost savings in future healthcare expenditures and improved patient health outcomes?
+  
+## Adoption and Implementation {-}
+
+The adoption of our model will allow health insurance companies to enhance their health insurance policies, creating more targeted health intervention programs aimed at decreasing obesity incidence rates among insured clients. For medical professionals, the incorporation of this tool brings about more accurate patient health and early interventions. It is essential to note that customers should be made aware they will be participating in this program, with a focus on eliminating the stigma surrounding obesity status and fostering a healthier perspective towards physical well-being.
+
+## Strategic Impact {-}
+
+Integrating our predictive models into healthcare decision-making processes enables health insurance providers and medical professionals to combat the obesity epidemic more effectively. By employing a data-driven approach, we can tackle the financial strain on the healthcare system and provide better patient health outcomes. Recent [studies](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10394178/) suggest that insurance providers could potentially save up to `$2,505` annually per individual by implementing this strategy. This substantial financial benefit showcases the importance of investing in predictive analytics and personalized health interventions.

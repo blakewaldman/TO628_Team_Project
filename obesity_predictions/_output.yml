@@ -1,0 +1,13 @@
+bookdown::gitbook:
+  split_bib: no
+  css: style.css
+  config:
+    sharing: no
+    toc:
+      collapse: section
+      before: |
+        <li class="toc-logo"><a href="./"><img src="_bookdown_files/to_628_hidden_image2.jpg" 
+        alt="TO 628 Group Project" 
+        title="TO 628 Group Project" style="width:100%;"></a></li>
+      after: |
+        <li><a href="https://michiganross.umich.edu/courses/advanced-big-data-analytics-10562">About The Course</a></li>

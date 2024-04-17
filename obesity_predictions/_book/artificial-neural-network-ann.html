@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Artificial Neural Network (ANN) | Indirect Obesity Forecasting</title>
+  <meta name="description" content="This is our team project for TO628. In this project, we are exploring innovative predictive analytics methods to assess and manage obesity in the context of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health Evaluation System (PHES), our approach circumvents these potential limitations, providing health insurance companies and medical professionals with essential insights to develop proactive health programs and enhance patient outcomes." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Artificial Neural Network (ANN) | Indirect Obesity Forecasting" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is our team project for TO628. In this project, we are exploring innovative predictive analytics methods to assess and manage obesity in the context of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health Evaluation System (PHES), our approach circumvents these potential limitations, providing health insurance companies and medical professionals with essential insights to develop proactive health programs and enhance patient outcomes." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Artificial Neural Network (ANN) | Indirect Obesity Forecasting" />
+  
+  <meta name="twitter:description" content="This is our team project for TO628. In this project, we are exploring innovative predictive analytics methods to assess and manage obesity in the context of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health Evaluation System (PHES), our approach circumvents these potential limitations, providing health insurance companies and medical professionals with essential insights to develop proactive health programs and enhance patient outcomes." />
+  
+
+<meta name="author" content="Aaron Zhao" />
+<meta name="author" content="Arneet Singh" />
+<meta name="author" content="Blake Waldman" />
+<meta name="author" content="Grace Coleman" />
+<meta name="author" content="Tyler James Phillips" />
+<meta name="author" content="Yousuf Altameemi" />
+
+
+<meta name="date" content="2024-04-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="logistic-regression-lr.html"/>
+<link rel="next" href="k-neareast-neighbor-knn.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="_bookdown_files/to_628_hidden_image2.jpg" 
+alt="TO 628 Group Project" 
+title="TO 628 Group Project" style="width:100%;"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#dataset-overview"><i class="fa fa-check"></i>Dataset Overview</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#audience-and-impact"><i class="fa fa-check"></i>Audience and Impact</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#challenges-in-health-insurance"><i class="fa fa-check"></i>Challenges in Health Insurance</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#medical-professional-engagement"><i class="fa fa-check"></i>Medical Professional Engagement</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#research-questions"><i class="fa fa-check"></i>Research Questions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#adoption-and-implementation"><i class="fa fa-check"></i>Adoption and Implementation</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#strategic-impact"><i class="fa fa-check"></i>Strategic Impact</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="initial-analysis.html"><a href="initial-analysis.html"><i class="fa fa-check"></i><b>2</b> Initial Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="initial-analysis.html"><a href="initial-analysis.html#r-packages-and-setup"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="2.1" data-path="initial-analysis.html"><a href="initial-analysis.html#load-data"><i class="fa fa-check"></i><b>2.1</b> Load Data</a></li>
+<li class="chapter" data-level="2.2" data-path="initial-analysis.html"><a href="initial-analysis.html#clean-data"><i class="fa fa-check"></i><b>2.2</b> Clean Data</a></li>
+<li class="chapter" data-level="2.3" data-path="initial-analysis.html"><a href="initial-analysis.html#feature-engineering"><i class="fa fa-check"></i><b>2.3</b> Feature Engineering</a></li>
+<li class="chapter" data-level="2.4" data-path="initial-analysis.html"><a href="initial-analysis.html#visualize-data"><i class="fa fa-check"></i><b>2.4</b> Visualize Data</a></li>
+<li class="chapter" data-level="2.5" data-path="initial-analysis.html"><a href="initial-analysis.html#split-data"><i class="fa fa-check"></i><b>2.5</b> Split Data</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="initial-analysis.html"><a href="initial-analysis.html#split-train-test"><i class="fa fa-check"></i><b>2.5.1</b> Split Train Test</a></li>
+<li class="chapter" data-level="2.5.2" data-path="initial-analysis.html"><a href="initial-analysis.html#split-lr"><i class="fa fa-check"></i><b>2.5.2</b> Split LR</a></li>
+<li class="chapter" data-level="2.5.3" data-path="initial-analysis.html"><a href="initial-analysis.html#split-dt"><i class="fa fa-check"></i><b>2.5.3</b> Split DT</a></li>
+<li class="chapter" data-level="2.5.4" data-path="initial-analysis.html"><a href="initial-analysis.html#split-svm"><i class="fa fa-check"></i><b>2.5.4</b> Split SVM</a></li>
+<li class="chapter" data-level="2.5.5" data-path="initial-analysis.html"><a href="initial-analysis.html#split-rf"><i class="fa fa-check"></i><b>2.5.5</b> Split RF</a></li>
+<li class="chapter" data-level="2.5.6" data-path="initial-analysis.html"><a href="initial-analysis.html#split-xgb"><i class="fa fa-check"></i><b>2.5.6</b> Split XGB</a></li>
+<li class="chapter" data-level="2.5.7" data-path="initial-analysis.html"><a href="initial-analysis.html#split-ann"><i class="fa fa-check"></i><b>2.5.7</b> Split ANN</a></li>
+<li class="chapter" data-level="2.5.8" data-path="initial-analysis.html"><a href="initial-analysis.html#split-knn"><i class="fa fa-check"></i><b>2.5.8</b> Split KNN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html"><i class="fa fa-check"></i><b>3</b> Logistic Regression (LR)</a>
+<ul>
+<li class="chapter" data-level="" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#r-packages-and-setup-1"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="3.1" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#load-data-1"><i class="fa fa-check"></i><b>3.2</b> Load Data</a></li>
+<li class="chapter" data-level="3.3" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#model-lr"><i class="fa fa-check"></i><b>3.3</b> Model LR</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#simple-lr"><i class="fa fa-check"></i><b>3.3.1</b> Simple LR</a></li>
+<li class="chapter" data-level="3.3.2" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#complex-lr"><i class="fa fa-check"></i><b>3.3.2</b> Complex LR</a></li>
+<li class="chapter" data-level="3.3.3" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#stepwise-lr"><i class="fa fa-check"></i><b>3.3.3</b> Stepwise LR</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#evaluate-lr"><i class="fa fa-check"></i><b>3.4</b> Evaluate LR</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#simple-lr-1"><i class="fa fa-check"></i><b>3.4.1</b> Simple LR</a></li>
+<li class="chapter" data-level="3.4.2" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#complex-lr-1"><i class="fa fa-check"></i><b>3.4.2</b> Complex LR</a></li>
+<li class="chapter" data-level="3.4.3" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#stepwise-lr-1"><i class="fa fa-check"></i><b>3.4.3</b> Stepwise LR</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html"><i class="fa fa-check"></i><b>4</b> Artificial Neural Network (ANN)</a>
+<ul>
+<li class="chapter" data-level="" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#r-packages-and-setup-2"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="4.1" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#introduction-2"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#load-data-2"><i class="fa fa-check"></i><b>4.2</b> Load Data</a></li>
+<li class="chapter" data-level="4.3" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#model-ann"><i class="fa fa-check"></i><b>4.3</b> Model ANN</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#simple-ann"><i class="fa fa-check"></i><b>4.3.1</b> Simple ANN</a></li>
+<li class="chapter" data-level="4.3.2" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#complex-ann"><i class="fa fa-check"></i><b>4.3.2</b> Complex ANN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#evaluate-ann"><i class="fa fa-check"></i><b>4.4</b> Evaluate ANN</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#simple-ann-1"><i class="fa fa-check"></i><b>4.4.1</b> Simple ANN</a></li>
+<li class="chapter" data-level="4.4.2" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#complex-ann-1"><i class="fa fa-check"></i><b>4.4.2</b> Complex ANN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html"><i class="fa fa-check"></i><b>5</b> K-Neareast Neighbor (KNN)</a>
+<ul>
+<li class="chapter" data-level="" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#r-packages-and-setup-3"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="5.1" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#introduction-3"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#load-data-3"><i class="fa fa-check"></i><b>5.2</b> Load Data</a></li>
+<li class="chapter" data-level="5.3" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#model-knn"><i class="fa fa-check"></i><b>5.3</b> Model KNN</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#default-knn"><i class="fa fa-check"></i><b>5.3.1</b> Default KNN</a></li>
+<li class="chapter" data-level="5.3.2" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#tuned-knn"><i class="fa fa-check"></i><b>5.3.2</b> Tuned KNN</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#evaluate-knn"><i class="fa fa-check"></i><b>5.4</b> Evaluate KNN</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#default-knn-1"><i class="fa fa-check"></i><b>5.4.1</b> Default KNN</a></li>
+<li class="chapter" data-level="5.4.2" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#tuned-knn-1"><i class="fa fa-check"></i><b>5.4.2</b> Tuned KNN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html"><i class="fa fa-check"></i><b>6</b> Decision Tree (DT)</a>
+<ul>
+<li class="chapter" data-level="" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#r-packages-and-setup-4"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="6.1" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#introduction-4"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#load-data-4"><i class="fa fa-check"></i><b>6.2</b> Load Data</a></li>
+<li class="chapter" data-level="6.3" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#model-dt"><i class="fa fa-check"></i><b>6.3</b> Model DT</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#simple-dt"><i class="fa fa-check"></i><b>6.3.1</b> Simple DT</a></li>
+<li class="chapter" data-level="6.3.2" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#dt-with-cost-matrix"><i class="fa fa-check"></i><b>6.3.2</b> DT with Cost Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#evaluate-dt"><i class="fa fa-check"></i><b>6.4</b> Evaluate DT</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#simple-dt-1"><i class="fa fa-check"></i><b>6.4.1</b> Simple DT</a></li>
+<li class="chapter" data-level="6.4.2" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#dt-with-cost-matrix-1"><i class="fa fa-check"></i><b>6.4.2</b> DT with Cost Matrix</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html"><i class="fa fa-check"></i><b>7</b> Support Vector Machine (SVM)</a>
+<ul>
+<li class="chapter" data-level="" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#r-packages-and-setup-5"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="7.1" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#introduction-5"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#load-data-5"><i class="fa fa-check"></i><b>7.2</b> Load Data</a></li>
+<li class="chapter" data-level="7.3" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#model-svm"><i class="fa fa-check"></i><b>7.3</b> Model SVM</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#vanilla-svm"><i class="fa fa-check"></i><b>7.3.1</b> Vanilla SVM</a></li>
+<li class="chapter" data-level="7.3.2" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#rbf-svm"><i class="fa fa-check"></i><b>7.3.2</b> RBF SVM</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#evaluate-svm"><i class="fa fa-check"></i><b>7.4</b> Evaluate SVM</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#vanilla-svm-1"><i class="fa fa-check"></i><b>7.4.1</b> Vanilla SVM</a></li>
+<li class="chapter" data-level="7.4.2" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#rbf-svm-1"><i class="fa fa-check"></i><b>7.4.2</b> RBF SVM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="random-forest-rf.html"><a href="random-forest-rf.html"><i class="fa fa-check"></i><b>8</b> Random Forest (RF)</a>
+<ul>
+<li class="chapter" data-level="" data-path="random-forest-rf.html"><a href="random-forest-rf.html#r-packages-and-setup-6"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="8.1" data-path="random-forest-rf.html"><a href="random-forest-rf.html#introduction-6"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="random-forest-rf.html"><a href="random-forest-rf.html#load-data-6"><i class="fa fa-check"></i><b>8.2</b> Load Data</a></li>
+<li class="chapter" data-level="8.3" data-path="random-forest-rf.html"><a href="random-forest-rf.html#model-rf"><i class="fa fa-check"></i><b>8.3</b> Model RF</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="random-forest-rf.html"><a href="random-forest-rf.html#simple-rf"><i class="fa fa-check"></i><b>8.3.1</b> Simple RF</a></li>
+<li class="chapter" data-level="8.3.2" data-path="random-forest-rf.html"><a href="random-forest-rf.html#tuned-rf"><i class="fa fa-check"></i><b>8.3.2</b> Tuned RF</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="random-forest-rf.html"><a href="random-forest-rf.html#evaluate-rf"><i class="fa fa-check"></i><b>8.4</b> Evaluate RF</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="random-forest-rf.html"><a href="random-forest-rf.html#simple-rf-1"><i class="fa fa-check"></i><b>8.4.1</b> Simple RF</a></li>
+<li class="chapter" data-level="8.4.2" data-path="random-forest-rf.html"><a href="random-forest-rf.html#tuned-rf-1"><i class="fa fa-check"></i><b>8.4.2</b> Tuned RF</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html"><i class="fa fa-check"></i><b>9</b> XG-Boost (XGB)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#r-packages-and-setup-7"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="9.1" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#introduction-7"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#load-data-7"><i class="fa fa-check"></i><b>9.2</b> Load Data</a></li>
+<li class="chapter" data-level="9.3" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#model-xgb"><i class="fa fa-check"></i><b>9.3</b> Model XGB</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#simple-xgb"><i class="fa fa-check"></i><b>9.3.1</b> Simple XGB</a></li>
+<li class="chapter" data-level="9.3.2" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#tuned-xgb"><i class="fa fa-check"></i><b>9.3.2</b> Tuned XGB</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#evaluate-xgb"><i class="fa fa-check"></i><b>9.4</b> Evaluate XGB</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#simple-xgb-1"><i class="fa fa-check"></i><b>9.4.1</b> Simple XGB</a></li>
+<li class="chapter" data-level="9.4.2" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#tuned-xgb-1"><i class="fa fa-check"></i><b>9.4.2</b> Tuned XGB</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html"><i class="fa fa-check"></i><b>10</b> Stacked Model with Decision Tree (SM)</a>
+<ul>
+<li class="chapter" data-level="" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#r-packages-and-setup-8"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="10.1" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#introduction-8"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#load-data-8"><i class="fa fa-check"></i><b>10.2</b> Load Data</a></li>
+<li class="chapter" data-level="10.3" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#split-data-1"><i class="fa fa-check"></i><b>10.3</b> Split Data</a></li>
+<li class="chapter" data-level="10.4" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#define-cost-matrix"><i class="fa fa-check"></i><b>10.4</b> Define Cost Matrix</a></li>
+<li class="chapter" data-level="10.5" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#model-sm"><i class="fa fa-check"></i><b>10.5</b> Model SM</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#simple-sm"><i class="fa fa-check"></i><b>10.5.1</b> Simple SM</a></li>
+<li class="chapter" data-level="10.5.2" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#sm-with-cost-matrix"><i class="fa fa-check"></i><b>10.5.2</b> SM with Cost Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#evaluate-sm"><i class="fa fa-check"></i><b>10.6</b> Evaluate SM</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#simple-sm-1"><i class="fa fa-check"></i><b>10.6.1</b> Simple SM</a></li>
+<li class="chapter" data-level="10.6.2" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#sm-with-cost-matrix-1"><i class="fa fa-check"></i><b>10.6.2</b> SM with Cost Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#model-evaluations"><i class="fa fa-check"></i><b>10.7</b> Model Evaluations</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>11</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="conclusion.html"><a href="conclusion.html#takeaways"><i class="fa fa-check"></i><b>11.1</b> Takeaways</a></li>
+<li class="chapter" data-level="11.2" data-path="conclusion.html"><a href="conclusion.html#business-impact"><i class="fa fa-check"></i><b>11.2</b> Business Impact</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://michiganross.umich.edu/courses/advanced-big-data-analytics-10562">About The Course</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Indirect Obesity Forecasting</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="artificial-neural-network-ann" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Artificial Neural Network (ANN)<a href="artificial-neural-network-ann.html#artificial-neural-network-ann" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="r-packages-and-setup-2" class="section level2 unnumbered hasAnchor">
+<h2>R Packages and Setup<a href="artificial-neural-network-ann.html#r-packages-and-setup-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="introduction-2" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Introduction<a href="artificial-neural-network-ann.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:</p>
+<p>Artificial Neural Networks (ANNs) are modeled after the human brain and capable of learning and improving from experience. One strength is their ability to adapt to complex patterns and relationships in high-dimensional data, making them powerful tools for our dataset. However, ANNs require large amounts of training data and computational resources, which can make implementation time-consuming and resource-intensive.</p>
+<p>We will now attempt using an ANN. Despite being considered a ‘black box’ model due to its difficulty in interpreting decision-making processes compared to models like DT, ANNs may perform slightly better than LR in terms of accuracy.</p>
+</div>
+<div id="load-data-2" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Load Data<a href="artificial-neural-network-ann.html#load-data-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="artificial-neural-network-ann.html#cb57-1" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb57-2"><a href="artificial-neural-network-ann.html#cb57-2" tabindex="-1"></a>train_ann <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../Train Test Set/train_ann.csv&#39;</span>)</span>
+<span id="cb57-3"><a href="artificial-neural-network-ann.html#cb57-3" tabindex="-1"></a>test_ann <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../Train Test Set/test_ann.csv&#39;</span>)</span>
+<span id="cb57-4"><a href="artificial-neural-network-ann.html#cb57-4" tabindex="-1"></a></span>
+<span id="cb57-5"><a href="artificial-neural-network-ann.html#cb57-5" tabindex="-1"></a><span class="co"># Display statistics</span></span>
+<span id="cb57-6"><a href="artificial-neural-network-ann.html#cb57-6" tabindex="-1"></a><span class="fu">str</span>(train_ann)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    10379 obs. of  27 variables:
+##  $ gender_female                  : int  1 1 1 0 1 1 1 0 1 1 ...
+##  $ gender_male                    : int  0 0 0 1 0 0 0 1 0 0 ...
+##  $ age                            : num  0.213 0.426 0.106 0.106 0.234 ...
+##  $ fam_history_overweight1        : int  1 1 1 1 1 1 1 1 1 0 ...
+##  $ freq_consumption_hc_food1      : int  1 1 1 1 1 1 0 1 1 0 ...
+##  $ veg_freq                       : num  1 0.552 1 1 1 ...
+##  $ num_meals                      : num  0.667 0.659 0.667 0.667 0.667 ...
+##  $ food_between_meals_frequently  : int  0 0 0 0 0 0 0 0 0 1 ...
+##  $ food_between_meals_never       : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ food_between_meals_sometimes   : int  1 1 1 0 1 1 1 1 1 0 ...
+##  $ smoke1                         : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ water_daily                    : num  0.736 0.482 0.933 1 0.932 ...
+##  $ caloric_beverages1             : int  0 0 0 1 0 0 0 0 0 0 ...
+##  $ activity_freq                  : num  0.0557 0.3292 0.4882 1 0.0883 ...
+##  $ tech_use                       : num  0.243 0 0.328 0 0.337 ...
+##  $ alcohol_never                  : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ alcohol_sometimes              : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ transport_bike                 : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ transport_motorbike            : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ transport_public_transportation: int  1 0 1 1 1 1 1 1 1 1 ...
+##  $ transport_walking              : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ eating_habit_binary            : num  0.833 0.68 0.833 0.833 0.833 ...
+##  $ physical_activity_binary       : num  0.336 0.598 0.562 1 0.318 ...
+##  $ age_group_young_adult          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ age_group_adult                : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ age_group_senior               : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ obesity_leveloverweight        : int  1 1 1 1 1 1 1 1 1 0 ...</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="artificial-neural-network-ann.html#cb59-1" tabindex="-1"></a><span class="fu">summary</span>(train_ann)</span></code></pre></div>
+<pre><code>##  gender_female     gender_male          age         fam_history_overweight1
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000         
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.1277   1st Qu.:1.0000         
+##  Median :1.0000   Median :0.0000   Median :0.1915   Median :1.0000         
+##  Mean   :0.5079   Mean   :0.4921   Mean   :0.2087   Mean   :0.8177         
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:0.2553   3rd Qu.:1.0000         
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000         
+##  freq_consumption_hc_food1    veg_freq        num_meals     
+##  Min.   :0.0000            Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:1.0000            1st Qu.:0.5000   1st Qu.:0.6667  
+##  Median :1.0000            Median :0.7223   Median :0.6667  
+##  Mean   :0.9166            Mean   :0.7260   Mean   :0.5858  
+##  3rd Qu.:1.0000            3rd Qu.:1.0000   3rd Qu.:0.6667  
+##  Max.   :1.0000            Max.   :1.0000   Max.   :1.0000  
+##  food_between_meals_frequently food_between_meals_never
+##  Min.   :0.0000                Min.   :0.00000         
+##  1st Qu.:0.0000                1st Qu.:0.00000         
+##  Median :0.0000                Median :0.00000         
+##  Mean   :0.1212                Mean   :0.01253         
+##  3rd Qu.:0.0000                3rd Qu.:0.00000         
+##  Max.   :1.0000                Max.   :1.00000         
+##  food_between_meals_sometimes     smoke1         water_daily    
+##  Min.   :0.0000               Min.   :0.00000   Min.   :0.0000  
+##  1st Qu.:1.0000               1st Qu.:0.00000   1st Qu.:0.3981  
+##  Median :1.0000               Median :0.00000   Median :0.5000  
+##  Mean   :0.8446               Mean   :0.01224   Mean   :0.5146  
+##  3rd Qu.:1.0000               3rd Qu.:0.00000   3rd Qu.:0.7678  
+##  Max.   :1.0000               Max.   :1.00000   Max.   :1.0000  
+##  caloric_beverages1 activity_freq        tech_use      alcohol_never   
+##  Min.   :0.00000    Min.   :0.00000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:0.00000    1st Qu.:0.00235   1st Qu.:0.0000   1st Qu.:0.0000  
+##  Median :0.00000    Median :0.33333   Median :0.2870   Median :0.0000  
+##  Mean   :0.03276    Mean   :0.32699   Mean   :0.3074   Mean   :0.2461  
+##  3rd Qu.:0.00000    3rd Qu.:0.52884   3rd Qu.:0.5000   3rd Qu.:0.0000  
+##  Max.   :1.00000    Max.   :1.00000   Max.   :1.0000   Max.   :1.0000  
+##  alcohol_sometimes transport_bike     transport_motorbike
+##  Min.   :0.0000    Min.   :0.000000   Min.   :0.000000   
+##  1st Qu.:0.0000    1st Qu.:0.000000   1st Qu.:0.000000   
+##  Median :1.0000    Median :0.000000   Median :0.000000   
+##  Mean   :0.7289    Mean   :0.001734   Mean   :0.001927   
+##  3rd Qu.:1.0000    3rd Qu.:0.000000   3rd Qu.:0.000000   
+##  Max.   :1.0000    Max.   :1.000000   Max.   :1.000000   
+##  transport_public_transportation transport_walking eating_habit_binary
+##  Min.   :0.0000                  Min.   :0.00000   Min.   :0.0000     
+##  1st Qu.:1.0000                  1st Qu.:0.00000   1st Qu.:0.6546     
+##  Median :1.0000                  Median :0.00000   Median :0.6667     
+##  Mean   :0.8056                  Mean   :0.02226   Mean   :0.6877     
+##  3rd Qu.:1.0000                  3rd Qu.:0.00000   3rd Qu.:0.8333     
+##  Max.   :1.0000                  Max.   :1.00000   Max.   :1.0000     
+##  physical_activity_binary age_group_young_adult age_group_adult  
+##  Min.   :0.0000           Min.   :0.0000        Min.   :0.00000  
+##  1st Qu.:0.3442           1st Qu.:1.0000        1st Qu.:0.00000  
+##  Median :0.4573           Median :1.0000        Median :0.00000  
+##  Mean   :0.4732           Mean   :0.9019        Mean   :0.05222  
+##  3rd Qu.:0.6000           3rd Qu.:1.0000        3rd Qu.:0.00000  
+##  Max.   :1.0000           Max.   :1.0000        Max.   :1.00000  
+##  age_group_senior   obesity_leveloverweight
+##  Min.   :0.000000   Min.   :0.0000         
+##  1st Qu.:0.000000   1st Qu.:0.0000         
+##  Median :0.000000   Median :1.0000         
+##  Mean   :0.003276   Mean   :0.7262         
+##  3rd Qu.:0.000000   3rd Qu.:1.0000         
+##  Max.   :1.000000   Max.   :1.0000</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="artificial-neural-network-ann.html#cb61-1" tabindex="-1"></a><span class="fu">head</span>(train_ann)</span></code></pre></div>
+<pre><code>##   gender_female gender_male       age fam_history_overweight1
+## 1             1           0 0.2127660                       1
+## 2             1           0 0.4255319                       1
+## 3             1           0 0.1063830                       1
+## 4             0           1 0.1063830                       1
+## 5             1           0 0.2340426                       1
+## 6             1           0 0.2553191                       1
+##   freq_consumption_hc_food1  veg_freq num_meals food_between_meals_frequently
+## 1                         1 1.0000000 0.6666667                             0
+## 2                         1 0.5516675 0.6593030                             0
+## 3                         1 1.0000000 0.6666667                             0
+## 4                         1 1.0000000 0.6666667                             0
+## 5                         1 1.0000000 0.6666667                             0
+## 6                         1 1.0000000 0.6666667                             0
+##   food_between_meals_never food_between_meals_sometimes smoke1 water_daily
+## 1                        0                            1      0   0.7364515
+## 2                        0                            1      0   0.4822175
+## 3                        0                            1      0   0.9327950
+## 4                        0                            0      0   1.0000000
+## 5                        0                            1      0   0.9317565
+## 6                        0                            1      0   0.1737795
+##   caloric_beverages1 activity_freq  tech_use alcohol_never alcohol_sometimes
+## 1                  0    0.05569533 0.2434340             0                 1
+## 2                  0    0.32917367 0.0000000             0                 1
+## 3                  0    0.48822467 0.3277855             0                 1
+## 4                  1    1.00000000 0.0000000             0                 1
+## 5                  0    0.08827700 0.3366050             0                 1
+## 6                  0    0.07248500 0.3126750             0                 1
+##   transport_bike transport_motorbike transport_public_transportation
+## 1              0                   0                               1
+## 2              0                   0                               0
+## 3              0                   0                               1
+## 4              0                   0                               1
+## 5              0                   0                               1
+## 6              0                   0                               1
+##   transport_walking eating_habit_binary physical_activity_binary
+## 1                 0           0.8333333                0.3360436
+## 2                 0           0.6802073                0.5975042
+## 3                 0           0.8333333                0.5618206
+## 4                 0           0.8333333                1.0000000
+## 5                 0           0.8333333                0.3183242
+## 6                 0           0.8333333                0.3184210
+##   age_group_young_adult age_group_adult age_group_senior
+## 1                     1               0                0
+## 2                     1               0                0
+## 3                     1               0                0
+## 4                     1               0                0
+## 5                     1               0                0
+## 6                     1               0                0
+##   obesity_leveloverweight
+## 1                       1
+## 2                       1
+## 3                       1
+## 4                       1
+## 5                       1
+## 6                       1</code></pre>
+</div>
+<div id="model-ann" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Model ANN<a href="artificial-neural-network-ann.html#model-ann" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="simple-ann" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Simple ANN<a href="artificial-neural-network-ann.html#simple-ann" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will initiate with a single neuron (single node) ANN to run a preliminary simple model. Once we have finished working on that model, we will create a more complex model consisting of one hidden layer and one neuron.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="artificial-neural-network-ann.html#cb63-1" tabindex="-1"></a><span class="co"># Build a model</span></span>
+<span id="cb63-2"><a href="artificial-neural-network-ann.html#cb63-2" tabindex="-1"></a>model_ann <span class="ot">&lt;-</span> <span class="fu">neuralnet</span>(obesity_leveloverweight <span class="sc">~</span> .,</span>
+<span id="cb63-3"><a href="artificial-neural-network-ann.html#cb63-3" tabindex="-1"></a>                       <span class="at">data =</span> train_ann,</span>
+<span id="cb63-4"><a href="artificial-neural-network-ann.html#cb63-4" tabindex="-1"></a>                       <span class="at">hidden =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="artificial-neural-network-ann.html#cb64-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
+<span id="cb64-2"><a href="artificial-neural-network-ann.html#cb64-2" tabindex="-1"></a><span class="fu">summary</span>(model_ann)</span></code></pre></div>
+<pre><code>##                     Length Class      Mode    
+## call                     4 -none-     call    
+## response             10379 -none-     numeric 
+## covariate           269854 -none-     numeric 
+## model.list               2 -none-     list    
+## err.fct                  1 -none-     function
+## act.fct                  1 -none-     function
+## linear.output            1 -none-     logical 
+## data                    27 data.frame list    
+## exclude                  0 -none-     NULL    
+## net.result               1 -none-     list    
+## weights                  1 -none-     list    
+## generalized.weights      1 -none-     list    
+## startweights             1 -none-     list    
+## result.matrix           32 -none-     numeric</code></pre>
+</div>
+<div id="complex-ann" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Complex ANN<a href="artificial-neural-network-ann.html#complex-ann" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Adding hidden layers increases computational requirements, so this will take significantly longer to run compared to a simple ANN.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="artificial-neural-network-ann.html#cb66-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
+<span id="cb66-2"><a href="artificial-neural-network-ann.html#cb66-2" tabindex="-1"></a>model_ann_complex <span class="ot">&lt;-</span> <span class="fu">neuralnet</span>(obesity_leveloverweight <span class="sc">~</span> .,</span>
+<span id="cb66-3"><a href="artificial-neural-network-ann.html#cb66-3" tabindex="-1"></a>                               <span class="at">data =</span> train_ann,</span>
+<span id="cb66-4"><a href="artificial-neural-network-ann.html#cb66-4" tabindex="-1"></a>                               <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">stepmax =</span> <span class="fl">1e+07</span>)</span>
+<span id="cb66-5"><a href="artificial-neural-network-ann.html#cb66-5" tabindex="-1"></a></span>
+<span id="cb66-6"><a href="artificial-neural-network-ann.html#cb66-6" tabindex="-1"></a><span class="fu">summary</span>(model_ann_complex)</span></code></pre></div>
+<pre><code>##                     Length Class      Mode    
+## call                     5 -none-     call    
+## response             10379 -none-     numeric 
+## covariate           269854 -none-     numeric 
+## model.list               2 -none-     list    
+## err.fct                  1 -none-     function
+## act.fct                  1 -none-     function
+## linear.output            1 -none-     logical 
+## data                    27 data.frame list    
+## exclude                  0 -none-     NULL    
+## net.result               1 -none-     list    
+## weights                  1 -none-     list    
+## generalized.weights      1 -none-     list    
+## startweights             1 -none-     list    
+## result.matrix           34 -none-     numeric</code></pre>
+</div>
+</div>
+<div id="evaluate-ann" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Evaluate ANN<a href="artificial-neural-network-ann.html#evaluate-ann" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="simple-ann-1" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Simple ANN<a href="artificial-neural-network-ann.html#simple-ann-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="artificial-neural-network-ann.html#cb68-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
+<span id="cb68-2"><a href="artificial-neural-network-ann.html#cb68-2" tabindex="-1"></a>prediction_ann_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_ann, test_ann)</span>
+<span id="cb68-3"><a href="artificial-neural-network-ann.html#cb68-3" tabindex="-1"></a>prediction_ann <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_ann_probability <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb68-4"><a href="artificial-neural-network-ann.html#cb68-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_ann_probability)</span></code></pre></div>
+<pre><code>##        V1         
+##  Min.   :0.08761  
+##  1st Qu.:0.53668  
+##  Median :0.90047  
+##  Mean   :0.73205  
+##  3rd Qu.:0.97776  
+##  Max.   :1.00227</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="artificial-neural-network-ann.html#cb70-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
+<span id="cb70-2"><a href="artificial-neural-network-ann.html#cb70-2" tabindex="-1"></a>cm_ann <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(prediction_ann),</span>
+<span id="cb70-3"><a href="artificial-neural-network-ann.html#cb70-3" tabindex="-1"></a>                          <span class="fu">as.factor</span>(test_ann<span class="sc">$</span>obesity_leveloverweight),</span>
+<span id="cb70-4"><a href="artificial-neural-network-ann.html#cb70-4" tabindex="-1"></a>                          <span class="at">positive =</span> <span class="st">&#39;1&#39;</span>)</span>
+<span id="cb70-5"><a href="artificial-neural-network-ann.html#cb70-5" tabindex="-1"></a>cm_ann</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    0    1
+##          0 1939  561
+##          1  824 7055
+##                                          
+##                Accuracy : 0.8666         
+##                  95% CI : (0.8599, 0.873)
+##     No Information Rate : 0.7338         
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16      
+##                                          
+##                   Kappa : 0.6478         
+##                                          
+##  Mcnemar&#39;s Test P-Value : 1.922e-12      
+##                                          
+##             Sensitivity : 0.9263         
+##             Specificity : 0.7018         
+##          Pos Pred Value : 0.8954         
+##          Neg Pred Value : 0.7756         
+##              Prevalence : 0.7338         
+##          Detection Rate : 0.6797         
+##    Detection Prevalence : 0.7591         
+##       Balanced Accuracy : 0.8141         
+##                                          
+##        &#39;Positive&#39; Class : 1              
+## </code></pre>
+<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8666</code>, sensitivity of <code>0.9263</code>, and a Kappa coefficient of <code>0.6478</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="artificial-neural-network-ann.html#cb72-1" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_ann_probability, test_ann<span class="sc">$</span>obesity_leveloverweight)</span>
+<span id="cb72-2"><a href="artificial-neural-network-ann.html#cb72-2" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb72-3"><a href="artificial-neural-network-ann.html#cb72-3" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb72-4"><a href="artificial-neural-network-ann.html#cb72-4" tabindex="-1"></a></span>
+<span id="cb72-5"><a href="artificial-neural-network-ann.html#cb72-5" tabindex="-1"></a></span>
+<span id="cb72-6"><a href="artificial-neural-network-ann.html#cb72-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
+<span id="cb72-7"><a href="artificial-neural-network-ann.html#cb72-7" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
+<span id="cb72-8"><a href="artificial-neural-network-ann.html#cb72-8" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
+<span id="cb72-9"><a href="artificial-neural-network-ann.html#cb72-9" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
+<span id="cb72-10"><a href="artificial-neural-network-ann.html#cb72-10" tabindex="-1"></a></span>
+<span id="cb72-11"><a href="artificial-neural-network-ann.html#cb72-11" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
+<span id="cb72-12"><a href="artificial-neural-network-ann.html#cb72-12" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb72-13"><a href="artificial-neural-network-ann.html#cb72-13" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb72-14"><a href="artificial-neural-network-ann.html#cb72-14" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb72-15"><a href="artificial-neural-network-ann.html#cb72-15" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Simple ANN ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
+<span id="cb72-16"><a href="artificial-neural-network-ann.html#cb72-16" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+<div id="complex-ann-1" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Complex ANN<a href="artificial-neural-network-ann.html#complex-ann-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="artificial-neural-network-ann.html#cb73-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
+<span id="cb73-2"><a href="artificial-neural-network-ann.html#cb73-2" tabindex="-1"></a>prediction_ann_complex_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_ann_complex, test_ann)</span>
+<span id="cb73-3"><a href="artificial-neural-network-ann.html#cb73-3" tabindex="-1"></a>prediction_ann_complex <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_ann_complex_probability <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb73-4"><a href="artificial-neural-network-ann.html#cb73-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_ann_complex_probability)</span></code></pre></div>
+<pre><code>##        V1         
+##  Min.   :0.04298  
+##  1st Qu.:0.51153  
+##  Median :0.91891  
+##  Mean   :0.73173  
+##  3rd Qu.:0.97819  
+##  Max.   :0.97998</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="artificial-neural-network-ann.html#cb75-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
+<span id="cb75-2"><a href="artificial-neural-network-ann.html#cb75-2" tabindex="-1"></a>cm_ann_complex <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(prediction_ann_complex),</span>
+<span id="cb75-3"><a href="artificial-neural-network-ann.html#cb75-3" tabindex="-1"></a>                                  <span class="fu">as.factor</span>(test_ann<span class="sc">$</span>obesity_leveloverweight),</span>
+<span id="cb75-4"><a href="artificial-neural-network-ann.html#cb75-4" tabindex="-1"></a>                                  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span>)</span>
+<span id="cb75-5"><a href="artificial-neural-network-ann.html#cb75-5" tabindex="-1"></a>cm_ann_complex</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    0    1
+##          0 1973  594
+##          1  790 7022
+##                                         
+##                Accuracy : 0.8667        
+##                  95% CI : (0.86, 0.8731)
+##     No Information Rate : 0.7338        
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16     
+##                                         
+##                   Kappa : 0.6508        
+##                                         
+##  Mcnemar&#39;s Test P-Value : 1.592e-07     
+##                                         
+##             Sensitivity : 0.9220        
+##             Specificity : 0.7141        
+##          Pos Pred Value : 0.8989        
+##          Neg Pred Value : 0.7686        
+##              Prevalence : 0.7338        
+##          Detection Rate : 0.6766        
+##    Detection Prevalence : 0.7527        
+##       Balanced Accuracy : 0.8180        
+##                                         
+##        &#39;Positive&#39; Class : 1             
+## </code></pre>
+<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8667</code>, sensitivity of <code>0.922</code>, and a Kappa coefficient of <code>0.6508</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="artificial-neural-network-ann.html#cb77-1" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_ann_complex_probability, test_ann<span class="sc">$</span>obesity_leveloverweight)</span>
+<span id="cb77-2"><a href="artificial-neural-network-ann.html#cb77-2" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb77-3"><a href="artificial-neural-network-ann.html#cb77-3" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb77-4"><a href="artificial-neural-network-ann.html#cb77-4" tabindex="-1"></a></span>
+<span id="cb77-5"><a href="artificial-neural-network-ann.html#cb77-5" tabindex="-1"></a></span>
+<span id="cb77-6"><a href="artificial-neural-network-ann.html#cb77-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
+<span id="cb77-7"><a href="artificial-neural-network-ann.html#cb77-7" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
+<span id="cb77-8"><a href="artificial-neural-network-ann.html#cb77-8" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
+<span id="cb77-9"><a href="artificial-neural-network-ann.html#cb77-9" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
+<span id="cb77-10"><a href="artificial-neural-network-ann.html#cb77-10" tabindex="-1"></a></span>
+<span id="cb77-11"><a href="artificial-neural-network-ann.html#cb77-11" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
+<span id="cb77-12"><a href="artificial-neural-network-ann.html#cb77-12" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb77-13"><a href="artificial-neural-network-ann.html#cb77-13" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb77-14"><a href="artificial-neural-network-ann.html#cb77-14" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb77-15"><a href="artificial-neural-network-ann.html#cb77-15" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Complex ANN ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
+<span id="cb77-16"><a href="artificial-neural-network-ann.html#cb77-16" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="logistic-regression-lr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="k-neareast-neighbor-knn.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

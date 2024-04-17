@@ -1,0 +1,15 @@
+ggplot2
+lattice
+caret
+class
+C50
+kernlab
+randomForest
+neuralnet
+janitor
+dplyr
+corrplot
+skimr
+pROC
+xgboost
+kableExtra

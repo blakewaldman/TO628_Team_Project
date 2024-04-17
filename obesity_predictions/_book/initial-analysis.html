@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Initial Analysis | Indirect Obesity Forecasting</title>
+  <meta name="description" content="This is our team project for TO628. In this project, we are exploring innovative predictive analytics methods to assess and manage obesity in the context of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health Evaluation System (PHES), our approach circumvents these potential limitations, providing health insurance companies and medical professionals with essential insights to develop proactive health programs and enhance patient outcomes." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Initial Analysis | Indirect Obesity Forecasting" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is our team project for TO628. In this project, we are exploring innovative predictive analytics methods to assess and manage obesity in the context of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health Evaluation System (PHES), our approach circumvents these potential limitations, providing health insurance companies and medical professionals with essential insights to develop proactive health programs and enhance patient outcomes." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Initial Analysis | Indirect Obesity Forecasting" />
+  
+  <meta name="twitter:description" content="This is our team project for TO628. In this project, we are exploring innovative predictive analytics methods to assess and manage obesity in the context of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health Evaluation System (PHES), our approach circumvents these potential limitations, providing health insurance companies and medical professionals with essential insights to develop proactive health programs and enhance patient outcomes." />
+  
+
+<meta name="author" content="Aaron Zhao" />
+<meta name="author" content="Arneet Singh" />
+<meta name="author" content="Blake Waldman" />
+<meta name="author" content="Grace Coleman" />
+<meta name="author" content="Tyler James Phillips" />
+<meta name="author" content="Yousuf Altameemi" />
+
+
+<meta name="date" content="2024-04-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="logistic-regression-lr.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="_bookdown_files/to_628_hidden_image2.jpg" 
+alt="TO 628 Group Project" 
+title="TO 628 Group Project" style="width:100%;"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#dataset-overview"><i class="fa fa-check"></i>Dataset Overview</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#audience-and-impact"><i class="fa fa-check"></i>Audience and Impact</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#challenges-in-health-insurance"><i class="fa fa-check"></i>Challenges in Health Insurance</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#medical-professional-engagement"><i class="fa fa-check"></i>Medical Professional Engagement</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#research-questions"><i class="fa fa-check"></i>Research Questions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#adoption-and-implementation"><i class="fa fa-check"></i>Adoption and Implementation</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#strategic-impact"><i class="fa fa-check"></i>Strategic Impact</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="initial-analysis.html"><a href="initial-analysis.html"><i class="fa fa-check"></i><b>2</b> Initial Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="initial-analysis.html"><a href="initial-analysis.html#r-packages-and-setup"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="2.1" data-path="initial-analysis.html"><a href="initial-analysis.html#load-data"><i class="fa fa-check"></i><b>2.1</b> Load Data</a></li>
+<li class="chapter" data-level="2.2" data-path="initial-analysis.html"><a href="initial-analysis.html#clean-data"><i class="fa fa-check"></i><b>2.2</b> Clean Data</a></li>
+<li class="chapter" data-level="2.3" data-path="initial-analysis.html"><a href="initial-analysis.html#feature-engineering"><i class="fa fa-check"></i><b>2.3</b> Feature Engineering</a></li>
+<li class="chapter" data-level="2.4" data-path="initial-analysis.html"><a href="initial-analysis.html#visualize-data"><i class="fa fa-check"></i><b>2.4</b> Visualize Data</a></li>
+<li class="chapter" data-level="2.5" data-path="initial-analysis.html"><a href="initial-analysis.html#split-data"><i class="fa fa-check"></i><b>2.5</b> Split Data</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="initial-analysis.html"><a href="initial-analysis.html#split-train-test"><i class="fa fa-check"></i><b>2.5.1</b> Split Train Test</a></li>
+<li class="chapter" data-level="2.5.2" data-path="initial-analysis.html"><a href="initial-analysis.html#split-lr"><i class="fa fa-check"></i><b>2.5.2</b> Split LR</a></li>
+<li class="chapter" data-level="2.5.3" data-path="initial-analysis.html"><a href="initial-analysis.html#split-dt"><i class="fa fa-check"></i><b>2.5.3</b> Split DT</a></li>
+<li class="chapter" data-level="2.5.4" data-path="initial-analysis.html"><a href="initial-analysis.html#split-svm"><i class="fa fa-check"></i><b>2.5.4</b> Split SVM</a></li>
+<li class="chapter" data-level="2.5.5" data-path="initial-analysis.html"><a href="initial-analysis.html#split-rf"><i class="fa fa-check"></i><b>2.5.5</b> Split RF</a></li>
+<li class="chapter" data-level="2.5.6" data-path="initial-analysis.html"><a href="initial-analysis.html#split-xgb"><i class="fa fa-check"></i><b>2.5.6</b> Split XGB</a></li>
+<li class="chapter" data-level="2.5.7" data-path="initial-analysis.html"><a href="initial-analysis.html#split-ann"><i class="fa fa-check"></i><b>2.5.7</b> Split ANN</a></li>
+<li class="chapter" data-level="2.5.8" data-path="initial-analysis.html"><a href="initial-analysis.html#split-knn"><i class="fa fa-check"></i><b>2.5.8</b> Split KNN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html"><i class="fa fa-check"></i><b>3</b> Logistic Regression (LR)</a>
+<ul>
+<li class="chapter" data-level="" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#r-packages-and-setup-1"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="3.1" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#load-data-1"><i class="fa fa-check"></i><b>3.2</b> Load Data</a></li>
+<li class="chapter" data-level="3.3" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#model-lr"><i class="fa fa-check"></i><b>3.3</b> Model LR</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#simple-lr"><i class="fa fa-check"></i><b>3.3.1</b> Simple LR</a></li>
+<li class="chapter" data-level="3.3.2" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#complex-lr"><i class="fa fa-check"></i><b>3.3.2</b> Complex LR</a></li>
+<li class="chapter" data-level="3.3.3" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#stepwise-lr"><i class="fa fa-check"></i><b>3.3.3</b> Stepwise LR</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#evaluate-lr"><i class="fa fa-check"></i><b>3.4</b> Evaluate LR</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#simple-lr-1"><i class="fa fa-check"></i><b>3.4.1</b> Simple LR</a></li>
+<li class="chapter" data-level="3.4.2" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#complex-lr-1"><i class="fa fa-check"></i><b>3.4.2</b> Complex LR</a></li>
+<li class="chapter" data-level="3.4.3" data-path="logistic-regression-lr.html"><a href="logistic-regression-lr.html#stepwise-lr-1"><i class="fa fa-check"></i><b>3.4.3</b> Stepwise LR</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html"><i class="fa fa-check"></i><b>4</b> Artificial Neural Network (ANN)</a>
+<ul>
+<li class="chapter" data-level="" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#r-packages-and-setup-2"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="4.1" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#introduction-2"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#load-data-2"><i class="fa fa-check"></i><b>4.2</b> Load Data</a></li>
+<li class="chapter" data-level="4.3" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#model-ann"><i class="fa fa-check"></i><b>4.3</b> Model ANN</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#simple-ann"><i class="fa fa-check"></i><b>4.3.1</b> Simple ANN</a></li>
+<li class="chapter" data-level="4.3.2" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#complex-ann"><i class="fa fa-check"></i><b>4.3.2</b> Complex ANN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#evaluate-ann"><i class="fa fa-check"></i><b>4.4</b> Evaluate ANN</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#simple-ann-1"><i class="fa fa-check"></i><b>4.4.1</b> Simple ANN</a></li>
+<li class="chapter" data-level="4.4.2" data-path="artificial-neural-network-ann.html"><a href="artificial-neural-network-ann.html#complex-ann-1"><i class="fa fa-check"></i><b>4.4.2</b> Complex ANN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html"><i class="fa fa-check"></i><b>5</b> K-Neareast Neighbor (KNN)</a>
+<ul>
+<li class="chapter" data-level="" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#r-packages-and-setup-3"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="5.1" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#introduction-3"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#load-data-3"><i class="fa fa-check"></i><b>5.2</b> Load Data</a></li>
+<li class="chapter" data-level="5.3" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#model-knn"><i class="fa fa-check"></i><b>5.3</b> Model KNN</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#default-knn"><i class="fa fa-check"></i><b>5.3.1</b> Default KNN</a></li>
+<li class="chapter" data-level="5.3.2" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#tuned-knn"><i class="fa fa-check"></i><b>5.3.2</b> Tuned KNN</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#evaluate-knn"><i class="fa fa-check"></i><b>5.4</b> Evaluate KNN</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#default-knn-1"><i class="fa fa-check"></i><b>5.4.1</b> Default KNN</a></li>
+<li class="chapter" data-level="5.4.2" data-path="k-neareast-neighbor-knn.html"><a href="k-neareast-neighbor-knn.html#tuned-knn-1"><i class="fa fa-check"></i><b>5.4.2</b> Tuned KNN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html"><i class="fa fa-check"></i><b>6</b> Decision Tree (DT)</a>
+<ul>
+<li class="chapter" data-level="" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#r-packages-and-setup-4"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="6.1" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#introduction-4"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#load-data-4"><i class="fa fa-check"></i><b>6.2</b> Load Data</a></li>
+<li class="chapter" data-level="6.3" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#model-dt"><i class="fa fa-check"></i><b>6.3</b> Model DT</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#simple-dt"><i class="fa fa-check"></i><b>6.3.1</b> Simple DT</a></li>
+<li class="chapter" data-level="6.3.2" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#dt-with-cost-matrix"><i class="fa fa-check"></i><b>6.3.2</b> DT with Cost Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#evaluate-dt"><i class="fa fa-check"></i><b>6.4</b> Evaluate DT</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#simple-dt-1"><i class="fa fa-check"></i><b>6.4.1</b> Simple DT</a></li>
+<li class="chapter" data-level="6.4.2" data-path="decision-tree-dt.html"><a href="decision-tree-dt.html#dt-with-cost-matrix-1"><i class="fa fa-check"></i><b>6.4.2</b> DT with Cost Matrix</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html"><i class="fa fa-check"></i><b>7</b> Support Vector Machine (SVM)</a>
+<ul>
+<li class="chapter" data-level="" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#r-packages-and-setup-5"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="7.1" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#introduction-5"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#load-data-5"><i class="fa fa-check"></i><b>7.2</b> Load Data</a></li>
+<li class="chapter" data-level="7.3" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#model-svm"><i class="fa fa-check"></i><b>7.3</b> Model SVM</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#vanilla-svm"><i class="fa fa-check"></i><b>7.3.1</b> Vanilla SVM</a></li>
+<li class="chapter" data-level="7.3.2" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#rbf-svm"><i class="fa fa-check"></i><b>7.3.2</b> RBF SVM</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#evaluate-svm"><i class="fa fa-check"></i><b>7.4</b> Evaluate SVM</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#vanilla-svm-1"><i class="fa fa-check"></i><b>7.4.1</b> Vanilla SVM</a></li>
+<li class="chapter" data-level="7.4.2" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#rbf-svm-1"><i class="fa fa-check"></i><b>7.4.2</b> RBF SVM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="random-forest-rf.html"><a href="random-forest-rf.html"><i class="fa fa-check"></i><b>8</b> Random Forest (RF)</a>
+<ul>
+<li class="chapter" data-level="" data-path="random-forest-rf.html"><a href="random-forest-rf.html#r-packages-and-setup-6"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="8.1" data-path="random-forest-rf.html"><a href="random-forest-rf.html#introduction-6"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="random-forest-rf.html"><a href="random-forest-rf.html#load-data-6"><i class="fa fa-check"></i><b>8.2</b> Load Data</a></li>
+<li class="chapter" data-level="8.3" data-path="random-forest-rf.html"><a href="random-forest-rf.html#model-rf"><i class="fa fa-check"></i><b>8.3</b> Model RF</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="random-forest-rf.html"><a href="random-forest-rf.html#simple-rf"><i class="fa fa-check"></i><b>8.3.1</b> Simple RF</a></li>
+<li class="chapter" data-level="8.3.2" data-path="random-forest-rf.html"><a href="random-forest-rf.html#tuned-rf"><i class="fa fa-check"></i><b>8.3.2</b> Tuned RF</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="random-forest-rf.html"><a href="random-forest-rf.html#evaluate-rf"><i class="fa fa-check"></i><b>8.4</b> Evaluate RF</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="random-forest-rf.html"><a href="random-forest-rf.html#simple-rf-1"><i class="fa fa-check"></i><b>8.4.1</b> Simple RF</a></li>
+<li class="chapter" data-level="8.4.2" data-path="random-forest-rf.html"><a href="random-forest-rf.html#tuned-rf-1"><i class="fa fa-check"></i><b>8.4.2</b> Tuned RF</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html"><i class="fa fa-check"></i><b>9</b> XG-Boost (XGB)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#r-packages-and-setup-7"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="9.1" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#introduction-7"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#load-data-7"><i class="fa fa-check"></i><b>9.2</b> Load Data</a></li>
+<li class="chapter" data-level="9.3" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#model-xgb"><i class="fa fa-check"></i><b>9.3</b> Model XGB</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#simple-xgb"><i class="fa fa-check"></i><b>9.3.1</b> Simple XGB</a></li>
+<li class="chapter" data-level="9.3.2" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#tuned-xgb"><i class="fa fa-check"></i><b>9.3.2</b> Tuned XGB</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#evaluate-xgb"><i class="fa fa-check"></i><b>9.4</b> Evaluate XGB</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#simple-xgb-1"><i class="fa fa-check"></i><b>9.4.1</b> Simple XGB</a></li>
+<li class="chapter" data-level="9.4.2" data-path="xg-boost-xgb.html"><a href="xg-boost-xgb.html#tuned-xgb-1"><i class="fa fa-check"></i><b>9.4.2</b> Tuned XGB</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html"><i class="fa fa-check"></i><b>10</b> Stacked Model with Decision Tree (SM)</a>
+<ul>
+<li class="chapter" data-level="" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#r-packages-and-setup-8"><i class="fa fa-check"></i>R Packages and Setup</a></li>
+<li class="chapter" data-level="10.1" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#introduction-8"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#load-data-8"><i class="fa fa-check"></i><b>10.2</b> Load Data</a></li>
+<li class="chapter" data-level="10.3" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#split-data-1"><i class="fa fa-check"></i><b>10.3</b> Split Data</a></li>
+<li class="chapter" data-level="10.4" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#define-cost-matrix"><i class="fa fa-check"></i><b>10.4</b> Define Cost Matrix</a></li>
+<li class="chapter" data-level="10.5" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#model-sm"><i class="fa fa-check"></i><b>10.5</b> Model SM</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#simple-sm"><i class="fa fa-check"></i><b>10.5.1</b> Simple SM</a></li>
+<li class="chapter" data-level="10.5.2" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#sm-with-cost-matrix"><i class="fa fa-check"></i><b>10.5.2</b> SM with Cost Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#evaluate-sm"><i class="fa fa-check"></i><b>10.6</b> Evaluate SM</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#simple-sm-1"><i class="fa fa-check"></i><b>10.6.1</b> Simple SM</a></li>
+<li class="chapter" data-level="10.6.2" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#sm-with-cost-matrix-1"><i class="fa fa-check"></i><b>10.6.2</b> SM with Cost Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="stacked-model-with-decision-tree-sm.html"><a href="stacked-model-with-decision-tree-sm.html#model-evaluations"><i class="fa fa-check"></i><b>10.7</b> Model Evaluations</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>11</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="conclusion.html"><a href="conclusion.html#takeaways"><i class="fa fa-check"></i><b>11.1</b> Takeaways</a></li>
+<li class="chapter" data-level="11.2" data-path="conclusion.html"><a href="conclusion.html#business-impact"><i class="fa fa-check"></i><b>11.2</b> Business Impact</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://michiganross.umich.edu/courses/advanced-big-data-analytics-10562">About The Course</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Indirect Obesity Forecasting</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="initial-analysis" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Initial Analysis<a href="initial-analysis.html#initial-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="r-packages-and-setup" class="section level2 unnumbered hasAnchor">
+<h2>R Packages and Setup<a href="initial-analysis.html#r-packages-and-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="load-data" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Load Data<a href="initial-analysis.html#load-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s begin by loading the dataset and examining its crucial variables and values.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="initial-analysis.html#cb1-1" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb1-2"><a href="initial-analysis.html#cb1-2" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../obesity_level.csv&#39;</span>)</span>
+<span id="cb1-3"><a href="initial-analysis.html#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="initial-analysis.html#cb1-4" tabindex="-1"></a><span class="co"># Display statistics</span></span>
+<span id="cb1-5"><a href="initial-analysis.html#cb1-5" tabindex="-1"></a><span class="fu">str</span>(raw)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    20758 obs. of  18 variables:
+##  $ id                            : int  0 1 2 3 4 5 6 7 8 9 ...
+##  $ Gender                        : chr  &quot;Male&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; ...
+##  $ Age                           : num  24.4 18 18 21 31.6 ...
+##  $ Height                        : num  1.7 1.56 1.71 1.71 1.91 ...
+##  $ Weight                        : num  81.7 57 50.2 131.3 93.8 ...
+##  $ family_history_with_overweight: int  1 1 1 1 1 1 1 1 0 1 ...
+##  $ FAVC                          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ FCVC                          : num  2 2 1.88 3 2.68 ...
+##  $ NCP                           : num  2.98 3 1.41 3 1.97 ...
+##  $ CAEC                          : chr  &quot;Sometimes&quot; &quot;Frequently&quot; &quot;Sometimes&quot; &quot;Sometimes&quot; ...
+##  $ SMOKE                         : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ CH2O                          : num  2.76 2 1.91 1.67 1.98 ...
+##  $ SCC                           : int  0 0 0 0 0 0 0 0 1 0 ...
+##  $ FAF                           : num  0 1 0.866 1.468 1.968 ...
+##  $ TUE                           : num  0.976 1 1.674 0.78 0.932 ...
+##  $ CALC                          : chr  &quot;Sometimes&quot; &quot;0&quot; &quot;0&quot; &quot;Sometimes&quot; ...
+##  $ MTRANS                        : chr  &quot;Public_Transportation&quot; &quot;Automobile&quot; &quot;Public_Transportation&quot; &quot;Public_Transportation&quot; ...
+##  $ X0be1dad                      : chr  &quot;Overweight_Level_II&quot; &quot;0rmal_Weight&quot; &quot;Insufficient_Weight&quot; &quot;Obesity_Type_III&quot; ...</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="initial-analysis.html#cb3-1" tabindex="-1"></a><span class="fu">summary</span>(raw)</span></code></pre></div>
+<pre><code>##        id           Gender               Age            Height     
+##  Min.   :    0   Length:20758       Min.   :14.00   Min.   :1.450  
+##  1st Qu.: 5189   Class :character   1st Qu.:20.00   1st Qu.:1.632  
+##  Median :10378   Mode  :character   Median :22.82   Median :1.700  
+##  Mean   :10378                      Mean   :23.84   Mean   :1.700  
+##  3rd Qu.:15568                      3rd Qu.:26.00   3rd Qu.:1.763  
+##  Max.   :20757                      Max.   :61.00   Max.   :1.976  
+##      Weight       family_history_with_overweight      FAVC       
+##  Min.   : 39.00   Min.   :0.0000                 Min.   :0.0000  
+##  1st Qu.: 66.00   1st Qu.:1.0000                 1st Qu.:1.0000  
+##  Median : 84.06   Median :1.0000                 Median :1.0000  
+##  Mean   : 87.89   Mean   :0.8196                 Mean   :0.9144  
+##  3rd Qu.:111.60   3rd Qu.:1.0000                 3rd Qu.:1.0000  
+##  Max.   :165.06   Max.   :1.0000                 Max.   :1.0000  
+##       FCVC            NCP            CAEC               SMOKE       
+##  Min.   :1.000   Min.   :1.000   Length:20758       Min.   :0.0000  
+##  1st Qu.:2.000   1st Qu.:3.000   Class :character   1st Qu.:0.0000  
+##  Median :2.394   Median :3.000   Mode  :character   Median :0.0000  
+##  Mean   :2.446   Mean   :2.761                      Mean   :0.0118  
+##  3rd Qu.:3.000   3rd Qu.:3.000                      3rd Qu.:0.0000  
+##  Max.   :3.000   Max.   :4.000                      Max.   :1.0000  
+##       CH2O            SCC              FAF                TUE        
+##  Min.   :1.000   Min.   :0.0000   Min.   :0.000000   Min.   :0.0000  
+##  1st Qu.:1.792   1st Qu.:0.0000   1st Qu.:0.008013   1st Qu.:0.0000  
+##  Median :2.000   Median :0.0000   Median :1.000000   Median :0.5739  
+##  Mean   :2.029   Mean   :0.0331   Mean   :0.981747   Mean   :0.6168  
+##  3rd Qu.:2.550   3rd Qu.:0.0000   3rd Qu.:1.587406   3rd Qu.:1.0000  
+##  Max.   :3.000   Max.   :1.0000   Max.   :3.000000   Max.   :2.0000  
+##      CALC              MTRANS            X0be1dad        
+##  Length:20758       Length:20758       Length:20758      
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##                                                          
+##                                                          
+## </code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="initial-analysis.html#cb5-1" tabindex="-1"></a><span class="fu">head</span>(raw)</span></code></pre></div>
+<pre><code>##   id Gender      Age   Height    Weight family_history_with_overweight FAVC
+## 1  0   Male 24.44301 1.699998  81.66995                              1    1
+## 2  1 Female 18.00000 1.560000  57.00000                              1    1
+## 3  2 Female 18.00000 1.711460  50.16575                              1    1
+## 4  3 Female 20.95274 1.710730 131.27485                              1    1
+## 5  4   Male 31.64108 1.914186  93.79806                              1    1
+## 6  5   Male 18.12825 1.748524  51.55259                              1    1
+##       FCVC      NCP       CAEC SMOKE     CH2O SCC      FAF      TUE      CALC
+## 1 2.000000 2.983297  Sometimes     0 2.763573   0 0.000000 0.976473 Sometimes
+## 2 2.000000 3.000000 Frequently     0 2.000000   0 1.000000 1.000000         0
+## 3 1.880534 1.411685  Sometimes     0 1.910378   0 0.866045 1.673584         0
+## 4 3.000000 3.000000  Sometimes     0 1.674061   0 1.467863 0.780199 Sometimes
+## 5 2.679664 1.971472  Sometimes     0 1.979848   0 1.967973 0.931721 Sometimes
+## 6 2.919751 3.000000  Sometimes     0 2.137550   0 1.930033 1.000000 Sometimes
+##                  MTRANS            X0be1dad
+## 1 Public_Transportation Overweight_Level_II
+## 2            Automobile        0rmal_Weight
+## 3 Public_Transportation Insufficient_Weight
+## 4 Public_Transportation    Obesity_Type_III
+## 5 Public_Transportation Overweight_Level_II
+## 6 Public_Transportation Insufficient_Weight</code></pre>
+<p>According to the dataset, the following facts can be observed:</p>
+<ul>
+<li><strong>Biometric Variables</strong>:
+<ul>
+<li><strong>Gender (Gender)</strong>: Indicates whether the individual is male or female.</li>
+<li><strong>Age (Age)</strong>: Specifies the age of each individual.</li>
+<li><strong>Height (Height)</strong>: Records the height in meters of each person in the dataset. (not used in our analysis)</li>
+<li><strong>Weight (Weight)</strong>: Captures the weight in kilograms of each individual. (not used in our analysis)</li>
+</ul></li>
+<li><strong>Medical and Health-related Factors</strong>:
+<ul>
+<li><strong>Family History with Overweight (family_history_with_overweight)</strong>: Tracks whether individuals have a familial history of being overweight.</li>
+<li><strong>Smoking Status(SMOKE)</strong>: Indicates whether individuals are smokers or non-smokers.</li>
+</ul></li>
+<li><strong>Dietary Habits</strong>:
+<ul>
+<li><strong>Frequent Consumption of High-caloric Food (FAVC)</strong>: Observes if individuals frequently consume high-caloric foods.</li>
+<li><strong>Frequency of Consumption of Vegetables (FCVC)</strong>: Measures how frequently individuals incorporate vegetables into their diet.</li>
+<li><strong>Number of Main Meals (NCP)</strong>: Records the number of main meals individuals consume in a day.</li>
+<li><strong>Consumption of Food Between Meals (CAEC)</strong>: Tracks individuals’ consumption of food between regular meals.</li>
+<li><strong>Daily Water Consumption (CH2O)</strong>: Monitors the amount of water individuals consume daily in liters.</li>
+<li><strong>Caloric Beverages Consumption (SCC)</strong>: Notes the intake of caloric beverages.</li>
+<li><strong>Consumption of Alcohol (CALC)</strong>: Observes whether an individual consumes alcohol or not.</li>
+<li><strong>Physical Activity</strong>:
+<ul>
+<li><strong>Physical Activity Frequency (FAF)</strong>: Records how often individuals engage in physical activities in a week.</li>
+<li><strong>Time Spent Using Technological Devices (TUE)</strong>: Measures the amount of time individuals spend using technological devices.</li>
+<li><strong>Mode of Transportation (MTRANS)</strong>: Observes the mode of transportation individuals use in their daily routines.</li>
+</ul></li>
+</ul></li>
+<li><strong>Outcome Variable</strong>:
+<ul>
+<li><strong>Obesity Level (0be1dad)</strong>: indicates if someone is obese or not.</li>
+</ul></li>
+</ul>
+</div>
+<div id="clean-data" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Clean Data<a href="initial-analysis.html#clean-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will perform data cleaning in the following steps, as the dataset is rather messy.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="initial-analysis.html#cb7-1" tabindex="-1"></a><span class="co"># Copy raw data</span></span>
+<span id="cb7-2"><a href="initial-analysis.html#cb7-2" tabindex="-1"></a>cleaned <span class="ot">&lt;-</span> raw</span>
+<span id="cb7-3"><a href="initial-analysis.html#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="initial-analysis.html#cb7-4" tabindex="-1"></a><span class="co"># Drop unnecessary columns</span></span>
+<span id="cb7-5"><a href="initial-analysis.html#cb7-5" tabindex="-1"></a>cleaned <span class="ot">&lt;-</span> cleaned <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="initial-analysis.html#cb7-6" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>id, <span class="sc">-</span>Weight, <span class="sc">-</span>Height)</span>
+<span id="cb7-7"><a href="initial-analysis.html#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="initial-analysis.html#cb7-8" tabindex="-1"></a><span class="co"># Rename columns</span></span>
+<span id="cb7-9"><a href="initial-analysis.html#cb7-9" tabindex="-1"></a>cols_to_rename <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb7-10"><a href="initial-analysis.html#cb7-10" tabindex="-1"></a>  <span class="st">&#39;Gender&#39;</span> <span class="ot">=</span> <span class="st">&#39;gender&#39;</span>,</span>
+<span id="cb7-11"><a href="initial-analysis.html#cb7-11" tabindex="-1"></a>  <span class="st">&#39;Age&#39;</span> <span class="ot">=</span> <span class="st">&#39;age&#39;</span>,</span>
+<span id="cb7-12"><a href="initial-analysis.html#cb7-12" tabindex="-1"></a>  <span class="co"># &#39;Height&#39; = &#39;height&#39;,</span></span>
+<span id="cb7-13"><a href="initial-analysis.html#cb7-13" tabindex="-1"></a>  <span class="co"># &#39;Weight&#39; = &#39;weight&#39;,</span></span>
+<span id="cb7-14"><a href="initial-analysis.html#cb7-14" tabindex="-1"></a>  <span class="st">&#39;family_history_with_overweight&#39;</span> <span class="ot">=</span> <span class="st">&#39;fam_history_overweight&#39;</span>,</span>
+<span id="cb7-15"><a href="initial-analysis.html#cb7-15" tabindex="-1"></a>  <span class="st">&#39;FAVC&#39;</span> <span class="ot">=</span> <span class="st">&#39;freq_consumption_hc_food&#39;</span>,</span>
+<span id="cb7-16"><a href="initial-analysis.html#cb7-16" tabindex="-1"></a>  <span class="st">&#39;FCVC&#39;</span> <span class="ot">=</span> <span class="st">&#39;veg_freq&#39;</span>,</span>
+<span id="cb7-17"><a href="initial-analysis.html#cb7-17" tabindex="-1"></a>  <span class="st">&#39;NCP&#39;</span> <span class="ot">=</span> <span class="st">&#39;num_meals&#39;</span>,</span>
+<span id="cb7-18"><a href="initial-analysis.html#cb7-18" tabindex="-1"></a>  <span class="st">&#39;CAEC&#39;</span> <span class="ot">=</span> <span class="st">&#39;food_between_meals&#39;</span>,</span>
+<span id="cb7-19"><a href="initial-analysis.html#cb7-19" tabindex="-1"></a>  <span class="st">&#39;SMOKE&#39;</span> <span class="ot">=</span> <span class="st">&#39;smoke&#39;</span>,</span>
+<span id="cb7-20"><a href="initial-analysis.html#cb7-20" tabindex="-1"></a>  <span class="st">&#39;CH2O&#39;</span> <span class="ot">=</span> <span class="st">&#39;water_daily&#39;</span>,</span>
+<span id="cb7-21"><a href="initial-analysis.html#cb7-21" tabindex="-1"></a>  <span class="st">&#39;SCC&#39;</span> <span class="ot">=</span> <span class="st">&#39;caloric_beverages&#39;</span>,</span>
+<span id="cb7-22"><a href="initial-analysis.html#cb7-22" tabindex="-1"></a>  <span class="st">&#39;FAF&#39;</span> <span class="ot">=</span> <span class="st">&#39;activity_freq&#39;</span>,</span>
+<span id="cb7-23"><a href="initial-analysis.html#cb7-23" tabindex="-1"></a>  <span class="st">&#39;TUE&#39;</span> <span class="ot">=</span> <span class="st">&#39;tech_use&#39;</span>,</span>
+<span id="cb7-24"><a href="initial-analysis.html#cb7-24" tabindex="-1"></a>  <span class="st">&#39;CALC&#39;</span> <span class="ot">=</span> <span class="st">&#39;alcohol&#39;</span>,</span>
+<span id="cb7-25"><a href="initial-analysis.html#cb7-25" tabindex="-1"></a>  <span class="st">&#39;MTRANS&#39;</span> <span class="ot">=</span> <span class="st">&#39;transport&#39;</span>,</span>
+<span id="cb7-26"><a href="initial-analysis.html#cb7-26" tabindex="-1"></a>  <span class="st">&#39;X0be1dad&#39;</span> <span class="ot">=</span> <span class="st">&#39;obesity_level&#39;</span></span>
+<span id="cb7-27"><a href="initial-analysis.html#cb7-27" tabindex="-1"></a>)</span>
+<span id="cb7-28"><a href="initial-analysis.html#cb7-28" tabindex="-1"></a><span class="fu">names</span>(cleaned) <span class="ot">&lt;-</span> cols_to_rename[<span class="fu">names</span>(cleaned)]</span>
+<span id="cb7-29"><a href="initial-analysis.html#cb7-29" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="initial-analysis.html#cb7-30" tabindex="-1"></a><span class="co"># Simplify columns</span></span>
+<span id="cb7-31"><a href="initial-analysis.html#cb7-31" tabindex="-1"></a>cleaned <span class="ot">&lt;-</span> cleaned <span class="sc">%&gt;%</span></span>
+<span id="cb7-32"><a href="initial-analysis.html#cb7-32" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.integer</span>(<span class="fu">round</span>(age)),</span>
+<span id="cb7-33"><a href="initial-analysis.html#cb7-33" tabindex="-1"></a>         <span class="co"># height = round(height, digits = 2),</span></span>
+<span id="cb7-34"><a href="initial-analysis.html#cb7-34" tabindex="-1"></a>         <span class="co"># weight = round(weight, digits = 2),</span></span>
+<span id="cb7-35"><a href="initial-analysis.html#cb7-35" tabindex="-1"></a>         <span class="at">food_between_meals =</span> <span class="fu">ifelse</span>(food_between_meals <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb7-36"><a href="initial-analysis.html#cb7-36" tabindex="-1"></a>                                     <span class="st">&#39;Never&#39;</span>, food_between_meals),</span>
+<span id="cb7-37"><a href="initial-analysis.html#cb7-37" tabindex="-1"></a>         <span class="at">alcohol =</span> <span class="fu">ifelse</span>(alcohol <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&#39;Never&#39;</span>, alcohol),</span>
+<span id="cb7-38"><a href="initial-analysis.html#cb7-38" tabindex="-1"></a>         <span class="at">obesity_level =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-39"><a href="initial-analysis.html#cb7-39" tabindex="-1"></a>           obesity_level <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;Insufficient_Weight&#39;</span>,</span>
+<span id="cb7-40"><a href="initial-analysis.html#cb7-40" tabindex="-1"></a>                                <span class="st">&#39;0rmal_Weight&#39;</span>) <span class="sc">~</span> <span class="st">&#39;normal_weight&#39;</span>,</span>
+<span id="cb7-41"><a href="initial-analysis.html#cb7-41" tabindex="-1"></a>           obesity_level <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;Obesity_Type_I&#39;</span>,</span>
+<span id="cb7-42"><a href="initial-analysis.html#cb7-42" tabindex="-1"></a>                                <span class="st">&#39;Obesity_Type_II&#39;</span>,</span>
+<span id="cb7-43"><a href="initial-analysis.html#cb7-43" tabindex="-1"></a>                                <span class="st">&#39;Obesity_Type_III&#39;</span>,</span>
+<span id="cb7-44"><a href="initial-analysis.html#cb7-44" tabindex="-1"></a>                                <span class="st">&#39;Overweight_Level_I&#39;</span>,</span>
+<span id="cb7-45"><a href="initial-analysis.html#cb7-45" tabindex="-1"></a>                                <span class="st">&#39;Overweight_Level_II&#39;</span>) <span class="sc">~</span> <span class="st">&#39;overweight&#39;</span>,</span>
+<span id="cb7-46"><a href="initial-analysis.html#cb7-46" tabindex="-1"></a>           <span class="cn">TRUE</span> <span class="sc">~</span> obesity_level))</span>
+<span id="cb7-47"><a href="initial-analysis.html#cb7-47" tabindex="-1"></a></span>
+<span id="cb7-48"><a href="initial-analysis.html#cb7-48" tabindex="-1"></a><span class="co"># Convert columns to factors</span></span>
+<span id="cb7-49"><a href="initial-analysis.html#cb7-49" tabindex="-1"></a>cols_to_factor <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;gender&#39;</span>,</span>
+<span id="cb7-50"><a href="initial-analysis.html#cb7-50" tabindex="-1"></a>                    <span class="st">&#39;fam_history_overweight&#39;</span>,</span>
+<span id="cb7-51"><a href="initial-analysis.html#cb7-51" tabindex="-1"></a>                    <span class="st">&#39;freq_consumption_hc_food&#39;</span>, </span>
+<span id="cb7-52"><a href="initial-analysis.html#cb7-52" tabindex="-1"></a>                    <span class="st">&#39;food_between_meals&#39;</span>,</span>
+<span id="cb7-53"><a href="initial-analysis.html#cb7-53" tabindex="-1"></a>                    <span class="st">&#39;smoke&#39;</span>,</span>
+<span id="cb7-54"><a href="initial-analysis.html#cb7-54" tabindex="-1"></a>                    <span class="st">&#39;alcohol&#39;</span>,</span>
+<span id="cb7-55"><a href="initial-analysis.html#cb7-55" tabindex="-1"></a>                    <span class="st">&#39;caloric_beverages&#39;</span>,</span>
+<span id="cb7-56"><a href="initial-analysis.html#cb7-56" tabindex="-1"></a>                    <span class="st">&#39;transport&#39;</span>,</span>
+<span id="cb7-57"><a href="initial-analysis.html#cb7-57" tabindex="-1"></a>                    <span class="st">&#39;obesity_level&#39;</span>)</span>
+<span id="cb7-58"><a href="initial-analysis.html#cb7-58" tabindex="-1"></a>cleaned[cols_to_factor] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(cleaned[cols_to_factor], as.factor)</span>
+<span id="cb7-59"><a href="initial-analysis.html#cb7-59" tabindex="-1"></a></span>
+<span id="cb7-60"><a href="initial-analysis.html#cb7-60" tabindex="-1"></a><span class="co"># Display data</span></span>
+<span id="cb7-61"><a href="initial-analysis.html#cb7-61" tabindex="-1"></a><span class="fu">str</span>(cleaned)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    20758 obs. of  15 variables:
+##  $ gender                  : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 1 1 1 2 2 2 2 2 1 ...
+##  $ age                     : int  24 18 18 21 32 18 30 30 17 26 ...
+##  $ fam_history_overweight  : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 2 2 2 2 2 1 2 ...
+##  $ freq_consumption_hc_food: Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ veg_freq                : num  2 2 1.88 3 2.68 ...
+##  $ num_meals               : num  2.98 3 1.41 3 1.97 ...
+##  $ food_between_meals      : Factor w/ 4 levels &quot;Always&quot;,&quot;Frequently&quot;,..: 4 2 4 4 4 4 4 4 4 4 ...
+##  $ smoke                   : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ water_daily             : num  2.76 2 1.91 1.67 1.98 ...
+##  $ caloric_beverages       : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 1 1 1 1 1 2 1 ...
+##  $ activity_freq           : num  0 1 0.866 1.468 1.968 ...
+##  $ tech_use                : num  0.976 1 1.674 0.78 0.932 ...
+##  $ alcohol                 : Factor w/ 3 levels &quot;Frequently&quot;,&quot;Never&quot;,..: 3 2 2 3 3 3 3 3 2 3 ...
+##  $ transport               : Factor w/ 5 levels &quot;Automobile&quot;,&quot;Bike&quot;,..: 4 1 4 4 4 4 1 1 4 4 ...
+##  $ obesity_level           : Factor w/ 2 levels &quot;normal_weight&quot;,..: 2 1 1 2 2 1 2 2 2 2 ...</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="initial-analysis.html#cb9-1" tabindex="-1"></a><span class="fu">summary</span>(cleaned)</span></code></pre></div>
+<pre><code>##     gender           age        fam_history_overweight freq_consumption_hc_food
+##  Female:10422   Min.   :14.00   0: 3744                0: 1776                 
+##  Male  :10336   1st Qu.:20.00   1:17014                1:18982                 
+##                 Median :23.00                                                  
+##                 Mean   :23.85                                                  
+##                 3rd Qu.:26.00                                                  
+##                 Max.   :61.00                                                  
+##     veg_freq       num_meals      food_between_meals smoke      water_daily   
+##  Min.   :1.000   Min.   :1.000   Always    :  478    0:20513   Min.   :1.000  
+##  1st Qu.:2.000   1st Qu.:3.000   Frequently: 2472    1:  245   1st Qu.:1.792  
+##  Median :2.394   Median :3.000   Never     :  279              Median :2.000  
+##  Mean   :2.446   Mean   :2.761   Sometimes :17529              Mean   :2.029  
+##  3rd Qu.:3.000   3rd Qu.:3.000                                 3rd Qu.:2.550  
+##  Max.   :3.000   Max.   :4.000                                 Max.   :3.000  
+##  caloric_beverages activity_freq         tech_use            alcohol     
+##  0:20071           Min.   :0.000000   Min.   :0.0000   Frequently:  529  
+##  1:  687           1st Qu.:0.008013   1st Qu.:0.0000   Never     : 5163  
+##                    Median :1.000000   Median :0.5739   Sometimes :15066  
+##                    Mean   :0.981747   Mean   :0.6168                     
+##                    3rd Qu.:1.587406   3rd Qu.:1.0000                     
+##                    Max.   :3.000000   Max.   :2.0000                     
+##                  transport           obesity_level  
+##  Automobile           : 3534   normal_weight: 5605  
+##  Bike                 :   32   overweight   :15153  
+##  Motorbike            :   38                        
+##  Public_Transportation:16687                        
+##  Walking              :  467                        
+## </code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="initial-analysis.html#cb11-1" tabindex="-1"></a><span class="fu">head</span>(cleaned)</span></code></pre></div>
+<pre><code>##   gender age fam_history_overweight freq_consumption_hc_food veg_freq num_meals
+## 1   Male  24                      1                        1 2.000000  2.983297
+## 2 Female  18                      1                        1 2.000000  3.000000
+## 3 Female  18                      1                        1 1.880534  1.411685
+## 4 Female  21                      1                        1 3.000000  3.000000
+## 5   Male  32                      1                        1 2.679664  1.971472
+## 6   Male  18                      1                        1 2.919751  3.000000
+##   food_between_meals smoke water_daily caloric_beverages activity_freq tech_use
+## 1          Sometimes     0    2.763573                 0      0.000000 0.976473
+## 2         Frequently     0    2.000000                 0      1.000000 1.000000
+## 3          Sometimes     0    1.910378                 0      0.866045 1.673584
+## 4          Sometimes     0    1.674061                 0      1.467863 0.780199
+## 5          Sometimes     0    1.979848                 0      1.967973 0.931721
+## 6          Sometimes     0    2.137550                 0      1.930033 1.000000
+##     alcohol             transport obesity_level
+## 1 Sometimes Public_Transportation    overweight
+## 2     Never            Automobile normal_weight
+## 3     Never Public_Transportation normal_weight
+## 4 Sometimes Public_Transportation    overweight
+## 5 Sometimes Public_Transportation    overweight
+## 6 Sometimes Public_Transportation normal_weight</code></pre>
+</div>
+<div id="feature-engineering" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Feature Engineering<a href="initial-analysis.html#feature-engineering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With the dataset cleaned, we will now attempt some basic levels of feature engineering. This is beneficial when dealing with datasets having a limited number of columns, and can help reveal underlying dynamics between key variables. We will perform the following feature engineering techniques:</p>
+<ul>
+<li>Create binary outcomes for eating habits based on individual records. Higher scores may suggest healthier eating habits.</li>
+<li>Develop binary outcomes for physical activities.</li>
+<li>Classify age groups categorically, which could help uncover age-specific trends related to obesity.</li>
+</ul>
+<p><strong>Note that we are not using <code>BMI</code>, <code>Height</code>, or <code>Weight</code> as predictors given that we are trying to build models without these variables.</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="initial-analysis.html#cb13-1" tabindex="-1"></a><span class="co"># Create BMI column</span></span>
+<span id="cb13-2"><a href="initial-analysis.html#cb13-2" tabindex="-1"></a><span class="co"># cleaned$bmi &lt;- cleaned$weight / (cleaned$height ^ 2)</span></span>
+<span id="cb13-3"><a href="initial-analysis.html#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="initial-analysis.html#cb13-4" tabindex="-1"></a><span class="co"># Create weight to height ratio</span></span>
+<span id="cb13-5"><a href="initial-analysis.html#cb13-5" tabindex="-1"></a><span class="co"># cleaned$weight_to_height_ratio &lt;- cleaned$weight / cleaned$height</span></span>
+<span id="cb13-6"><a href="initial-analysis.html#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="initial-analysis.html#cb13-7" tabindex="-1"></a><span class="co"># Create eating habit binary outcome</span></span>
+<span id="cb13-8"><a href="initial-analysis.html#cb13-8" tabindex="-1"></a>cleaned<span class="sc">$</span>eating_habit_binary <span class="ot">&lt;-</span> (</span>
+<span id="cb13-9"><a href="initial-analysis.html#cb13-9" tabindex="-1"></a>  <span class="fu">as.numeric</span>(cleaned<span class="sc">$</span>freq_consumption_hc_food) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="initial-analysis.html#cb13-10" tabindex="-1"></a>    <span class="fu">as.numeric</span>(cleaned<span class="sc">$</span>veg_freq) <span class="sc">+</span></span>
+<span id="cb13-11"><a href="initial-analysis.html#cb13-11" tabindex="-1"></a>    <span class="fu">as.numeric</span>(cleaned<span class="sc">$</span>num_meals))<span class="sc">/</span><span class="dv">3</span></span>
+<span id="cb13-12"><a href="initial-analysis.html#cb13-12" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="initial-analysis.html#cb13-13" tabindex="-1"></a><span class="co"># Create physical activity binary outcome</span></span>
+<span id="cb13-14"><a href="initial-analysis.html#cb13-14" tabindex="-1"></a>cleaned<span class="sc">$</span>physical_activity_binary <span class="ot">&lt;-</span> cleaned<span class="sc">$</span>activity_freq <span class="sc">-</span> cleaned<span class="sc">$</span>tech_use</span>
+<span id="cb13-15"><a href="initial-analysis.html#cb13-15" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="initial-analysis.html#cb13-16" tabindex="-1"></a><span class="co"># Create age group</span></span>
+<span id="cb13-17"><a href="initial-analysis.html#cb13-17" tabindex="-1"></a>cleaned<span class="sc">$</span>age_group <span class="ot">&lt;-</span> <span class="fu">cut</span>(cleaned<span class="sc">$</span>age,</span>
+<span id="cb13-18"><a href="initial-analysis.html#cb13-18" tabindex="-1"></a>                         <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">18</span>, <span class="dv">35</span>, <span class="dv">50</span>, <span class="cn">Inf</span>),</span>
+<span id="cb13-19"><a href="initial-analysis.html#cb13-19" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Teen&#39;</span>,</span>
+<span id="cb13-20"><a href="initial-analysis.html#cb13-20" tabindex="-1"></a>                                    <span class="st">&#39;Young Adult&#39;</span>,</span>
+<span id="cb13-21"><a href="initial-analysis.html#cb13-21" tabindex="-1"></a>                                    <span class="st">&#39;Adult&#39;</span>,</span>
+<span id="cb13-22"><a href="initial-analysis.html#cb13-22" tabindex="-1"></a>                                    <span class="st">&#39;Senior&#39;</span>),</span>
+<span id="cb13-23"><a href="initial-analysis.html#cb13-23" tabindex="-1"></a>                         <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-24"><a href="initial-analysis.html#cb13-24" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="initial-analysis.html#cb13-25" tabindex="-1"></a><span class="co"># Create water intake per weight</span></span>
+<span id="cb13-26"><a href="initial-analysis.html#cb13-26" tabindex="-1"></a><span class="co"># cleaned$water_intake_per_weight &lt;- (cleaned$water_daily / cleaned$weight) * 100</span></span>
+<span id="cb13-27"><a href="initial-analysis.html#cb13-27" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="initial-analysis.html#cb13-28" tabindex="-1"></a><span class="co"># Display data</span></span>
+<span id="cb13-29"><a href="initial-analysis.html#cb13-29" tabindex="-1"></a><span class="fu">str</span>(cleaned)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    20758 obs. of  18 variables:
+##  $ gender                  : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 1 1 1 2 2 2 2 2 1 ...
+##  $ age                     : int  24 18 18 21 32 18 30 30 17 26 ...
+##  $ fam_history_overweight  : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 2 2 2 2 2 1 2 ...
+##  $ freq_consumption_hc_food: Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ veg_freq                : num  2 2 1.88 3 2.68 ...
+##  $ num_meals               : num  2.98 3 1.41 3 1.97 ...
+##  $ food_between_meals      : Factor w/ 4 levels &quot;Always&quot;,&quot;Frequently&quot;,..: 4 2 4 4 4 4 4 4 4 4 ...
+##  $ smoke                   : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ water_daily             : num  2.76 2 1.91 1.67 1.98 ...
+##  $ caloric_beverages       : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 1 1 1 1 1 2 1 ...
+##  $ activity_freq           : num  0 1 0.866 1.468 1.968 ...
+##  $ tech_use                : num  0.976 1 1.674 0.78 0.932 ...
+##  $ alcohol                 : Factor w/ 3 levels &quot;Frequently&quot;,&quot;Never&quot;,..: 3 2 2 3 3 3 3 3 2 3 ...
+##  $ transport               : Factor w/ 5 levels &quot;Automobile&quot;,&quot;Bike&quot;,..: 4 1 4 4 4 4 1 1 4 4 ...
+##  $ obesity_level           : Factor w/ 2 levels &quot;normal_weight&quot;,..: 2 1 1 2 2 1 2 2 2 2 ...
+##  $ eating_habit_binary     : num  2.33 2.33 1.76 2.67 2.22 ...
+##  $ physical_activity_binary: num  -0.976 0 -0.808 0.688 1.036 ...
+##  $ age_group               : Factor w/ 4 levels &quot;Teen&quot;,&quot;Young Adult&quot;,..: 2 2 2 2 2 2 2 2 1 2 ...</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="initial-analysis.html#cb15-1" tabindex="-1"></a><span class="fu">summary</span>(cleaned)</span></code></pre></div>
+<pre><code>##     gender           age        fam_history_overweight freq_consumption_hc_food
+##  Female:10422   Min.   :14.00   0: 3744                0: 1776                 
+##  Male  :10336   1st Qu.:20.00   1:17014                1:18982                 
+##                 Median :23.00                                                  
+##                 Mean   :23.85                                                  
+##                 3rd Qu.:26.00                                                  
+##                 Max.   :61.00                                                  
+##     veg_freq       num_meals      food_between_meals smoke      water_daily   
+##  Min.   :1.000   Min.   :1.000   Always    :  478    0:20513   Min.   :1.000  
+##  1st Qu.:2.000   1st Qu.:3.000   Frequently: 2472    1:  245   1st Qu.:1.792  
+##  Median :2.394   Median :3.000   Never     :  279              Median :2.000  
+##  Mean   :2.446   Mean   :2.761   Sometimes :17529              Mean   :2.029  
+##  3rd Qu.:3.000   3rd Qu.:3.000                                 3rd Qu.:2.550  
+##  Max.   :3.000   Max.   :4.000                                 Max.   :3.000  
+##  caloric_beverages activity_freq         tech_use            alcohol     
+##  0:20071           Min.   :0.000000   Min.   :0.0000   Frequently:  529  
+##  1:  687           1st Qu.:0.008013   1st Qu.:0.0000   Never     : 5163  
+##                    Median :1.000000   Median :0.5739   Sometimes :15066  
+##                    Mean   :0.981747   Mean   :0.6168                     
+##                    3rd Qu.:1.587406   3rd Qu.:1.0000                     
+##                    Max.   :3.000000   Max.   :2.0000                     
+##                  transport           obesity_level   eating_habit_binary
+##  Automobile           : 3534   normal_weight: 5605   Min.   :1.000      
+##  Bike                 :   32   overweight   :15153   1st Qu.:2.308      
+##  Motorbike            :   38                         Median :2.333      
+##  Public_Transportation:16687                         Mean   :2.374      
+##  Walking              :  467                         3rd Qu.:2.667      
+##                                                      Max.   :3.000      
+##  physical_activity_binary       age_group    
+##  Min.   :-2.0000          Teen       :  892  
+##  1st Qu.:-0.2749          Young Adult:18712  
+##  Median : 0.2859          Adult      : 1083  
+##  Mean   : 0.3650          Senior     :   71  
+##  3rd Qu.: 1.0000                             
+##  Max.   : 3.0000</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="initial-analysis.html#cb17-1" tabindex="-1"></a><span class="fu">head</span>(cleaned)</span></code></pre></div>
+<pre><code>##   gender age fam_history_overweight freq_consumption_hc_food veg_freq num_meals
+## 1   Male  24                      1                        1 2.000000  2.983297
+## 2 Female  18                      1                        1 2.000000  3.000000
+## 3 Female  18                      1                        1 1.880534  1.411685
+## 4 Female  21                      1                        1 3.000000  3.000000
+## 5   Male  32                      1                        1 2.679664  1.971472
+## 6   Male  18                      1                        1 2.919751  3.000000
+##   food_between_meals smoke water_daily caloric_beverages activity_freq tech_use
+## 1          Sometimes     0    2.763573                 0      0.000000 0.976473
+## 2         Frequently     0    2.000000                 0      1.000000 1.000000
+## 3          Sometimes     0    1.910378                 0      0.866045 1.673584
+## 4          Sometimes     0    1.674061                 0      1.467863 0.780199
+## 5          Sometimes     0    1.979848                 0      1.967973 0.931721
+## 6          Sometimes     0    2.137550                 0      1.930033 1.000000
+##     alcohol             transport obesity_level eating_habit_binary
+## 1 Sometimes Public_Transportation    overweight            2.327766
+## 2     Never            Automobile normal_weight            2.333333
+## 3     Never Public_Transportation normal_weight            1.764073
+## 4 Sometimes Public_Transportation    overweight            2.666667
+## 5 Sometimes Public_Transportation    overweight            2.217045
+## 6 Sometimes Public_Transportation normal_weight            2.639917
+##   physical_activity_binary   age_group
+## 1                -0.976473 Young Adult
+## 2                 0.000000 Young Adult
+## 3                -0.807539 Young Adult
+## 4                 0.687664 Young Adult
+## 5                 1.036252 Young Adult
+## 6                 0.930033 Young Adult</code></pre>
+</div>
+<div id="visualize-data" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Visualize Data<a href="initial-analysis.html#visualize-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that all features have been added, we will proceed with our exploratory data analysis</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="initial-analysis.html#cb19-1" tabindex="-1"></a><span class="co"># Identify categorical and numerical columns</span></span>
+<span id="cb19-2"><a href="initial-analysis.html#cb19-2" tabindex="-1"></a>categorical_cols <span class="ot">&lt;-</span> <span class="fu">sapply</span>(cleaned, is.factor)</span>
+<span id="cb19-3"><a href="initial-analysis.html#cb19-3" tabindex="-1"></a>numerical_cols <span class="ot">&lt;-</span> <span class="fu">sapply</span>(cleaned, is.numeric)</span>
+<span id="cb19-4"><a href="initial-analysis.html#cb19-4" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="initial-analysis.html#cb19-5" tabindex="-1"></a><span class="co"># Exclude certain columns</span></span>
+<span id="cb19-6"><a href="initial-analysis.html#cb19-6" tabindex="-1"></a>exclude_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;weight&#39;</span>, <span class="st">&#39;height&#39;</span>)</span>
+<span id="cb19-7"><a href="initial-analysis.html#cb19-7" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="initial-analysis.html#cb19-8" tabindex="-1"></a><span class="co"># Frequency charts</span></span>
+<span id="cb19-9"><a href="initial-analysis.html#cb19-9" tabindex="-1"></a><span class="cf">for</span> (col <span class="cf">in</span> <span class="fu">names</span>(cleaned)[categorical_cols]) {</span>
+<span id="cb19-10"><a href="initial-analysis.html#cb19-10" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>(col <span class="sc">%in%</span> exclude_cols)) {</span>
+<span id="cb19-11"><a href="initial-analysis.html#cb19-11" tabindex="-1"></a>    freq_table <span class="ot">&lt;-</span> <span class="fu">table</span>(cleaned[[col]])</span>
+<span id="cb19-12"><a href="initial-analysis.html#cb19-12" tabindex="-1"></a>    freq_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(freq_table)</span>
+<span id="cb19-13"><a href="initial-analysis.html#cb19-13" tabindex="-1"></a>    <span class="fu">colnames</span>(freq_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Category&#39;</span>, <span class="st">&#39;Frequency&#39;</span>)</span>
+<span id="cb19-14"><a href="initial-analysis.html#cb19-14" tabindex="-1"></a>    plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(freq_df, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> Frequency)) <span class="sc">+</span></span>
+<span id="cb19-15"><a href="initial-analysis.html#cb19-15" tabindex="-1"></a>      <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>) <span class="sc">+</span></span>
+<span id="cb19-16"><a href="initial-analysis.html#cb19-16" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">&#39;Frequency Chart for&#39;</span>, col)) <span class="sc">+</span></span>
+<span id="cb19-17"><a href="initial-analysis.html#cb19-17" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb19-18"><a href="initial-analysis.html#cb19-18" tabindex="-1"></a>    <span class="fu">print</span>(plot)</span>
+<span id="cb19-19"><a href="initial-analysis.html#cb19-19" tabindex="-1"></a>  }</span>
+<span id="cb19-20"><a href="initial-analysis.html#cb19-20" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-2.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-3.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-4.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-5.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-6.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-7.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-8.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-9.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-10.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="initial-analysis.html#cb20-1" tabindex="-1"></a><span class="co"># Histograms</span></span>
+<span id="cb20-2"><a href="initial-analysis.html#cb20-2" tabindex="-1"></a><span class="cf">for</span> (col <span class="cf">in</span> <span class="fu">names</span>(cleaned)[numerical_cols]) {</span>
+<span id="cb20-3"><a href="initial-analysis.html#cb20-3" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>(col <span class="sc">%in%</span> exclude_cols)) {</span>
+<span id="cb20-4"><a href="initial-analysis.html#cb20-4" tabindex="-1"></a>    <span class="cf">if</span> (col <span class="sc">==</span> <span class="st">&#39;height&#39;</span>) {</span>
+<span id="cb20-5"><a href="initial-analysis.html#cb20-5" tabindex="-1"></a>      plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cleaned, <span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">!!</span><span class="fu">sym</span>(col))) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="initial-analysis.html#cb20-6" tabindex="-1"></a>        <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">fill =</span> <span class="st">&#39;skyblue&#39;</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="initial-analysis.html#cb20-7" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">&#39;Histogram for&#39;</span>, col)) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="initial-analysis.html#cb20-8" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb20-9"><a href="initial-analysis.html#cb20-9" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (col <span class="sc">==</span> <span class="st">&#39;weight&#39;</span>) {</span>
+<span id="cb20-10"><a href="initial-analysis.html#cb20-10" tabindex="-1"></a>      plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cleaned, <span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">!!</span><span class="fu">sym</span>(col))) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="initial-analysis.html#cb20-11" tabindex="-1"></a>        <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">10</span>, <span class="at">fill =</span> <span class="st">&#39;skyblue&#39;</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="initial-analysis.html#cb20-12" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">&#39;Histogram for&#39;</span>, col)) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="initial-analysis.html#cb20-13" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb20-14"><a href="initial-analysis.html#cb20-14" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb20-15"><a href="initial-analysis.html#cb20-15" tabindex="-1"></a>      plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cleaned, <span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">!!</span><span class="fu">sym</span>(col))) <span class="sc">+</span></span>
+<span id="cb20-16"><a href="initial-analysis.html#cb20-16" tabindex="-1"></a>        <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">&#39;skyblue&#39;</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>) <span class="sc">+</span></span>
+<span id="cb20-17"><a href="initial-analysis.html#cb20-17" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">&#39;Histogram for&#39;</span>, col)) <span class="sc">+</span></span>
+<span id="cb20-18"><a href="initial-analysis.html#cb20-18" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb20-19"><a href="initial-analysis.html#cb20-19" tabindex="-1"></a>    }</span>
+<span id="cb20-20"><a href="initial-analysis.html#cb20-20" tabindex="-1"></a>    <span class="fu">print</span>(plot)</span>
+<span id="cb20-21"><a href="initial-analysis.html#cb20-21" tabindex="-1"></a>  }</span>
+<span id="cb20-22"><a href="initial-analysis.html#cb20-22" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-11.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-12.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-13.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-14.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-15.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-16.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-17.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-5-18.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="initial-analysis.html#cb21-1" tabindex="-1"></a><span class="co"># Correlation matrix</span></span>
+<span id="cb21-2"><a href="initial-analysis.html#cb21-2" tabindex="-1"></a><span class="fu">corrplot</span>(<span class="fu">cor</span>(cleaned[, numerical_cols]), <span class="at">method=</span><span class="st">&quot;color&quot;</span>, <span class="at">addCoef.col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">number.cex =</span> <span class="fl">0.9</span>, <span class="at">tl.cex =</span> <span class="dv">1</span>, <span class="at">tl.col=</span><span class="st">&quot;black&quot;</span>, <span class="at">tl.srt=</span><span class="dv">45</span>, <span class="at">type =</span> <span class="st">&#39;upper&#39;</span>, <span class="at">order =</span> <span class="st">&#39;alphabet&#39;</span>, <span class="at">number.digits =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-19.png" width="672" /></p>
+<p>Based on the visuals, we can see that:</p>
+<ul>
+<li>Gender: This shows a nearly equal distribution between female and male categories, indicating that both genders are nearly equally represented in the dataset.</li>
+<li>Family History of Overweight: There’s a higher frequency for individuals with a family history of being overweight. This suggests that there is a potential genetic or familial component contributing to obesity, as many individuals in this sample have a family history of overweight conditions.</li>
+<li>Frequency of High-Calorie Food Consumption: This shows that there is an overwhelmingly high frequency of individuals who consume high-calorie foods. Regular consumption of high-calorie food is strongly associated with weight gain and obesity.</li>
+<li>Food Between Meals: This displays the frequency of eating between meals, with ‘Sometimes’ being the most common response. Frequent snacking can contribute to an increased caloric intake, which is a risk factor for obesity.</li>
+<li>Smoking: This indicates that most individuals in the dataset do not smoke. While smoking has been associated with lower body weight due to nicotine’s appetite suppressant effects, the high non-smoking frequency shown here indicates that, within this dataset, smoking status may not be a primary factor in obesity.</li>
+<li>Caloric Beverage Consumption: A higher frequency of individuals in the dataset do not consume caloric beverages often. This suggests that habitual consumption of sugary drinks is not common in this sample. However, for those who do consume these beverages, it could be a contributing factor to caloric surplus and weight gain.</li>
+<li>Alcohol Consumption: More individuals report ‘Sometimes’ consuming alcohol. Alcohol can be calorically dense and may contribute to weight gain if consumed in large or frequent amounts.</li>
+<li>Age Group: ‘Young Adult’ is the most frequent age group in the dataset, followed by a significantly smaller number of ‘Adults’ and ‘Teens,’ with ‘Seniors’ being the least frequent. Age can influence metabolism, lifestyle choices, and thus risk of obesity.</li>
+<li>Vegetable Consumption Frequency: This histogram may indicate how frequently individuals consume vegetables. A higher intake of vegetables is generally associated with healthier eating patterns, which can contribute to a lower risk of obesity.</li>
+<li>Number of Meals: This shows the distribution of the number of meals participants report having each day. Eating patterns, including the number of meals daily, might influence weight and overall health, although the relationship can be complex.</li>
+<li>Daily Water Intake: Proper hydration can affect appetite and metabolism, both of which play a role in maintaining a healthy weight.</li>
+<li>BMI: BMI is a key index used to categorize individuals according to their risk of weight-related health problems. This histogram shows the BMI distribution, which directly relates to the study of obesity.</li>
+<li>Weight to Height Ratio: This could be another indicator of body composition, similar to BMI but not necessarily the same calculation. Ratios that are higher might indicate higher levels of overweight or obesity.</li>
+<li>Water Intake By weight: This chart shows the amount of water intake relative to body weight. Similar to daily water intake distribution chart, hydration status normalized by weight may provide insights into individual health behaviors.</li>
+</ul>
+</div>
+<div id="split-data" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Split Data<a href="initial-analysis.html#split-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will initially split the data with a 50-50 ratio for train and test sets in our stacked models, reserving sufficient data for re-splitting during the second level model.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="initial-analysis.html#cb22-1" tabindex="-1"></a><span class="co"># Copy cleaned data</span></span>
+<span id="cb22-2"><a href="initial-analysis.html#cb22-2" tabindex="-1"></a>split <span class="ot">&lt;-</span> cleaned</span>
+<span id="cb22-3"><a href="initial-analysis.html#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="initial-analysis.html#cb22-4" tabindex="-1"></a><span class="co"># Dummy data</span></span>
+<span id="cb22-5"><a href="initial-analysis.html#cb22-5" tabindex="-1"></a>dummied <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">model.matrix</span>(<span class="sc">~</span>.<span class="sc">-</span><span class="dv">1</span>,split))</span>
+<span id="cb22-6"><a href="initial-analysis.html#cb22-6" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="initial-analysis.html#cb22-7" tabindex="-1"></a><span class="co"># Clean up data</span></span>
+<span id="cb22-8"><a href="initial-analysis.html#cb22-8" tabindex="-1"></a>dummied <span class="ot">&lt;-</span> <span class="fu">clean_names</span>(dummied)</span>
+<span id="cb22-9"><a href="initial-analysis.html#cb22-9" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="initial-analysis.html#cb22-10" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb22-11"><a href="initial-analysis.html#cb22-11" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb22-12"><a href="initial-analysis.html#cb22-12" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="initial-analysis.html#cb22-13" tabindex="-1"></a><span class="co"># Define training set ratio</span></span>
+<span id="cb22-14"><a href="initial-analysis.html#cb22-14" tabindex="-1"></a>train_ratio <span class="ot">&lt;-</span> <span class="fl">0.50</span></span>
+<span id="cb22-15"><a href="initial-analysis.html#cb22-15" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="initial-analysis.html#cb22-16" tabindex="-1"></a><span class="co"># Randomly sample training set</span></span>
+<span id="cb22-17"><a href="initial-analysis.html#cb22-17" tabindex="-1"></a>train_rows <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dummied), train_ratio <span class="sc">*</span> <span class="fu">nrow</span>(dummied))</span></code></pre></div>
+<div id="split-train-test" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Split Train Test<a href="initial-analysis.html#split-train-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="initial-analysis.html#cb23-1" tabindex="-1"></a><span class="co"># Train test split</span></span>
+<span id="cb23-2"><a href="initial-analysis.html#cb23-2" tabindex="-1"></a>train <span class="ot">&lt;-</span> dummied[train_rows, ]</span>
+<span id="cb23-3"><a href="initial-analysis.html#cb23-3" tabindex="-1"></a>test <span class="ot">&lt;-</span> dummied[<span class="sc">-</span>train_rows, ]</span></code></pre></div>
+</div>
+<div id="split-lr" class="section level3 hasAnchor" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Split LR<a href="initial-analysis.html#split-lr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="initial-analysis.html#cb24-1" tabindex="-1"></a><span class="co"># LR split</span></span>
+<span id="cb24-2"><a href="initial-analysis.html#cb24-2" tabindex="-1"></a>train_lr <span class="ot">&lt;-</span> dummied[train_rows, ]</span>
+<span id="cb24-3"><a href="initial-analysis.html#cb24-3" tabindex="-1"></a>test_lr <span class="ot">&lt;-</span> dummied[<span class="sc">-</span>train_rows, ]</span></code></pre></div>
+</div>
+<div id="split-dt" class="section level3 hasAnchor" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> Split DT<a href="initial-analysis.html#split-dt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="initial-analysis.html#cb25-1" tabindex="-1"></a><span class="co"># DT Split</span></span>
+<span id="cb25-2"><a href="initial-analysis.html#cb25-2" tabindex="-1"></a>train_dt <span class="ot">&lt;-</span> dummied[train_rows, ]</span>
+<span id="cb25-3"><a href="initial-analysis.html#cb25-3" tabindex="-1"></a>test_dt <span class="ot">&lt;-</span> dummied[<span class="sc">-</span>train_rows, ]</span></code></pre></div>
+</div>
+<div id="split-svm" class="section level3 hasAnchor" number="2.5.4">
+<h3><span class="header-section-number">2.5.4</span> Split SVM<a href="initial-analysis.html#split-svm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="initial-analysis.html#cb26-1" tabindex="-1"></a><span class="co"># DT Split</span></span>
+<span id="cb26-2"><a href="initial-analysis.html#cb26-2" tabindex="-1"></a>train_svm <span class="ot">&lt;-</span> dummied[train_rows, ]</span>
+<span id="cb26-3"><a href="initial-analysis.html#cb26-3" tabindex="-1"></a>test_svm <span class="ot">&lt;-</span> dummied[<span class="sc">-</span>train_rows, ]</span></code></pre></div>
+</div>
+<div id="split-rf" class="section level3 hasAnchor" number="2.5.5">
+<h3><span class="header-section-number">2.5.5</span> Split RF<a href="initial-analysis.html#split-rf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="initial-analysis.html#cb27-1" tabindex="-1"></a><span class="co"># DT Split</span></span>
+<span id="cb27-2"><a href="initial-analysis.html#cb27-2" tabindex="-1"></a>train_rf <span class="ot">&lt;-</span> dummied[train_rows, ]</span>
+<span id="cb27-3"><a href="initial-analysis.html#cb27-3" tabindex="-1"></a>test_rf <span class="ot">&lt;-</span> dummied[<span class="sc">-</span>train_rows, ]</span></code></pre></div>
+</div>
+<div id="split-xgb" class="section level3 hasAnchor" number="2.5.6">
+<h3><span class="header-section-number">2.5.6</span> Split XGB<a href="initial-analysis.html#split-xgb" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="initial-analysis.html#cb28-1" tabindex="-1"></a><span class="co"># DT Split</span></span>
+<span id="cb28-2"><a href="initial-analysis.html#cb28-2" tabindex="-1"></a>train_xgb <span class="ot">&lt;-</span> dummied[train_rows, ]</span>
+<span id="cb28-3"><a href="initial-analysis.html#cb28-3" tabindex="-1"></a>test_xgb <span class="ot">&lt;-</span> dummied[<span class="sc">-</span>train_rows, ]</span></code></pre></div>
+</div>
+<div id="split-ann" class="section level3 hasAnchor" number="2.5.7">
+<h3><span class="header-section-number">2.5.7</span> Split ANN<a href="initial-analysis.html#split-ann" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Remember that ANN necessitate normalized data. We will implement min-max normalization, excluding the outcome variable, for successful integration into our models.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="initial-analysis.html#cb29-1" tabindex="-1"></a><span class="co"># ANN split</span></span>
+<span id="cb29-2"><a href="initial-analysis.html#cb29-2" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="initial-analysis.html#cb29-3" tabindex="-1"></a><span class="co"># Normalize data</span></span>
+<span id="cb29-4"><a href="initial-analysis.html#cb29-4" tabindex="-1"></a>normalize <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb29-5"><a href="initial-analysis.html#cb29-5" tabindex="-1"></a>  <span class="fu">return</span> ((x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)))</span>
+<span id="cb29-6"><a href="initial-analysis.html#cb29-6" tabindex="-1"></a>}</span>
+<span id="cb29-7"><a href="initial-analysis.html#cb29-7" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="initial-analysis.html#cb29-8" tabindex="-1"></a>outcome_variable <span class="ot">&lt;-</span> dummied<span class="sc">$</span>obesity_leveloverweight</span>
+<span id="cb29-9"><a href="initial-analysis.html#cb29-9" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="initial-analysis.html#cb29-10" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="initial-analysis.html#cb29-11" tabindex="-1"></a>dummied <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">lapply</span>(</span>
+<span id="cb29-12"><a href="initial-analysis.html#cb29-12" tabindex="-1"></a>  dummied[,<span class="sc">!</span><span class="fu">names</span>(dummied) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>], normalize))</span>
+<span id="cb29-13"><a href="initial-analysis.html#cb29-13" tabindex="-1"></a>dummied<span class="sc">$</span>obesity_leveloverweight <span class="ot">&lt;-</span> outcome_variable</span>
+<span id="cb29-14"><a href="initial-analysis.html#cb29-14" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="initial-analysis.html#cb29-15" tabindex="-1"></a><span class="co"># ANN split</span></span>
+<span id="cb29-16"><a href="initial-analysis.html#cb29-16" tabindex="-1"></a>train_ann <span class="ot">&lt;-</span> dummied[train_rows, ]</span>
+<span id="cb29-17"><a href="initial-analysis.html#cb29-17" tabindex="-1"></a>test_ann <span class="ot">&lt;-</span> dummied[<span class="sc">-</span>train_rows, ]</span></code></pre></div>
+</div>
+<div id="split-knn" class="section level3 hasAnchor" number="2.5.8">
+<h3><span class="header-section-number">2.5.8</span> Split KNN<a href="initial-analysis.html#split-knn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Similar to ANN, KNN also require a min-max normalized dataset for optimal performance. Additionally, it is essential to distinguish between predictor and outcome variables when running the model.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="initial-analysis.html#cb30-1" tabindex="-1"></a><span class="co"># KNN split</span></span>
+<span id="cb30-2"><a href="initial-analysis.html#cb30-2" tabindex="-1"></a>train_knn <span class="ot">&lt;-</span> train_ann</span>
+<span id="cb30-3"><a href="initial-analysis.html#cb30-3" tabindex="-1"></a>test_knn <span class="ot">&lt;-</span> test_ann</span>
+<span id="cb30-4"><a href="initial-analysis.html#cb30-4" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="initial-analysis.html#cb30-5" tabindex="-1"></a>train_knn_x <span class="ot">&lt;-</span> train_knn</span>
+<span id="cb30-6"><a href="initial-analysis.html#cb30-6" tabindex="-1"></a>train_knn_x<span class="sc">$</span>obesity_leveloverweight <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb30-7"><a href="initial-analysis.html#cb30-7" tabindex="-1"></a>train_knn_y <span class="ot">&lt;-</span> train_knn<span class="sc">$</span>obesity_leveloverweight</span>
+<span id="cb30-8"><a href="initial-analysis.html#cb30-8" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="initial-analysis.html#cb30-9" tabindex="-1"></a>test_knn_x <span class="ot">&lt;-</span> test_knn</span>
+<span id="cb30-10"><a href="initial-analysis.html#cb30-10" tabindex="-1"></a>test_knn_x<span class="sc">$</span>obesity_leveloverweight <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb30-11"><a href="initial-analysis.html#cb30-11" tabindex="-1"></a>test_knn_y <span class="ot">&lt;-</span> test_knn<span class="sc">$</span>obesity_leveloverweight</span></code></pre></div>
+<p>Once all train and test sets have been split, we will proceed to module 1 for L1 modeling.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="logistic-regression-lr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,234 @@
+# Logistic Regression (LR)
+
+## R Packages and Setup {-}
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(caret)
+```
+
+
+## Introduction
+
+Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:
+
+Logistic Regression (LR) is a popular algorithm for binary classification tasks, modeling the relationship between features and the probability of an event occurrence.
+
+LR’s simplicity makes it an excellent choice for initial modeling. Yet, it may struggle with complex relationships between features, limiting its performance on intricate datasets relative to other algorithms, such as RF or ANN, which will be covered in a later module.
+
+Our initial model will utilize LR. With LR, we can efficiently calculate the probability of a ‘yes’ or ‘no’ response based on all features in the dataset.
+
+
+## Load Data
+
+```{r}
+# Load data
+train_lr <- read.csv('../Train Test Set/train_lr.csv')
+test_lr <- read.csv('../Train Test Set/test_lr.csv')
+
+# Display statistics
+str(train_lr)
+summary(train_lr)
+head(train_lr)
+```
+
+
+## Model LR
+
+### Simple LR
+
+The model we are building here is a simple LR model that utilizes all the features as predictors and considers a binary outcome labeled `obesity_leveloverweight`.
+
+```{r model_lr, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+# Build a model
+model_lr <- glm(obesity_leveloverweight ~ .,
+                data = train_lr,
+                family = 'binomial')
+```
+
+```{r model_lr_summary, collapse=TRUE}
+# Display summary
+summary(model_lr)
+```
+
+Based on the logistic regression results, we can make the following observations:
+
+  - Gender: Being female is a significant predictor of being overweight, with a positive coefficient of `1.19523`. This suggests that females are more likely to be overweight compared to males.
+  - Family history of overweight: Individuals with a family history of overweight have a slightly higher odds of being overweight, as indicated by the positive coefficient of `0.24989`.
+  - Vegetable consumption: Higher vegetable consumption is associated with a lower likelihood of being overweight, with a negative coefficient of `-0.47774`. This emphasizes the importance of a balanced diet in maintaining a healthy weight.
+  - Number of meals per day: The frequency of meals per day is negatively associated with overweight status, with individuals having fewer meals per day being more likely to be overweight (coefficient of `-0.49194`).
+  - Alcohol consumption: Individuals who never consume alcohol are less likely to be overweight, as indicated by the negative coefficients for alcohol_never (`-1.96064`) and alcohol_sometimes (`-1.20386`).
+  - Age group: Young adults are less likely to be overweight compared to other age groups, with a negative coefficient of `-0.77593`.
+  - BMI, height, and weight: Surprisingly, these variables do not show a strong significance in predicting overweight status in this model. This suggests that other factors in the model may have a stronger influence on obesity level than these traditional measures of body size.
+
+### Complex LR
+
+```{r model_lr_complex, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+# Build a model
+model_lr_complex <- glm(obesity_leveloverweight ~ . + . * .,
+                        data = train_lr,
+                        family = 'binomial')
+```
+
+```{r model_lr_complex_summary, collapse=TRUE}
+# Display summary
+summary(model_lr_complex)
+```
+
+Once we introduced interaction terms, we noticed that both weight and height became significant factors. Due to an excessive number of terms, we will not delve into them individually.
+
+### Stepwise LR
+
+Because of prolonged runtime issues, we opted against including stepwise Logistic Regression in our project.
+
+```{r model_lr_step, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+# # Build a model
+# model_lr_step <- step(model_lr_complex,
+#                       direction = 'backward')
+```
+
+```{r model_lr_step_summary}
+# # Display summary
+# summary(model_lr_step)
+```
+
+
+## Evaluate LR
+
+### Simple LR
+
+```{r evaluate_lr}
+# Make a LR prediction
+prediction_lr_probability <- predict(model_lr,
+                                     newdata = test_lr,
+                                     type = 'response')
+prediction_lr <- ifelse(prediction_lr_probability > 0.5, 1, 0)
+summary(prediction_lr_probability)
+
+# Perform confusion matrix
+cm_lr <- confusionMatrix(as.factor(prediction_lr),
+                         as.factor(test_lr$obesity_leveloverweight),
+                         positive = '1')
+cm_lr
+```
+
+
+Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_lr$overall[1], 4)``, sensitivity of ``r round(cm_lr$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_lr$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
+
+```{r}
+pred <- ROCR::prediction(prediction_lr_probability, test_lr$obesity_leveloverweight)
+perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
+auc <- ROCR::performance(pred, measure="auc")
+
+
+auc <- round(auc@y.values[[1]],3)
+roc.data <- data.frame(fpr=unlist(perf@x.values),
+                       tpr=unlist(perf@y.values),
+                       model="GLM")
+
+ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
+    geom_ribbon(alpha=0.2, fill = "blue") +
+    geom_line(aes(y=tpr), col = "blue") +
+    geom_abline(intercept = 0, slope = 1, lty = "dashed") +
+    labs(title = paste0("Simple Logistic Regression ROC Curve w/ AUC=", auc)) +
+    theme_bw()
+```
+
+```{r write_prediction_lr_probability, echo=FALSE}
+# write to csv
+write.csv(prediction_lr_probability,
+          file = '../Predictions/prediction_lr_probability.csv',
+          row.names = FALSE)
+
+# Extract confusion matrix
+write.csv(cm_lr$table,
+          file = '../Confusion Matrix/cm_lr.csv',
+          row.names = FALSE)
+```
+
+### Complex LR
+
+```{r evaluate_lr_complex}
+# Make a complex LR prediction
+prediction_lr_complex_probability <- predict(model_lr_complex,
+                                             newdata = test_lr,
+                                             type = 'response')
+
+attr(prediction_lr_complex_probability, "non-estim")
+attr(prediction_lr_complex_probability, "non-estim") <- NULL
+
+
+
+prediction_lr_complex <- ifelse(prediction_lr_complex_probability > 0.5, 1, 0)
+summary(prediction_lr_complex_probability)
+
+# Perform confusion matrix
+cm_lr_complex <- confusionMatrix(as.factor(prediction_lr_complex),
+                                 as.factor(test_lr$obesity_leveloverweight),
+                                 positive = '1')
+cm_lr_complex
+```
+
+Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_lr_complex$overall[1], 4)``, sensitivity of ``r round(cm_lr_complex$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_lr_complex$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
+
+```{r}
+pred <- ROCR::prediction(prediction_lr_complex_probability, test_lr$obesity_leveloverweight)
+perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
+auc <- ROCR::performance(pred, measure="auc")
+
+
+auc <- round(auc@y.values[[1]],3)
+roc.data <- data.frame(fpr=unlist(perf@x.values),
+                       tpr=unlist(perf@y.values),
+                       model="GLM")
+
+ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
+    geom_ribbon(alpha=0.2, fill = "blue") +
+    geom_line(aes(y=tpr), col = "blue") +
+    geom_abline(intercept = 0, slope = 1, lty = "dashed") +
+    labs(title = paste0("Complex Logistic Regression ROC Curve w/ AUC=", auc)) +
+    theme_bw()
+```
+
+```{r write_prediction_lr_complex_probability, echo=FALSE}
+# Write to csv
+write.csv(prediction_lr_complex_probability,
+          file = '../Predictions/prediction_lr_complex_probability.csv',
+          row.names = FALSE)
+
+# Extract confusion matrix
+write.csv(cm_lr_complex$table,
+          file = '../Confusion Matrix/cm_lr_complex.csv',
+          row.names = FALSE)
+```
+
+### Stepwise LR
+
+No evaluation will be conducted since we abandoned running stepwise Logistic Regression.
+
+<!-- ```{r evaluate_lr_step} -->
+<!-- # Make a step LR prediction -->
+<!-- prediction_lr_step_probability <- predict(model_lr_step, -->
+<!--                                           newdata = test_lr, -->
+<!--                                           type = 'response') -->
+<!-- prediction_lr_step <- ifelse(prediction_lr_step_probability > 0.5, 1, 0) -->
+<!-- summary(prediction_lr_step_probability) -->
+
+<!-- # Perform confusion matrix -->
+<!-- cm_lr_step <- confusionMatrix(as.factor(prediction_lr_step), -->
+<!--                               as.factor(test_lr$obesity_leveloverweight), -->
+<!--                               positive = '1') -->
+<!-- cm_lr_step -->
+<!-- ``` -->
+
+<!-- ```{r write_prediction_lr_step_probability, echo=FALSE} -->
+<!-- # Write to csv -->
+<!-- write.csv(prediction_lr_step_probability, -->
+<!--           file = '../Predictions/prediction_lr_step_probability.csv', -->
+<!--           row.names = FALSE) -->
+
+<!-- # Extract confusion matrix -->
+<!-- write.csv(cm_lr_step$table, -->
+<!--           file = '../Confusion Matrix/cm_lr_step.csv', -->
+<!--           row.names = FALSE) -->
+<!-- ``` -->
