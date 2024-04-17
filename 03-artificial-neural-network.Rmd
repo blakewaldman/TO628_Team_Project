@@ -74,7 +74,6 @@ summary(model_ann_complex)
 ```
 
 
-
 ## Evaluate ANN
 
 ### Simple ANN
@@ -84,7 +83,6 @@ summary(model_ann_complex)
 prediction_ann_probability <- predict(model_ann, test_ann)
 prediction_ann <- ifelse(prediction_ann_probability >= 0.5, 1, 0)
 summary(prediction_ann_probability)
-
 
 # Perform confusion matrix
 cm_ann <- confusionMatrix(
@@ -163,7 +161,6 @@ pred <- ROCR::prediction(
   )
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
 auc <- ROCR::performance(pred, measure="auc")
-
 
 auc <- round(auc@y.values[[1]],3)
 roc.data <- data.frame(fpr=unlist(perf@x.values),

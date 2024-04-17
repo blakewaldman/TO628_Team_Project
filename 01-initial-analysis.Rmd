@@ -68,8 +68,6 @@ cleaned <- cleaned %>%
 cols_to_rename <- c(
   'Gender' = 'gender',
   'Age' = 'age',
-  # 'Height' = 'height',
-  # 'Weight' = 'weight',
   'family_history_with_overweight' = 'fam_history_overweight',
   'FAVC' = 'freq_consumption_hc_food',
   'FCVC' = 'veg_freq',
@@ -88,32 +86,35 @@ names(cleaned) <- cols_to_rename[names(cleaned)]
 
 # Simplify columns
 cleaned <- cleaned %>%
-  mutate(age = as.integer(round(age)),
-         # height = round(height, digits = 2),
-         # weight = round(weight, digits = 2),
-         food_between_meals = ifelse(food_between_meals == 0,
+  mutate(
+    age = as.integer(round(age)),
+    food_between_meals = ifelse(food_between_meals == 0,
                                      'Never', food_between_meals),
-         alcohol = ifelse(alcohol == 0, 'Never', alcohol),
-         obesity_level = case_when(
-           obesity_level %in% c('Insufficient_Weight',
-                                '0rmal_Weight') ~ 'normal_weight',
-           obesity_level %in% c('Obesity_Type_I',
-                                'Obesity_Type_II',
-                                'Obesity_Type_III',
-                                'Overweight_Level_I',
-                                'Overweight_Level_II') ~ 'overweight',
-           TRUE ~ obesity_level))
+    alcohol = ifelse(alcohol == 0, 'Never', alcohol),
+    obesity_level = case_when(
+      obesity_level %in% c(
+        'Insufficient_Weight',
+        '0rmal_Weight') ~ 'normal_weight',
+      obesity_level %in% c(
+        'Obesity_Type_I',
+        'Obesity_Type_II',
+        'Obesity_Type_III',
+        'Overweight_Level_I',
+        'Overweight_Level_II') ~ 'overweight',
+      TRUE ~ obesity_level))
 
 # Convert columns to factors
-cols_to_factor <- c('gender',
-                    'fam_history_overweight',
-                    'freq_consumption_hc_food', 
-                    'food_between_meals',
-                    'smoke',
-                    'alcohol',
-                    'caloric_beverages',
-                    'transport',
-                    'obesity_level')
+cols_to_factor <- c(
+  'gender',
+  'fam_history_overweight',
+  'freq_consumption_hc_food', 
+  'food_between_meals',
+  'smoke',
+  'alcohol',
+  'caloric_beverages',
+  'transport',
+  'obesity_level'
+  )
 cleaned[cols_to_factor] <- lapply(cleaned[cols_to_factor], as.factor)
 
 # Display data
@@ -134,12 +135,6 @@ With the dataset cleaned, we will now attempt some basic levels of feature engin
 **Note that we are not using `BMI`, `Height`, or `Weight` as predictors given that we are trying to build models without these variables.**
 
 ```{r feature_engineering_01}
-# Create BMI column
-# cleaned$bmi <- cleaned$weight / (cleaned$height ^ 2)
-
-# Create weight to height ratio
-# cleaned$weight_to_height_ratio <- cleaned$weight / cleaned$height
-
 # Create eating habit binary outcome
 cleaned$eating_habit_binary <- (
   as.numeric(cleaned$freq_consumption_hc_food) +
@@ -157,9 +152,6 @@ cleaned$age_group <- cut(cleaned$age,
                                     'Adult',
                                     'Senior'),
                          right = FALSE)
-
-# Create water intake per weight
-# cleaned$water_intake_per_weight <- (cleaned$water_daily / cleaned$weight) * 100
 
 # Display data
 str(cleaned)
@@ -262,6 +254,11 @@ train_ratio <- 0.50
 
 # Randomly sample training set
 train_rows <- sample(1:nrow(dummied), train_ratio * nrow(dummied))
+
+# Display statistics
+str(dummied)
+summary(dummied)
+head(dummied)
 ```
 
 
