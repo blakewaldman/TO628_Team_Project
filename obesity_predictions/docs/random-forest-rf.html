@@ -626,7 +626,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <span id="cb169-4"><a href="random-forest-rf.html#cb169-4" tabindex="-1"></a></span>
 <span id="cb169-5"><a href="random-forest-rf.html#cb169-5" tabindex="-1"></a><span class="fu">summary</span>(prediction_rf)</span></code></pre></div>
 <pre><code>##    0    1 
-## 2746 7633</code></pre>
+## 2748 7631</code></pre>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="random-forest-rf.html#cb171-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
 <span id="cb171-2"><a href="random-forest-rf.html#cb171-2" tabindex="-1"></a>cm_rf <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(prediction_rf),</span>
 <span id="cb171-3"><a href="random-forest-rf.html#cb171-3" tabindex="-1"></a>                         <span class="fu">as.factor</span>(test_rf<span class="sc">$</span>obesity_leveloverweight),</span>
@@ -636,8 +636,8 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## 
 ##           Reference
 ## Prediction    0    1
-##          0 2182  564
-##          1  581 7052
+##          0 2183  565
+##          1  580 7051
 ##                                           
 ##                Accuracy : 0.8897          
 ##                  95% CI : (0.8835, 0.8956)
@@ -646,20 +646,20 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##                                           
 ##                   Kappa : 0.7171          
 ##                                           
-##  Mcnemar&#39;s Test P-Value : 0.6363          
+##  Mcnemar&#39;s Test P-Value : 0.6791          
 ##                                           
-##             Sensitivity : 0.9259          
-##             Specificity : 0.7897          
-##          Pos Pred Value : 0.9239          
-##          Neg Pred Value : 0.7946          
+##             Sensitivity : 0.9258          
+##             Specificity : 0.7901          
+##          Pos Pred Value : 0.9240          
+##          Neg Pred Value : 0.7944          
 ##              Prevalence : 0.7338          
 ##          Detection Rate : 0.6794          
-##    Detection Prevalence : 0.7354          
-##       Balanced Accuracy : 0.8578          
+##    Detection Prevalence : 0.7352          
+##       Balanced Accuracy : 0.8579          
 ##                                           
 ##        &#39;Positive&#39; Class : 1               
 ## </code></pre>
-<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8897</code>, sensitivity of <code>0.9259</code>, and a Kappa coefficient of <code>0.7171</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
+<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8897</code>, sensitivity of <code>0.9258</code>, and a Kappa coefficient of <code>0.7171</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="random-forest-rf.html#cb173-1" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_rf_prob[,<span class="dv">2</span>], test_rf<span class="sc">$</span>obesity_leveloverweight)</span>
 <span id="cb173-2"><a href="random-forest-rf.html#cb173-2" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
 <span id="cb173-3"><a href="random-forest-rf.html#cb173-3" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
@@ -687,7 +687,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <span id="cb174-5"><a href="random-forest-rf.html#cb174-5" tabindex="-1"></a></span>
 <span id="cb174-6"><a href="random-forest-rf.html#cb174-6" tabindex="-1"></a><span class="fu">summary</span>(prediction_rf_tuned)</span></code></pre></div>
 <pre><code>##    0    1 
-## 2771 7608</code></pre>
+## 2773 7606</code></pre>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="random-forest-rf.html#cb176-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
 <span id="cb176-2"><a href="random-forest-rf.html#cb176-2" tabindex="-1"></a>cm_rf_tuned <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(prediction_rf_tuned),</span>
 <span id="cb176-3"><a href="random-forest-rf.html#cb176-3" tabindex="-1"></a>                               <span class="fu">as.factor</span>(test_rf<span class="sc">$</span>obesity_leveloverweight),</span>
@@ -697,30 +697,30 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## 
 ##           Reference
 ## Prediction    0    1
-##          0 2188  583
-##          1  575 7033
+##          0 2190  583
+##          1  573 7033
 ##                                           
-##                Accuracy : 0.8884          
-##                  95% CI : (0.8822, 0.8944)
+##                Accuracy : 0.8886          
+##                  95% CI : (0.8824, 0.8946)
 ##     No Information Rate : 0.7338          
 ##     P-Value [Acc &gt; NIR] : &lt;2e-16          
 ##                                           
-##                   Kappa : 0.7147          
+##                   Kappa : 0.7152          
 ##                                           
-##  Mcnemar&#39;s Test P-Value : 0.837           
+##  Mcnemar&#39;s Test P-Value : 0.7912          
 ##                                           
 ##             Sensitivity : 0.9235          
-##             Specificity : 0.7919          
-##          Pos Pred Value : 0.9244          
-##          Neg Pred Value : 0.7896          
+##             Specificity : 0.7926          
+##          Pos Pred Value : 0.9247          
+##          Neg Pred Value : 0.7898          
 ##              Prevalence : 0.7338          
 ##          Detection Rate : 0.6776          
-##    Detection Prevalence : 0.7330          
-##       Balanced Accuracy : 0.8577          
+##    Detection Prevalence : 0.7328          
+##       Balanced Accuracy : 0.8580          
 ##                                           
 ##        &#39;Positive&#39; Class : 1               
 ## </code></pre>
-<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8884</code>, sensitivity of <code>0.9235</code>, and a Kappa coefficient of <code>0.7147</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
+<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8886</code>, sensitivity of <code>0.9235</code>, and a Kappa coefficient of <code>0.7152</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="random-forest-rf.html#cb178-1" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_rf_tuned_prob[,<span class="dv">2</span>], test_rf<span class="sc">$</span>obesity_leveloverweight)</span>
 <span id="cb178-2"><a href="random-forest-rf.html#cb178-2" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
 <span id="cb178-3"><a href="random-forest-rf.html#cb178-3" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
