@@ -2,7 +2,7 @@
 
 ## R Packages and Setup {-}
 
-```{r, include=FALSE}
+```{r load_libraries_07, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(caret)
 library(randomForest)
@@ -18,7 +18,7 @@ Random Forest (RF) is an ensemble learning method, combining multiple decision t
 
 ## Load Data
 
-```{r}
+```{r load_data_07}
 # Load data
 train_rf <- read.csv('Train Test Set/train_rf.csv')
 test_rf <- read.csv('Train Test Set/test_rf.csv')
@@ -36,17 +36,19 @@ head(train_rf)
 
 We will begin by constructing a basic RF model with 500 trees, followed by fine-tuning our RF model through grid search.
 
-```{r model_rf, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r model_rf_07, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Set seed for reproducibility
 set.seed(12345)
 
 # Build a model
-model_rf <- randomForest(as.factor(obesity_leveloverweight) ~ .,
-                         data = train_rf,
-                         ntree = 500)
+model_rf <- randomForest(
+  as.factor(obesity_leveloverweight) ~ .,
+  data = train_rf,
+  ntree = 500
+  )
 ```
 
-```{r model_rf_summary}
+```{r model_rf_summary_07}
 # Display summary
 summary(model_rf)
 randomForest::varImpPlot(model_rf)
@@ -58,31 +60,37 @@ According to the variable importance plot, we observe a trend comparable to that
 
 Next, we will perform tuning for our model by testing different values of `mtry`, which specifies the number of candidate features to consider at each node during tree construction. We will also execute 10-fold cross validation.
 
-```{r model_rf_tuned, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r model_rf_tuned_07, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Set seed for reproducibility
 set.seed(12345)
 
 # Set up control parameters
-ctrl <- trainControl(method = 'cv', 
-                     number = 10,
-                     verboseIter = TRUE, 
-                     savePredictions = TRUE)
+ctrl <- trainControl(
+  method = 'cv',
+  number = 10,
+  verboseIter = TRUE,
+  savePredictions = TRUE
+  )
 
 # Define the parameter grid
-grid <- expand.grid(mtry = c(2, 4, 6, 8))
+grid <- expand.grid(
+  mtry = c(2, 4, 6, 8)
+  )
 
 # Tune the model
-rf_tuned <- train(as.factor(obesity_leveloverweight) ~ ., 
-                  data = train_rf, 
-                  method = 'rf', 
-                  trControl = ctrl, 
-                  tuneGrid = grid)
+rf_tuned <- train(
+  as.factor(obesity_leveloverweight) ~ .,
+  data = train_rf,
+  method = 'rf',
+  trControl = ctrl,
+  tuneGrid = grid
+  )
 
 # Retrieve best model
 model_rf_tuned <- rf_tuned$finalModel
 ```
 
-```{r model_rf_tuned_summary}
+```{r model_rf_tuned_summary_07}
 # Display summary
 print(rf_tuned)
 summary(model_rf_tuned)
@@ -95,7 +103,7 @@ The final selected value for our model was `mtry = 2`, as it presented the highe
 
 ### Simple RF
 
-```{r evaluate_rf}
+```{r evaluate_rf_07}
 # Make a prediction
 prediction_rf <- predict(model_rf, test_rf)
 prediction_rf_prob <- predict(model_rf, test_rf, type = 'prob')
@@ -103,19 +111,24 @@ prediction_rf_prob <- predict(model_rf, test_rf, type = 'prob')
 summary(prediction_rf)
 
 # Perform confusion matrix
-cm_rf <- confusionMatrix(as.factor(prediction_rf),
-                         as.factor(test_rf$obesity_leveloverweight),
-                         positive = '1')
+cm_rf <- confusionMatrix(
+  as.factor(prediction_rf),
+  as.factor(test_rf$obesity_leveloverweight),
+  positive = '1'
+  )
 cm_rf
 ```
 
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_rf$overall[1], 4)``, sensitivity of ``r round(cm_rf$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_rf$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
-```{r}
-pred <- ROCR::prediction(prediction_rf_prob[,2], test_rf$obesity_leveloverweight)
+```{r plot_auc_rf_07}
+# Plot AUC
+pred <- ROCR::prediction(
+  prediction_rf_prob[,2],
+  test_rf$obesity_leveloverweight
+  )
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
 auc <- ROCR::performance(pred, measure="auc")
-
 
 auc <- round(auc@y.values[[1]],3)
 roc.data <- data.frame(fpr=unlist(perf@x.values),
@@ -130,21 +143,25 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     theme_bw()
 ```
 
-```{r write_prediction_rf, echo=FALSE}
+```{r write_prediction_rf_07, echo=FALSE}
 # Write to csv
-write.csv(prediction_rf,
-          file = 'Predictions/prediction_rf.csv',
-          row.names = FALSE)
+write.csv(
+  prediction_rf,
+  file = 'Predictions/prediction_rf.csv',
+  row.names = FALSE
+  )
 
 # Extract confusion matrix
-write.csv(cm_rf$table,
-          file = 'Confusion Matrix/cm_rf.csv',
-          row.names = FALSE)
+write.csv(
+  cm_rf$table,
+  file = 'Confusion Matrix/cm_rf.csv',
+  row.names = FALSE
+  )
 ```
 
 ### Tuned RF
 
-```{r evaluate_rf_tuned}
+```{r evaluate_rf_tuned_07}
 # Make a prediction
 prediction_rf_tuned <- predict(model_rf_tuned, test_rf)
 
@@ -153,19 +170,24 @@ prediction_rf_tuned_prob <- predict(model_rf_tuned, test_rf, type = 'prob')
 summary(prediction_rf_tuned)
 
 # Perform confusion matrix
-cm_rf_tuned <- confusionMatrix(as.factor(prediction_rf_tuned),
-                               as.factor(test_rf$obesity_leveloverweight),
-                               positive = '1')
+cm_rf_tuned <- confusionMatrix(
+  as.factor(prediction_rf_tuned),
+  as.factor(test_rf$obesity_leveloverweight),
+  positive = '1'
+  )
 cm_rf_tuned
 ```
 
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_rf_tuned$overall[1], 4)``, sensitivity of ``r round(cm_rf_tuned$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_rf_tuned$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
-```{r}
-pred <- ROCR::prediction(prediction_rf_tuned_prob[,2], test_rf$obesity_leveloverweight)
+```{r plot_auc_rf_tuned_07}
+# Plot AUC
+pred <- ROCR::prediction(
+  prediction_rf_tuned_prob[,2],
+  test_rf$obesity_leveloverweight
+  )
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
 auc <- ROCR::performance(pred, measure="auc")
-
 
 auc <- round(auc@y.values[[1]],3)
 roc.data <- data.frame(fpr=unlist(perf@x.values),
@@ -180,15 +202,19 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     theme_bw()
 ```
 
-```{r write_prediction_rf_tuned, echo=FALSE}
+```{r write_prediction_rf_tuned_07, echo=FALSE}
 # Write to csv
-write.csv(prediction_rf_tuned,
-          file = 'Predictions/prediction_rf_tuned.csv',
-          row.names = FALSE)
+write.csv(
+  prediction_rf_tuned,
+  file = 'Predictions/prediction_rf_tuned.csv',
+  row.names = FALSE
+  )
 
 # Extract confusion matrix
-write.csv(cm_rf_tuned$table,
-          file = 'Confusion Matrix/cm_rf_tuned.csv',
-          row.names = FALSE)
+write.csv(
+  cm_rf_tuned$table,
+  file = 'Confusion Matrix/cm_rf_tuned.csv',
+  row.names = FALSE
+  )
 ```
 
