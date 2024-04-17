@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Support Vector Machine (SVM) | Indirect Obesity Forecasting</title>
+  <title>9 XGBoost (XGB) | Indirect Obesity Forecasting</title>
   <meta name="description" content="This is our team project for TO628. In this project, we are exploring innovative predictive analytics methods to assess and manage obesity in the context of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health Evaluation System (PHES), our approach circumvents these potential limitations, providing health insurance companies and medical professionals with essential insights to develop proactive health programs and enhance patient outcomes." />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Support Vector Machine (SVM) | Indirect Obesity Forecasting" />
+  <meta property="og:title" content="9 XGBoost (XGB) | Indirect Obesity Forecasting" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is our team project for TO628. In this project, we are exploring innovative predictive analytics methods to assess and manage obesity in the context of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health Evaluation System (PHES), our approach circumvents these potential limitations, providing health insurance companies and medical professionals with essential insights to develop proactive health programs and enhance patient outcomes." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Support Vector Machine (SVM) | Indirect Obesity Forecasting" />
+  <meta name="twitter:title" content="9 XGBoost (XGB) | Indirect Obesity Forecasting" />
   
   <meta name="twitter:description" content="This is our team project for TO628. In this project, we are exploring innovative predictive analytics methods to assess and manage obesity in the context of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health Evaluation System (PHES), our approach circumvents these potential limitations, providing health insurance companies and medical professionals with essential insights to develop proactive health programs and enhance patient outcomes." />
   
@@ -35,8 +35,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="decision-tree-dt.html"/>
-<link rel="next" href="random-forest-rf.html"/>
+<link rel="prev" href="random-forest-rf.html"/>
+<link rel="next" href="stacked-model-with-decision-tree-sm.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -334,25 +334,27 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="support-vector-machine-svm" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">7</span> Support Vector Machine (SVM)<a href="support-vector-machine-svm.html#support-vector-machine-svm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="r-packages-and-setup-5" class="section level2 unnumbered hasAnchor">
-<h2>R Packages and Setup<a href="support-vector-machine-svm.html#r-packages-and-setup-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="xgboost-xgb" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> XGBoost (XGB)<a href="xgboost-xgb.html#xgboost-xgb" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- ## R Packages and Setup {-} -->
+<div id="introduction-7" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Introduction<a href="xgboost-xgb.html#introduction-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Placeholder.</p>
 </div>
-<div id="introduction-5" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> Introduction<a href="support-vector-machine-svm.html#introduction-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:</p>
-<p>Support Vector Machines (SVMs) are algorithms for classification and regression tasks. Linear (Vanilla Dot) and Radial Basis Function (RBF) kernels are popular choices. The Vanilla Dot kernel is simple, effective for linearly separable data, but can’t handle complex non-linear relationships. RBF transforms data into a high-dimensional space to model non-linear relationships but requires careful tuning for optimal performance.</p>
-<p>In SVM, we will use both Vanilla SVM and RBF SVM. Our objective is to evaluate the performance of these two methods in terms of accuracy and sensitivity when predicting our test dataset.</p>
-</div>
-<div id="load-data-5" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> Load Data<a href="support-vector-machine-svm.html#load-data-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="support-vector-machine-svm.html#cb133-1" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb133-2"><a href="support-vector-machine-svm.html#cb133-2" tabindex="-1"></a>train_svm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_svm.csv&#39;</span>)</span>
-<span id="cb133-3"><a href="support-vector-machine-svm.html#cb133-3" tabindex="-1"></a>test_svm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_svm.csv&#39;</span>)</span>
-<span id="cb133-4"><a href="support-vector-machine-svm.html#cb133-4" tabindex="-1"></a></span>
-<span id="cb133-5"><a href="support-vector-machine-svm.html#cb133-5" tabindex="-1"></a><span class="co"># Display statistics</span></span>
-<span id="cb133-6"><a href="support-vector-machine-svm.html#cb133-6" tabindex="-1"></a><span class="fu">str</span>(train_svm)</span></code></pre></div>
+<div id="load-data-7" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Load Data<a href="xgboost-xgb.html#load-data-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="xgboost-xgb.html#cb179-1" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb179-2"><a href="xgboost-xgb.html#cb179-2" tabindex="-1"></a>train_xgb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_xgb.csv&#39;</span>)</span>
+<span id="cb179-3"><a href="xgboost-xgb.html#cb179-3" tabindex="-1"></a>test_xgb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_xgb.csv&#39;</span>)</span>
+<span id="cb179-4"><a href="xgboost-xgb.html#cb179-4" tabindex="-1"></a></span>
+<span id="cb179-5"><a href="xgboost-xgb.html#cb179-5" tabindex="-1"></a>train_xgb_x <span class="ot">&lt;-</span> train_xgb[, <span class="sc">!</span><span class="fu">names</span>(train_xgb) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
+<span id="cb179-6"><a href="xgboost-xgb.html#cb179-6" tabindex="-1"></a>train_xgb_y <span class="ot">&lt;-</span> train_xgb[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
+<span id="cb179-7"><a href="xgboost-xgb.html#cb179-7" tabindex="-1"></a></span>
+<span id="cb179-8"><a href="xgboost-xgb.html#cb179-8" tabindex="-1"></a>test_xgb_x <span class="ot">&lt;-</span> test_xgb[, <span class="sc">!</span><span class="fu">names</span>(test_xgb) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
+<span id="cb179-9"><a href="xgboost-xgb.html#cb179-9" tabindex="-1"></a>test_xgb_y <span class="ot">&lt;-</span> test_xgb[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
+<span id="cb179-10"><a href="xgboost-xgb.html#cb179-10" tabindex="-1"></a></span>
+<span id="cb179-11"><a href="xgboost-xgb.html#cb179-11" tabindex="-1"></a><span class="co"># Display statistics</span></span>
+<span id="cb179-12"><a href="xgboost-xgb.html#cb179-12" tabindex="-1"></a><span class="fu">str</span>(train_xgb)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    10379 obs. of  27 variables:
 ##  $ gender_female                  : int  1 1 1 0 1 1 1 0 1 1 ...
 ##  $ gender_male                    : int  0 0 0 1 0 0 0 1 0 0 ...
@@ -381,7 +383,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  $ age_group_young_adult          : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ age_group_adult                : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ age_group_senior               : int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="support-vector-machine-svm.html#cb135-1" tabindex="-1"></a><span class="fu">summary</span>(train_svm)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="xgboost-xgb.html#cb181-1" tabindex="-1"></a><span class="fu">summary</span>(train_xgb)</span></code></pre></div>
 <pre><code>##  gender_female     gender_male          age        fam_history_overweight1
 ##  Min.   :0.0000   Min.   :0.0000   Min.   :14.00   Min.   :0.0000         
 ##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:20.00   1st Qu.:1.0000         
@@ -445,7 +447,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  Mean   :0.05222   Mean   :0.003276  
 ##  3rd Qu.:0.00000   3rd Qu.:0.000000  
 ##  Max.   :1.00000   Max.   :1.000000</code></pre>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="support-vector-machine-svm.html#cb137-1" tabindex="-1"></a><span class="fu">head</span>(train_svm)</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="xgboost-xgb.html#cb183-1" tabindex="-1"></a><span class="fu">head</span>(train_xgb)</span></code></pre></div>
 <pre><code>##   gender_female gender_male age fam_history_overweight1
 ## 1             1           0  24                       1
 ## 2             1           0  34                       1
@@ -503,152 +505,257 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## 5                0
 ## 6                0</code></pre>
 </div>
-<div id="model-svm" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> Model SVM<a href="support-vector-machine-svm.html#model-svm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="vanilla-svm" class="section level3 hasAnchor" number="7.3.1">
-<h3><span class="header-section-number">7.3.1</span> Vanilla SVM<a href="support-vector-machine-svm.html#vanilla-svm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="support-vector-machine-svm.html#cb139-1" tabindex="-1"></a><span class="co"># Build a vanilla model</span></span>
-<span id="cb139-2"><a href="support-vector-machine-svm.html#cb139-2" tabindex="-1"></a>model_svm_vanilla <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(obesity_leveloverweight <span class="sc">~</span> .,</span>
-<span id="cb139-3"><a href="support-vector-machine-svm.html#cb139-3" tabindex="-1"></a>                          <span class="at">data =</span> train_svm,</span>
-<span id="cb139-4"><a href="support-vector-machine-svm.html#cb139-4" tabindex="-1"></a>                          <span class="at">kernel =</span> <span class="st">&#39;vanilladot&#39;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="support-vector-machine-svm.html#cb140-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
-<span id="cb140-2"><a href="support-vector-machine-svm.html#cb140-2" tabindex="-1"></a><span class="fu">summary</span>(model_svm_vanilla)</span></code></pre></div>
-<pre><code>## Length  Class   Mode 
-##      1   ksvm     S4</code></pre>
+<div id="model-xgb" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Model XGB<a href="xgboost-xgb.html#model-xgb" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="simple-xgb" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Simple XGB<a href="xgboost-xgb.html#simple-xgb" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="xgboost-xgb.html#cb185-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb185-2"><a href="xgboost-xgb.html#cb185-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb185-3"><a href="xgboost-xgb.html#cb185-3" tabindex="-1"></a></span>
+<span id="cb185-4"><a href="xgboost-xgb.html#cb185-4" tabindex="-1"></a><span class="co"># Build a model</span></span>
+<span id="cb185-5"><a href="xgboost-xgb.html#cb185-5" tabindex="-1"></a>model_xgb <span class="ot">&lt;-</span> <span class="fu">xgboost</span>(</span>
+<span id="cb185-6"><a href="xgboost-xgb.html#cb185-6" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">as.matrix</span>(train_xgb_x),</span>
+<span id="cb185-7"><a href="xgboost-xgb.html#cb185-7" tabindex="-1"></a>  <span class="at">label =</span> train_xgb_y,</span>
+<span id="cb185-8"><a href="xgboost-xgb.html#cb185-8" tabindex="-1"></a>  <span class="at">nrounds =</span> <span class="dv">10</span>,</span>
+<span id="cb185-9"><a href="xgboost-xgb.html#cb185-9" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&#39;binary:logistic&#39;</span></span>
+<span id="cb185-10"><a href="xgboost-xgb.html#cb185-10" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="xgboost-xgb.html#cb186-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
+<span id="cb186-2"><a href="xgboost-xgb.html#cb186-2" tabindex="-1"></a><span class="fu">summary</span>(model_xgb)</span></code></pre></div>
+<pre><code>##                Length Class              Mode       
+## handle             1  xgb.Booster.handle externalptr
+## raw            45397  -none-             raw        
+## niter              1  -none-             numeric    
+## evaluation_log     2  data.table         list       
+## call              14  -none-             call       
+## params             2  -none-             list       
+## callbacks          2  -none-             list       
+## feature_names     26  -none-             character  
+## nfeatures          1  -none-             numeric</code></pre>
 </div>
-<div id="rbf-svm" class="section level3 hasAnchor" number="7.3.2">
-<h3><span class="header-section-number">7.3.2</span> RBF SVM<a href="support-vector-machine-svm.html#rbf-svm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="support-vector-machine-svm.html#cb142-1" tabindex="-1"></a><span class="co"># Build a rbf model</span></span>
-<span id="cb142-2"><a href="support-vector-machine-svm.html#cb142-2" tabindex="-1"></a>model_svm_rbf <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(obesity_leveloverweight <span class="sc">~</span> .,</span>
-<span id="cb142-3"><a href="support-vector-machine-svm.html#cb142-3" tabindex="-1"></a>                      <span class="at">data =</span> train_svm,</span>
-<span id="cb142-4"><a href="support-vector-machine-svm.html#cb142-4" tabindex="-1"></a>                      <span class="at">kernel =</span> <span class="st">&#39;rbfdot&#39;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="support-vector-machine-svm.html#cb143-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
-<span id="cb143-2"><a href="support-vector-machine-svm.html#cb143-2" tabindex="-1"></a><span class="fu">summary</span>(model_svm_rbf)</span></code></pre></div>
-<pre><code>## Length  Class   Mode 
-##      1   ksvm     S4</code></pre>
+<div id="tuned-xgb" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> Tuned XGB<a href="xgboost-xgb.html#tuned-xgb" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="xgboost-xgb.html#cb188-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb188-2"><a href="xgboost-xgb.html#cb188-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb188-3"><a href="xgboost-xgb.html#cb188-3" tabindex="-1"></a></span>
+<span id="cb188-4"><a href="xgboost-xgb.html#cb188-4" tabindex="-1"></a><span class="co"># Set up control parameters</span></span>
+<span id="cb188-5"><a href="xgboost-xgb.html#cb188-5" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(</span>
+<span id="cb188-6"><a href="xgboost-xgb.html#cb188-6" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;cv&#39;</span>,</span>
+<span id="cb188-7"><a href="xgboost-xgb.html#cb188-7" tabindex="-1"></a>  <span class="at">number =</span> <span class="dv">10</span>,</span>
+<span id="cb188-8"><a href="xgboost-xgb.html#cb188-8" tabindex="-1"></a>  <span class="at">verboseIter =</span> <span class="cn">TRUE</span></span>
+<span id="cb188-9"><a href="xgboost-xgb.html#cb188-9" tabindex="-1"></a>  )</span>
+<span id="cb188-10"><a href="xgboost-xgb.html#cb188-10" tabindex="-1"></a></span>
+<span id="cb188-11"><a href="xgboost-xgb.html#cb188-11" tabindex="-1"></a><span class="co"># Define the parameter grid</span></span>
+<span id="cb188-12"><a href="xgboost-xgb.html#cb188-12" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb188-13"><a href="xgboost-xgb.html#cb188-13" tabindex="-1"></a>  <span class="at">nrounds =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">250</span>, <span class="dv">500</span>),</span>
+<span id="cb188-14"><a href="xgboost-xgb.html#cb188-14" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>),</span>
+<span id="cb188-15"><a href="xgboost-xgb.html#cb188-15" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
+<span id="cb188-16"><a href="xgboost-xgb.html#cb188-16" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
+<span id="cb188-17"><a href="xgboost-xgb.html#cb188-17" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
+<span id="cb188-18"><a href="xgboost-xgb.html#cb188-18" tabindex="-1"></a>  <span class="at">min_child_weight=</span><span class="dv">1</span>,</span>
+<span id="cb188-19"><a href="xgboost-xgb.html#cb188-19" tabindex="-1"></a>  <span class="at">subsample=</span><span class="dv">1</span></span>
+<span id="cb188-20"><a href="xgboost-xgb.html#cb188-20" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="xgboost-xgb.html#cb189-1" tabindex="-1"></a><span class="co"># Tune the model</span></span>
+<span id="cb189-2"><a href="xgboost-xgb.html#cb189-2" tabindex="-1"></a>xgb_tuned <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb189-3"><a href="xgboost-xgb.html#cb189-3" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">as.matrix</span>(train_xgb_x),</span>
+<span id="cb189-4"><a href="xgboost-xgb.html#cb189-4" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">as.factor</span>(train_xgb_y),</span>
+<span id="cb189-5"><a href="xgboost-xgb.html#cb189-5" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;xgbTree&#39;</span>,</span>
+<span id="cb189-6"><a href="xgboost-xgb.html#cb189-6" tabindex="-1"></a>  <span class="at">trControl =</span> ctrl,</span>
+<span id="cb189-7"><a href="xgboost-xgb.html#cb189-7" tabindex="-1"></a>  <span class="at">tuneGrid =</span> grid</span>
+<span id="cb189-8"><a href="xgboost-xgb.html#cb189-8" tabindex="-1"></a>  )</span>
+<span id="cb189-9"><a href="xgboost-xgb.html#cb189-9" tabindex="-1"></a></span>
+<span id="cb189-10"><a href="xgboost-xgb.html#cb189-10" tabindex="-1"></a><span class="co"># Retrieve best model</span></span>
+<span id="cb189-11"><a href="xgboost-xgb.html#cb189-11" tabindex="-1"></a>model_xgb_tuned <span class="ot">&lt;-</span> xgb_tuned<span class="sc">$</span>finalModel</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="xgboost-xgb.html#cb190-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
+<span id="cb190-2"><a href="xgboost-xgb.html#cb190-2" tabindex="-1"></a><span class="fu">print</span>(xgb_tuned)</span></code></pre></div>
+<pre><code>## eXtreme Gradient Boosting 
+## 
+## 10379 samples
+##    26 predictor
+##     2 classes: &#39;0&#39;, &#39;1&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 9340, 9341, 9341, 9341, 9341, 9342, ... 
+## Resampling results across tuning parameters:
+## 
+##   eta   max_depth  nrounds  Accuracy   Kappa    
+##   0.01  3          100      0.8582716  0.6212264
+##   0.01  3          250      0.8732044  0.6702596
+##   0.01  3          500      0.8791770  0.6906437
+##   0.01  6          100      0.8793702  0.6903753
+##   0.01  6          250      0.8841874  0.7043753
+##   0.01  6          500      0.8918951  0.7281252
+##   0.01  9          100      0.8830331  0.7033199
+##   0.01  9          250      0.8865016  0.7133600
+##   0.01  9          500      0.8901627  0.7241590
+##   0.10  3          100      0.8868853  0.7137084
+##   0.10  3          250      0.8907388  0.7245800
+##   0.10  3          500      0.8895836  0.7218751
+##   0.10  6          100      0.8935340  0.7327224
+##   0.10  6          250      0.8932451  0.7322391
+##   0.10  6          500      0.8892951  0.7227740
+##   0.10  9          100      0.8917039  0.7287168
+##   0.10  9          250      0.8867900  0.7156515
+##   0.10  9          500      0.8840919  0.7091133
+##   0.30  3          100      0.8908350  0.7240474
+##   0.30  3          250      0.8915106  0.7268474
+##   0.30  3          500      0.8915110  0.7267655
+##   0.30  6          100      0.8930530  0.7322671
+##   0.30  6          250      0.8866936  0.7158573
+##   0.30  6          500      0.8834179  0.7072085
+##   0.30  9          100      0.8862123  0.7142853
+##   0.30  9          250      0.8822621  0.7038175
+##   0.30  9          500      0.8786002  0.6938026
+## 
+## Tuning parameter &#39;gamma&#39; was held constant at a value of 0
+## Tuning
+## 
+## Tuning parameter &#39;min_child_weight&#39; was held constant at a value of 1
+## 
+## Tuning parameter &#39;subsample&#39; was held constant at a value of 1
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were nrounds = 100, max_depth = 6, eta
+##  = 0.1, gamma = 0, colsample_bytree = 1, min_child_weight = 1 and subsample = 1.</code></pre>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="xgboost-xgb.html#cb192-1" tabindex="-1"></a><span class="fu">summary</span>(model_xgb_tuned)</span></code></pre></div>
+<pre><code>##               Length Class              Mode       
+## handle             1 xgb.Booster.handle externalptr
+## raw           335280 -none-             raw        
+## niter              1 -none-             numeric    
+## call               5 -none-             call       
+## params             8 -none-             list       
+## callbacks          1 -none-             list       
+## feature_names     26 -none-             character  
+## nfeatures          1 -none-             numeric    
+## xNames            26 -none-             character  
+## problemType        1 -none-             character  
+## tuneValue          7 data.frame         list       
+## obsLevels          2 -none-             character  
+## param              0 -none-             list</code></pre>
 </div>
 </div>
-<div id="evaluate-svm" class="section level2 hasAnchor" number="7.4">
-<h2><span class="header-section-number">7.4</span> Evaluate SVM<a href="support-vector-machine-svm.html#evaluate-svm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="vanilla-svm-1" class="section level3 hasAnchor" number="7.4.1">
-<h3><span class="header-section-number">7.4.1</span> Vanilla SVM<a href="support-vector-machine-svm.html#vanilla-svm-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="support-vector-machine-svm.html#cb145-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
-<span id="cb145-2"><a href="support-vector-machine-svm.html#cb145-2" tabindex="-1"></a>prediction_svm_vanilla_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_svm_vanilla, test_svm)</span>
-<span id="cb145-3"><a href="support-vector-machine-svm.html#cb145-3" tabindex="-1"></a>prediction_svm_vanilla <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_svm_vanilla_probability <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb145-4"><a href="support-vector-machine-svm.html#cb145-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_svm_vanilla_probability)</span></code></pre></div>
-<pre><code>##        V1         
-##  Min.   :-0.1661  
-##  1st Qu.: 0.8623  
-##  Median : 0.9609  
-##  Mean   : 0.7994  
-##  3rd Qu.: 0.9936  
-##  Max.   : 1.1457</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="support-vector-machine-svm.html#cb147-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
-<span id="cb147-2"><a href="support-vector-machine-svm.html#cb147-2" tabindex="-1"></a>cm_svm_vanilla <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(prediction_svm_vanilla),</span>
-<span id="cb147-3"><a href="support-vector-machine-svm.html#cb147-3" tabindex="-1"></a>                                  <span class="fu">as.factor</span>(test_svm<span class="sc">$</span>obesity_leveloverweight),</span>
-<span id="cb147-4"><a href="support-vector-machine-svm.html#cb147-4" tabindex="-1"></a>                                  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span>)</span>
-<span id="cb147-5"><a href="support-vector-machine-svm.html#cb147-5" tabindex="-1"></a>cm_svm_vanilla</span></code></pre></div>
+<div id="evaluate-xgb" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Evaluate XGB<a href="xgboost-xgb.html#evaluate-xgb" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="simple-xgb-1" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> Simple XGB<a href="xgboost-xgb.html#simple-xgb-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="xgboost-xgb.html#cb194-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
+<span id="cb194-2"><a href="xgboost-xgb.html#cb194-2" tabindex="-1"></a>prediction_xgb_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_xgb, <span class="fu">as.matrix</span>(test_xgb_x))</span>
+<span id="cb194-3"><a href="xgboost-xgb.html#cb194-3" tabindex="-1"></a>prediction_xgb <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_xgb_probability <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb194-4"><a href="xgboost-xgb.html#cb194-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_xgb_probability)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 0.03182 0.46929 0.91454 0.72143 0.96696 0.97641</code></pre>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="xgboost-xgb.html#cb196-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
+<span id="cb196-2"><a href="xgboost-xgb.html#cb196-2" tabindex="-1"></a>cm_xgb <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
+<span id="cb196-3"><a href="xgboost-xgb.html#cb196-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_xgb),</span>
+<span id="cb196-4"><a href="xgboost-xgb.html#cb196-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_xgb_y),</span>
+<span id="cb196-5"><a href="xgboost-xgb.html#cb196-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
+<span id="cb196-6"><a href="xgboost-xgb.html#cb196-6" tabindex="-1"></a>  )</span>
+<span id="cb196-7"><a href="xgboost-xgb.html#cb196-7" tabindex="-1"></a>cm_xgb</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction    0    1
-##          0 1329  523
-##          1 1434 7093
-##                                           
-##                Accuracy : 0.8114          
-##                  95% CI : (0.8038, 0.8189)
-##     No Information Rate : 0.7338          
-##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
-##                                           
-##                   Kappa : 0.4607          
-##                                           
-##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
-##                                           
-##             Sensitivity : 0.9313          
-##             Specificity : 0.4810          
-##          Pos Pred Value : 0.8318          
-##          Neg Pred Value : 0.7176          
-##              Prevalence : 0.7338          
-##          Detection Rate : 0.6834          
-##    Detection Prevalence : 0.8216          
-##       Balanced Accuracy : 0.7062          
-##                                           
-##        &#39;Positive&#39; Class : 1               
+##          0 2128  559
+##          1  635 7057
+##                                          
+##                Accuracy : 0.885          
+##                  95% CI : (0.8787, 0.891)
+##     No Information Rate : 0.7338         
+##     P-Value [Acc &gt; NIR] : &lt; 2e-16        
+##                                          
+##                   Kappa : 0.7029         
+##                                          
+##  Mcnemar&#39;s Test P-Value : 0.02997        
+##                                          
+##             Sensitivity : 0.9266         
+##             Specificity : 0.7702         
+##          Pos Pred Value : 0.9174         
+##          Neg Pred Value : 0.7920         
+##              Prevalence : 0.7338         
+##          Detection Rate : 0.6799         
+##    Detection Prevalence : 0.7411         
+##       Balanced Accuracy : 0.8484         
+##                                          
+##        &#39;Positive&#39; Class : 1              
 ## </code></pre>
-<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8114</code>, sensitivity of <code>0.9313</code>, and a Kappa coefficient of <code>0.4607</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="support-vector-machine-svm.html#cb149-1" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_svm_vanilla_probability, test_svm<span class="sc">$</span>obesity_leveloverweight)</span>
-<span id="cb149-2"><a href="support-vector-machine-svm.html#cb149-2" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb149-3"><a href="support-vector-machine-svm.html#cb149-3" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb149-4"><a href="support-vector-machine-svm.html#cb149-4" tabindex="-1"></a></span>
-<span id="cb149-5"><a href="support-vector-machine-svm.html#cb149-5" tabindex="-1"></a></span>
-<span id="cb149-6"><a href="support-vector-machine-svm.html#cb149-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
-<span id="cb149-7"><a href="support-vector-machine-svm.html#cb149-7" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
-<span id="cb149-8"><a href="support-vector-machine-svm.html#cb149-8" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
-<span id="cb149-9"><a href="support-vector-machine-svm.html#cb149-9" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
-<span id="cb149-10"><a href="support-vector-machine-svm.html#cb149-10" tabindex="-1"></a></span>
-<span id="cb149-11"><a href="support-vector-machine-svm.html#cb149-11" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
-<span id="cb149-12"><a href="support-vector-machine-svm.html#cb149-12" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb149-13"><a href="support-vector-machine-svm.html#cb149-13" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb149-14"><a href="support-vector-machine-svm.html#cb149-14" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb149-15"><a href="support-vector-machine-svm.html#cb149-15" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Vanilla SVM ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
-<span id="cb149-16"><a href="support-vector-machine-svm.html#cb149-16" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.885</code>, sensitivity of <code>0.9266</code>, and a Kappa coefficient of <code>0.7029</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="xgboost-xgb.html#cb198-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
+<span id="cb198-2"><a href="xgboost-xgb.html#cb198-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_xgb_probability, test_xgb_y)</span>
+<span id="cb198-3"><a href="xgboost-xgb.html#cb198-3" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb198-4"><a href="xgboost-xgb.html#cb198-4" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb198-5"><a href="xgboost-xgb.html#cb198-5" tabindex="-1"></a></span>
+<span id="cb198-6"><a href="xgboost-xgb.html#cb198-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
+<span id="cb198-7"><a href="xgboost-xgb.html#cb198-7" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
+<span id="cb198-8"><a href="xgboost-xgb.html#cb198-8" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
+<span id="cb198-9"><a href="xgboost-xgb.html#cb198-9" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
+<span id="cb198-10"><a href="xgboost-xgb.html#cb198-10" tabindex="-1"></a></span>
+<span id="cb198-11"><a href="xgboost-xgb.html#cb198-11" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
+<span id="cb198-12"><a href="xgboost-xgb.html#cb198-12" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb198-13"><a href="xgboost-xgb.html#cb198-13" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb198-14"><a href="xgboost-xgb.html#cb198-14" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb198-15"><a href="xgboost-xgb.html#cb198-15" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Simple XG-Boost ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
+<span id="cb198-16"><a href="xgboost-xgb.html#cb198-16" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_auc_xgb-1.png" width="672" /></p>
 </div>
-<div id="rbf-svm-1" class="section level3 hasAnchor" number="7.4.2">
-<h3><span class="header-section-number">7.4.2</span> RBF SVM<a href="support-vector-machine-svm.html#rbf-svm-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="support-vector-machine-svm.html#cb150-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
-<span id="cb150-2"><a href="support-vector-machine-svm.html#cb150-2" tabindex="-1"></a>prediction_svm_rbf_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_svm_rbf, test_svm)</span>
-<span id="cb150-3"><a href="support-vector-machine-svm.html#cb150-3" tabindex="-1"></a>prediction_svm_rbf <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_svm_rbf_probability <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb150-4"><a href="support-vector-machine-svm.html#cb150-4" tabindex="-1"></a></span>
-<span id="cb150-5"><a href="support-vector-machine-svm.html#cb150-5" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
-<span id="cb150-6"><a href="support-vector-machine-svm.html#cb150-6" tabindex="-1"></a>cm_svm_rbf <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">as.factor</span>(prediction_svm_rbf),</span>
-<span id="cb150-7"><a href="support-vector-machine-svm.html#cb150-7" tabindex="-1"></a>                              <span class="fu">as.factor</span>(test_svm<span class="sc">$</span>obesity_leveloverweight),</span>
-<span id="cb150-8"><a href="support-vector-machine-svm.html#cb150-8" tabindex="-1"></a>                              <span class="at">positive =</span> <span class="st">&#39;1&#39;</span>)</span>
-<span id="cb150-9"><a href="support-vector-machine-svm.html#cb150-9" tabindex="-1"></a>cm_svm_rbf</span></code></pre></div>
+<div id="tuned-xgb-1" class="section level3 hasAnchor" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> Tuned XGB<a href="xgboost-xgb.html#tuned-xgb-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="xgboost-xgb.html#cb199-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
+<span id="cb199-2"><a href="xgboost-xgb.html#cb199-2" tabindex="-1"></a>prediction_xgb_tuned_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_xgb_tuned, <span class="fu">as.matrix</span>(test_xgb_x))</span>
+<span id="cb199-3"><a href="xgboost-xgb.html#cb199-3" tabindex="-1"></a>prediction_xgb_tuned <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_xgb_tuned_probability <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb199-4"><a href="xgboost-xgb.html#cb199-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_xgb_tuned_probability)</span></code></pre></div>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## 0.0002856 0.0034169 0.0383439 0.2662891 0.5447414 0.9967414</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="xgboost-xgb.html#cb201-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
+<span id="cb201-2"><a href="xgboost-xgb.html#cb201-2" tabindex="-1"></a>cm_xgb_tuned <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
+<span id="cb201-3"><a href="xgboost-xgb.html#cb201-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_xgb_tuned),</span>
+<span id="cb201-4"><a href="xgboost-xgb.html#cb201-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_xgb_y),</span>
+<span id="cb201-5"><a href="xgboost-xgb.html#cb201-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
+<span id="cb201-6"><a href="xgboost-xgb.html#cb201-6" tabindex="-1"></a>  )</span>
+<span id="cb201-7"><a href="xgboost-xgb.html#cb201-7" tabindex="-1"></a>cm_xgb_tuned</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction    0    1
-##          0 1902  537
-##          1  861 7079
+##          0 2204  552
+##          1  559 7064
 ##                                           
-##                Accuracy : 0.8653          
-##                  95% CI : (0.8586, 0.8718)
+##                Accuracy : 0.893           
+##                  95% CI : (0.8869, 0.8988)
 ##     No Information Rate : 0.7338          
-##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##     P-Value [Acc &gt; NIR] : &lt;2e-16          
 ##                                           
-##                   Kappa : 0.6419          
+##                   Kappa : 0.7258          
 ##                                           
-##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+##  Mcnemar&#39;s Test P-Value : 0.8571          
 ##                                           
-##             Sensitivity : 0.9295          
-##             Specificity : 0.6884          
-##          Pos Pred Value : 0.8916          
-##          Neg Pred Value : 0.7798          
+##             Sensitivity : 0.9275          
+##             Specificity : 0.7977          
+##          Pos Pred Value : 0.9267          
+##          Neg Pred Value : 0.7997          
 ##              Prevalence : 0.7338          
-##          Detection Rate : 0.6821          
-##    Detection Prevalence : 0.7650          
-##       Balanced Accuracy : 0.8089          
+##          Detection Rate : 0.6806          
+##    Detection Prevalence : 0.7345          
+##       Balanced Accuracy : 0.8626          
 ##                                           
 ##        &#39;Positive&#39; Class : 1               
 ## </code></pre>
-<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8653</code>, sensitivity of <code>0.9295</code>, and a Kappa coefficient of <code>0.6419</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="support-vector-machine-svm.html#cb152-1" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_svm_rbf_probability, test_svm<span class="sc">$</span>obesity_leveloverweight)</span>
-<span id="cb152-2"><a href="support-vector-machine-svm.html#cb152-2" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb152-3"><a href="support-vector-machine-svm.html#cb152-3" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb152-4"><a href="support-vector-machine-svm.html#cb152-4" tabindex="-1"></a></span>
-<span id="cb152-5"><a href="support-vector-machine-svm.html#cb152-5" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
-<span id="cb152-6"><a href="support-vector-machine-svm.html#cb152-6" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
-<span id="cb152-7"><a href="support-vector-machine-svm.html#cb152-7" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
-<span id="cb152-8"><a href="support-vector-machine-svm.html#cb152-8" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
-<span id="cb152-9"><a href="support-vector-machine-svm.html#cb152-9" tabindex="-1"></a></span>
-<span id="cb152-10"><a href="support-vector-machine-svm.html#cb152-10" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
-<span id="cb152-11"><a href="support-vector-machine-svm.html#cb152-11" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb152-12"><a href="support-vector-machine-svm.html#cb152-12" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb152-13"><a href="support-vector-machine-svm.html#cb152-13" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb152-14"><a href="support-vector-machine-svm.html#cb152-14" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;RBF SVM ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
-<span id="cb152-15"><a href="support-vector-machine-svm.html#cb152-15" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.893</code>, sensitivity of <code>0.9275</code>, and a Kappa coefficient of <code>0.7258</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="xgboost-xgb.html#cb203-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
+<span id="cb203-2"><a href="xgboost-xgb.html#cb203-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_xgb_tuned_probability, <span class="dv">1</span><span class="sc">-</span>test_xgb_y)</span>
+<span id="cb203-3"><a href="xgboost-xgb.html#cb203-3" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb203-4"><a href="xgboost-xgb.html#cb203-4" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb203-5"><a href="xgboost-xgb.html#cb203-5" tabindex="-1"></a></span>
+<span id="cb203-6"><a href="xgboost-xgb.html#cb203-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
+<span id="cb203-7"><a href="xgboost-xgb.html#cb203-7" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
+<span id="cb203-8"><a href="xgboost-xgb.html#cb203-8" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
+<span id="cb203-9"><a href="xgboost-xgb.html#cb203-9" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
+<span id="cb203-10"><a href="xgboost-xgb.html#cb203-10" tabindex="-1"></a></span>
+<span id="cb203-11"><a href="xgboost-xgb.html#cb203-11" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
+<span id="cb203-12"><a href="xgboost-xgb.html#cb203-12" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb203-13"><a href="xgboost-xgb.html#cb203-13" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb203-14"><a href="xgboost-xgb.html#cb203-14" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb203-15"><a href="xgboost-xgb.html#cb203-15" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Tuned XG-Boost ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
+<span id="cb203-16"><a href="xgboost-xgb.html#cb203-16" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_auc_xgb_tuned-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -658,8 +765,8 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
           </div>
         </div>
       </div>
-<a href="decision-tree-dt.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="random-forest-rf.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="random-forest-rf.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="stacked-model-with-decision-tree-sm.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

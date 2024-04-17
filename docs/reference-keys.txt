@@ -1,4 +1,4 @@
-tab:unnamed-chunk-63
+tab:unnamed-chunk-59
 introduction
 initial-analysis
 load-data
@@ -70,7 +70,7 @@ tuned-rf
 evaluate-rf
 simple-rf-1
 tuned-rf-1
-xg-boost-xgb
+xgboost-xgb
 introduction-7
 load-data-7
 model-xgb

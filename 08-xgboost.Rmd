@@ -1,8 +1,8 @@
-# XG-Boost (XGB)
+# XGBoost (XGB)
 
 <!-- ## R Packages and Setup {-} -->
 
-```{r, include=FALSE}
+```{r libraries, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(caret)
 library(pROC)
@@ -17,7 +17,7 @@ Placeholder.
 
 ## Load Data
 
-```{r}
+```{r load_data}
 # Load data
 train_xgb <- read.csv('Train Test Set/train_xgb.csv')
 test_xgb <- read.csv('Train Test Set/test_xgb.csv')
@@ -126,8 +126,8 @@ cm_xgb
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_xgb$overall[1], 4)``, sensitivity of ``r round(cm_xgb$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_xgb$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
 
-```{r}
-# Plot RUC
+```{r plot_auc_xgb}
+# Plot AUC
 pred <- ROCR::prediction(prediction_xgb_probability, test_xgb_y)
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
 auc <- ROCR::performance(pred, measure="auc")
@@ -181,7 +181,7 @@ cm_xgb_tuned
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_xgb_tuned$overall[1], 4)``, sensitivity of ``r round(cm_xgb_tuned$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_xgb_tuned$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
 
-```{r}
+```{r plot_auc_xgb_tuned}
 # Plot AUC
 pred <- ROCR::prediction(prediction_xgb_tuned_probability, 1-test_xgb_y)
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
@@ -215,4 +215,3 @@ write.csv(
   row.names = FALSE
   )
 ```
-
