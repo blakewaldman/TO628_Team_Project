@@ -481,7 +481,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  Min.   :0.0000  
 ##  1st Qu.:1.0000  
 ##  Median :1.0000  
-##  Mean   :0.9323  
+##  Mean   :0.9065  
 ##  3rd Qu.:1.0000  
 ##  Max.   :1.0000</code></pre>
 <div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="stacked-model-with-decision-tree-sm.html#cb228-1" tabindex="-1"></a><span class="fu">summary</span>(svm_vanilla)</span></code></pre></div>
@@ -561,7 +561,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  $ ann.V1                      : num  0.967 0.97 0.89 0.92 0.839 ...
 ##  $ ann_complex.V1              : num  0.974 0.975 0.911 0.943 0.853 ...
 ##  $ dt.x                        : int  1 1 1 1 1 1 1 0 1 1 ...
-##  $ dt_cost.x                   : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ dt_cost.x                   : int  1 1 1 1 1 1 1 0 1 1 ...
 ##  $ svm_vanilla.V1              : int  1 1 1 1 1 0 1 0 1 1 ...
 ##  $ svm_rbf.V1                  : int  1 1 1 1 1 0 0 0 1 1 ...
 ##  $ rf.x                        : int  1 1 1 0 1 0 1 0 1 0 ...
@@ -581,7 +581,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  Min.   :0.08761   Min.   :0.04298   Min.   :0.0000   Min.   :0.0000  
 ##  1st Qu.:0.53668   1st Qu.:0.51153   1st Qu.:1.0000   1st Qu.:1.0000  
 ##  Median :0.90047   Median :0.91891   Median :1.0000   Median :1.0000  
-##  Mean   :0.73205   Mean   :0.73173   Mean   :0.7505   Mean   :0.9323  
+##  Mean   :0.73205   Mean   :0.73173   Mean   :0.7505   Mean   :0.9065  
 ##  3rd Qu.:0.97776   3rd Qu.:0.97819   3rd Qu.:1.0000   3rd Qu.:1.0000  
 ##  Max.   :1.00227   Max.   :0.97998   Max.   :1.0000   Max.   :1.0000  
 ##  svm_vanilla.V1     svm_rbf.V1          rf.x          rf_tuned.x    
@@ -886,7 +886,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <span id="cb265-2"><a href="stacked-model-with-decision-tree-sm.html#cb265-2" tabindex="-1"></a>prediction_sm_cost <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_sm_cost, test_sm)</span>
 <span id="cb265-3"><a href="stacked-model-with-decision-tree-sm.html#cb265-3" tabindex="-1"></a><span class="fu">summary</span>(prediction_sm_cost)</span></code></pre></div>
 <pre><code>##    0    1 
-##  114 3000</code></pre>
+##  116 2998</code></pre>
 <div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="stacked-model-with-decision-tree-sm.html#cb267-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
 <span id="cb267-2"><a href="stacked-model-with-decision-tree-sm.html#cb267-2" tabindex="-1"></a>cm_sm_cost <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
 <span id="cb267-3"><a href="stacked-model-with-decision-tree-sm.html#cb267-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_sm_cost),</span>
@@ -898,30 +898,30 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## 
 ##           Reference
 ## Prediction    0    1
-##          0  112    2
-##          1  739 2261
+##          0  114    2
+##          1  737 2261
 ##                                           
-##                Accuracy : 0.762           
-##                  95% CI : (0.7467, 0.7769)
+##                Accuracy : 0.7627          
+##                  95% CI : (0.7473, 0.7775)
 ##     No Information Rate : 0.7267          
-##     P-Value [Acc &gt; NIR] : 4.033e-06       
+##     P-Value [Acc &gt; NIR] : 2.73e-06        
 ##                                           
-##                   Kappa : 0.1791          
+##                   Kappa : 0.1822          
 ##                                           
 ##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
 ##                                           
 ##             Sensitivity : 0.9991          
-##             Specificity : 0.1316          
-##          Pos Pred Value : 0.7537          
-##          Neg Pred Value : 0.9825          
+##             Specificity : 0.1340          
+##          Pos Pred Value : 0.7542          
+##          Neg Pred Value : 0.9828          
 ##              Prevalence : 0.7267          
 ##          Detection Rate : 0.7261          
-##    Detection Prevalence : 0.9634          
-##       Balanced Accuracy : 0.5654          
+##    Detection Prevalence : 0.9627          
+##       Balanced Accuracy : 0.5665          
 ##                                           
 ##        &#39;Positive&#39; Class : 1               
 ## </code></pre>
-<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.762</code>, sensitivity of <code>0.9991</code>, and a Kappa coefficient of <code>0.1791</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
+<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.7627</code>, sensitivity of <code>0.9991</code>, and a Kappa coefficient of <code>0.1822</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
 </div>
 </div>
 <div id="model-evaluations" class="section level2 hasAnchor" number="10.7">
@@ -1260,13 +1260,13 @@ SVM Vanilla
 DT with Cost
 </td>
 <td style="text-align:right;">
-0.7902
+0.8099
 </td>
 <td style="text-align:right;">
-0.9923
+0.9882
 </td>
 <td style="text-align:right;">
-0.2955
+0.3866
 </td>
 </tr>
 <tr>
@@ -1274,13 +1274,13 @@ DT with Cost
 SM with Cost
 </td>
 <td style="text-align:right;">
-0.7620
+0.7627
 </td>
 <td style="text-align:right;">
 0.9991
 </td>
 <td style="text-align:right;">
-0.1791
+0.1822
 </td>
 </tr>
 </tbody>

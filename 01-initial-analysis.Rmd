@@ -31,8 +31,8 @@ According to the dataset, the following facts can be observed:
   - **Biometric Variables**:
     - **Gender (Gender)**: Indicates whether the individual is male or female.
     - **Age (Age)**: Specifies the age of each individual.
-    - **Height (Height)**: Records the height in meters of each person in the dataset. (not used in our analysis)
-    - **Weight (Weight)**: Captures the weight in kilograms of each individual. (not used in our analysis)
+    - **Height (Height)**: Records the height in meters of each person in the dataset. **We will not use this variable in our analysis.**
+    - **Weight (Weight)**: Captures the weight in kilograms of each individual. **We will not use this variable in our analysis.**
   - **Medical and Health-related Factors**:
     - **Family History with Overweight (family_history_with_overweight)**: Tracks whether individuals have a familial history of being overweight.
     - **Smoking Status(SMOKE)**: Indicates whether individuals are smokers or non-smokers.
@@ -101,7 +101,9 @@ cleaned <- cleaned %>%
         'Obesity_Type_III',
         'Overweight_Level_I',
         'Overweight_Level_II') ~ 'overweight',
-      TRUE ~ obesity_level))
+      TRUE ~ obesity_level
+      )
+    )
 
 # Convert columns to factors
 cols_to_factor <- c(
@@ -115,7 +117,10 @@ cols_to_factor <- c(
   'transport',
   'obesity_level'
   )
-cleaned[cols_to_factor] <- lapply(cleaned[cols_to_factor], as.factor)
+cleaned[cols_to_factor] <- lapply(
+  cleaned[cols_to_factor],
+  as.factor
+  )
 
 # Display data
 str(cleaned)
@@ -150,8 +155,10 @@ cleaned$age_group <- cut(cleaned$age,
                          labels = c('Teen',
                                     'Young Adult',
                                     'Adult',
-                                    'Senior'),
-                         right = FALSE)
+                                    'Senior'
+                                    ),
+                         right = FALSE
+                         )
 
 # Display data
 str(cleaned)

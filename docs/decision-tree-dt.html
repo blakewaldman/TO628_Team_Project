@@ -331,9 +331,10 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <!-- ## R Packages and Setup {-} -->
 <div id="introduction-4" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> Introduction<a href="decision-tree-dt.html#introduction-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:</p>
-<p>A Decision Tree (DT) is a machine learning model that uses a tree structure for decision making based on given features (predictors). It partitions the input space with tests at nodes to output predictions at leaves. One of its strengths is the ability to handle both categorical and numerical data easily. However, DT can overfit training data and may require pruning or adjustments. Therefore, RF or GB often provide better performance.</p>
-<p>In our case, DTs are particularly effective for binary classification problems. In this module, we will utilize two DT models: a simple DT and a DT with a cost matrix. Our goal is to improve our model’s sensitivity through the employment of these trees as they will yield the highest profit given the cost structure discussed earlier.</p>
+<p>Decision trees are tree-based models that excel at classification tasks. In contrast, regression trees are effective for continuous outcome predictions rather than distinct classes.</p>
+<p>Decision trees structure their decisions based on given features using a tree with one trunk and multiple nodes. Starting from the root node, the tree branches out and makes decisions throughout each step, ultimately outputting predictions at leaves.</p>
+<p>Decision trees can easily handle both categorical and numerical data, but they have a tendency to overfit training data, necessitating potential pruning and adjustments. This is why RF or XGB might sometimes yield better results while preventing overfitting.</p>
+<p>In our case, decision trees can prove effective for solving our binary classification problem. In this module, we will utilize two models: a basic DT and a DT with a cost-considering cost structure.</p>
 </div>
 <div id="load-data-4" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Load Data<a href="decision-tree-dt.html#load-data-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -499,8 +500,10 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <h3><span class="header-section-number">6.3.1</span> Simple DT<a href="decision-tree-dt.html#simple-dt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>First, let’s construct a DT model without considering the misclassification error cost.</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="decision-tree-dt.html#cb120-1" tabindex="-1"></a><span class="co"># Build a model</span></span>
-<span id="cb120-2"><a href="decision-tree-dt.html#cb120-2" tabindex="-1"></a>model_dt <span class="ot">&lt;-</span> <span class="fu">C5.0</span>(<span class="fu">as.factor</span>(obesity_leveloverweight) <span class="sc">~</span> .,</span>
-<span id="cb120-3"><a href="decision-tree-dt.html#cb120-3" tabindex="-1"></a>                 <span class="at">data =</span> train_dt)</span></code></pre></div>
+<span id="cb120-2"><a href="decision-tree-dt.html#cb120-2" tabindex="-1"></a>model_dt <span class="ot">&lt;-</span> <span class="fu">C5.0</span>(</span>
+<span id="cb120-3"><a href="decision-tree-dt.html#cb120-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(obesity_leveloverweight) <span class="sc">~</span> .,</span>
+<span id="cb120-4"><a href="decision-tree-dt.html#cb120-4" tabindex="-1"></a>  <span class="at">data =</span> train_dt</span>
+<span id="cb120-5"><a href="decision-tree-dt.html#cb120-5" tabindex="-1"></a>  )</span></code></pre></div>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="decision-tree-dt.html#cb121-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
 <span id="cb121-2"><a href="decision-tree-dt.html#cb121-2" tabindex="-1"></a><span class="fu">summary</span>(model_dt)</span></code></pre></div>
 <pre><code>## 
@@ -508,7 +511,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## C5.0.formula(formula = as.factor(obesity_leveloverweight) ~ ., data = train_dt)
 ## 
 ## 
-## C5.0 [Release 2.07 GPL Edition]      Wed Apr 17 05:05:41 2024
+## C5.0 [Release 2.07 GPL Edition]      Wed Apr 17 20:31:24 2024
 ## -------------------------------
 ## 
 ## Class specified by attribute `outcome&#39;
@@ -710,20 +713,22 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## transport_walking                  0.00
 ## age_group_young_adult              0.00
 ## age_group_senior                   0.00</code></pre>
-<p>According to the variable importance chart, BMI is identified as one of the most significant features for making decisions. This makes intuitive sense since BMI and obesity are highly correlated. Age, on the other hand, exhibits an intriguing aspect as it ranks second in importance but noticeably lower than BMI. We suspect that older individuals may be more prone to obesity due to slower metabolism.</p>
+<p>According to the variable importance chart, <code>fam_history_overweight</code> is identified as one of the most significant features for making decisions. This makes intuitive sense since family who are overweight tend to have children who are also overweight. <code>Age</code>, on the other hand, exhibits an intriguing aspect as it ranks second in importance. We suspect that older individuals may be more prone to obesity due to slower metabolism.</p>
 </div>
 <div id="dt-with-cost-matrix" class="section level3 hasAnchor" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> DT with Cost Matrix<a href="decision-tree-dt.html#dt-with-cost-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now, we will introduce a cost matrix where misclassifying an individual as not obese when they are actually obese incurs significant business costs. Conversely, incorrectly labeling someone as obese but discovering they are healthy carries less financial consequence.</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="decision-tree-dt.html#cb126-1" tabindex="-1"></a><span class="co"># Build cost matrix</span></span>
-<span id="cb126-2"><a href="decision-tree-dt.html#cb126-2" tabindex="-1"></a>cost_matrix_dt <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb126-2"><a href="decision-tree-dt.html#cb126-2" tabindex="-1"></a>cost_matrix_dt <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb126-3"><a href="decision-tree-dt.html#cb126-3" tabindex="-1"></a>                         <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">Actual =</span> <span class="fu">c</span>(<span class="st">&#39;0&#39;</span>, <span class="st">&#39;1&#39;</span>),</span>
 <span id="cb126-4"><a href="decision-tree-dt.html#cb126-4" tabindex="-1"></a>                                         <span class="at">Predicted =</span> <span class="fu">c</span>(<span class="st">&#39;0&#39;</span>, <span class="st">&#39;1&#39;</span>)))</span>
 <span id="cb126-5"><a href="decision-tree-dt.html#cb126-5" tabindex="-1"></a></span>
 <span id="cb126-6"><a href="decision-tree-dt.html#cb126-6" tabindex="-1"></a><span class="co"># Build a model</span></span>
-<span id="cb126-7"><a href="decision-tree-dt.html#cb126-7" tabindex="-1"></a>model_dt_cost <span class="ot">&lt;-</span> <span class="fu">C5.0</span>(<span class="fu">as.factor</span>(obesity_leveloverweight) <span class="sc">~</span> .,</span>
-<span id="cb126-8"><a href="decision-tree-dt.html#cb126-8" tabindex="-1"></a>                      <span class="at">data =</span> train_dt,</span>
-<span id="cb126-9"><a href="decision-tree-dt.html#cb126-9" tabindex="-1"></a>                      <span class="at">costs =</span> cost_matrix_dt)</span></code></pre></div>
+<span id="cb126-7"><a href="decision-tree-dt.html#cb126-7" tabindex="-1"></a>model_dt_cost <span class="ot">&lt;-</span> <span class="fu">C5.0</span>(</span>
+<span id="cb126-8"><a href="decision-tree-dt.html#cb126-8" tabindex="-1"></a>  <span class="fu">as.factor</span>(obesity_leveloverweight) <span class="sc">~</span> .,</span>
+<span id="cb126-9"><a href="decision-tree-dt.html#cb126-9" tabindex="-1"></a>  <span class="at">data =</span> train_dt,</span>
+<span id="cb126-10"><a href="decision-tree-dt.html#cb126-10" tabindex="-1"></a>  <span class="at">costs =</span> cost_matrix_dt</span>
+<span id="cb126-11"><a href="decision-tree-dt.html#cb126-11" tabindex="-1"></a>  )</span></code></pre></div>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="decision-tree-dt.html#cb127-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
 <span id="cb127-2"><a href="decision-tree-dt.html#cb127-2" tabindex="-1"></a><span class="fu">summary</span>(model_dt_cost)</span></code></pre></div>
 <pre><code>## 
@@ -732,7 +737,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  train_dt, costs = cost_matrix_dt)
 ## 
 ## 
-## C5.0 [Release 2.07 GPL Edition]      Wed Apr 17 05:05:43 2024
+## C5.0 [Release 2.07 GPL Edition]      Wed Apr 17 20:31:26 2024
 ## -------------------------------
 ## 
 ## Class specified by attribute `outcome&#39;
@@ -742,48 +747,58 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## 
 ## Decision tree:
 ## 
-## food_between_meals_frequently &lt;= 0:
-## :...num_meals &gt; 3.998766:
-## :   :...alcohol_never &gt; 0: 0 (78/4)
-## :   :   alcohol_never &lt;= 0:
-## :   :   :...food_between_meals_sometimes &lt;= 0: 0 (14)
-## :   :       food_between_meals_sometimes &gt; 0: 1 (70/51)
-## :   num_meals &lt;= 3.998766:
-## :   :...fam_history_overweight1 &gt; 0: 1 (7752/906)
-## :       fam_history_overweight1 &lt;= 0:
-## :       :...gender_female &lt;= 0: 1 (545/296)
-## :           gender_female &gt; 0:
-## :           :...age &gt; 20: 1 (240/140)
-## :               age &lt;= 20:
-## :               :...caloric_beverages1 &lt;= 0:
-## :                   :...num_meals &lt;= 3.047959: 1 (326/279)
-## :                   :   num_meals &gt; 3.047959: 0 (49)
-## :                   caloric_beverages1 &gt; 0:
-## :                   :...veg_freq &lt;= 2.432886: 1 (18/6)
-## :                       veg_freq &gt; 2.432886:
-## :                       :...age_group_young_adult &lt;= 0: 1 (6/5)
-## :                           age_group_young_adult &gt; 0: 0 (23)
 ## food_between_meals_frequently &gt; 0:
-## :...gender_female &lt;= 0: 1 (493/310)
-##     gender_female &gt; 0:
-##     :...age_group_adult &gt; 0: 1 (10/1)
-##         age_group_adult &lt;= 0:
-##         :...fam_history_overweight1 &gt; 0:
-##             :...alcohol_never &gt; 0: 0 (162/13)
-##             :   alcohol_never &lt;= 0:
-##             :   :...num_meals &lt;= 3.058539: 1 (118/82)
-##             :       num_meals &gt; 3.058539: 0 (25)
-##             fam_history_overweight1 &lt;= 0:
-##             :...transport_public_transportation &lt;= 0: 1 (19/16)
-##                 transport_public_transportation &gt; 0:
-##                 :...veg_freq &lt;= 2.278644:
-##                     :...age &lt;= 20: 0 (92/3)
-##                     :   age &gt; 20: 1 (27/19)
-##                     veg_freq &gt; 2.278644:
-##                     :...alcohol_never &gt; 0: 0 (94)
-##                         alcohol_never &lt;= 0:
-##                         :...alcohol_sometimes &lt;= 0: 1 (3/1)
-##                             alcohol_sometimes &gt; 0: 0 (215/2)
+## :...age_group_adult &gt; 0: 1 (22/1)
+## :   age_group_adult &lt;= 0:
+## :   :...gender_female &lt;= 0:
+## :       :...alcohol_never &lt;= 0: 1 (326/186)
+## :       :   alcohol_never &gt; 0:
+## :       :   :...water_daily &gt; 2.976229: 1 (20/9)
+## :       :       water_daily &lt;= 2.976229:
+## :       :       :...fam_history_overweight1 &lt;= 0: 0 (36/1)
+## :       :           fam_history_overweight1 &gt; 0: 1 (99/80)
+## :       gender_female &gt; 0:
+## :       :...fam_history_overweight1 &lt;= 0:
+## :           :...veg_freq &lt;= 2.278644:
+## :           :   :...age &lt;= 20: 0 (95/3)
+## :           :   :   age &gt; 20: 1 (33/24)
+## :           :   veg_freq &gt; 2.278644:
+## :           :   :...transport_public_transportation &lt;= 0: 1 (10/8)
+## :           :       transport_public_transportation &gt; 0: 0 (312/4)
+## :           fam_history_overweight1 &gt; 0:
+## :           :...alcohol_never &gt; 0: 0 (162/13)
+## :               alcohol_never &lt;= 0:
+## :               :...num_meals &lt;= 3.058539: 1 (118/82)
+## :                   num_meals &gt; 3.058539: 0 (25)
+## food_between_meals_frequently &lt;= 0:
+## :...fam_history_overweight1 &gt; 0:
+##     :...num_meals &lt;= 3.998766: 1 (7752/906)
+##     :   num_meals &gt; 3.998766:
+##     :   :...alcohol_never &lt;= 0: 1 (34/26)
+##     :       alcohol_never &gt; 0: 0 (53/2)
+##     fam_history_overweight1 &lt;= 0:
+##     :...food_between_meals_never &gt; 0: 1 (78/15)
+##         food_between_meals_never &lt;= 0:
+##         :...transport_public_transportation &lt;= 0:
+##             :...food_between_meals_sometimes &lt;= 0: 0 (19/1)
+##             :   food_between_meals_sometimes &gt; 0: 1 (194/78)
+##             transport_public_transportation &gt; 0:
+##             :...water_daily &gt; 2.975528:
+##                 :...gender_female &lt;= 0: 1 (58/17)
+##                 :   gender_female &gt; 0:
+##                 :   :...veg_freq &lt;= 2.499626: 1 (17/9)
+##                 :       veg_freq &gt; 2.499626: 0 (8)
+##                 water_daily &lt;= 2.975528:
+##                 :...num_meals &lt;= 2.986637: 1 (171/100)
+##                     num_meals &gt; 2.986637:
+##                     :...age &lt;= 18: 0 (321/33)
+##                         age &gt; 18:
+##                         :...gender_female &lt;= 0:
+##                             :...food_between_meals_sometimes &lt;= 0: 0 (15/1)
+##                             :   food_between_meals_sometimes &gt; 0: 1 (151/103)
+##                             gender_female &gt; 0:
+##                             :...num_meals &lt;= 3.105007: 1 (203/165)
+##                                 num_meals &gt; 3.105007: 0 (47/2)
 ## 
 ## 
 ## Evaluation on training data (10379 cases):
@@ -792,64 +807,63 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##    -----------------------  
 ##    Size      Errors   Cost  
 ## 
-##      22 2134(20.6%)   0.22   &lt;&lt;
+##      27 1869(18.0%)   0.20   &lt;&lt;
 ## 
 ## 
 ##     (a)   (b)    &lt;-classified as
 ##    ----  ----
-##     730  2112    (a): class 0
-##      22  7515    (b): class 1
+##    1033  1809    (a): class 0
+##      60  7477    (b): class 1
 ## 
 ## 
 ##  Attribute usage:
 ## 
 ##  100.00% food_between_meals_frequently
-##   93.59% fam_history_overweight1
-##   89.26% num_meals
-##   23.75% gender_female
-##    7.52% age
-##    7.51% alcohol_never
-##    7.37% age_group_adult
-##    4.61% veg_freq
-##    4.34% transport_public_transportation
-##    4.07% caloric_beverages1
-##    2.10% alcohol_sometimes
-##    0.81% food_between_meals_sometimes
-##    0.28% age_group_young_adult
+##   96.45% fam_history_overweight1
+##   85.65% num_meals
+##   16.72% gender_female
+##   14.70% transport_public_transportation
+##   12.35% food_between_meals_never
+##   12.12% age_group_adult
+##   11.04% water_daily
+##    8.41% alcohol_never
+##    8.33% age
+##    4.58% veg_freq
+##    3.65% food_between_meals_sometimes
 ## 
 ## 
-## Time: 0.1 secs</code></pre>
+## Time: 0.0 secs</code></pre>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="decision-tree-dt.html#cb129-1" tabindex="-1"></a><span class="fu">plot</span>(model_dt_cost)</span></code></pre></div>
 <p><img src="_main_files/figure-html/model_dt_cost_summary_05-1.png" width="672" /></p>
 <div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="decision-tree-dt.html#cb130-1" tabindex="-1"></a><span class="fu">varImp</span>(model_dt_cost)</span></code></pre></div>
 <pre><code>##                                 Overall
 ## food_between_meals_frequently    100.00
-## fam_history_overweight1           93.59
-## num_meals                         89.26
-## gender_female                     23.75
-## age                                7.52
-## alcohol_never                      7.51
-## age_group_adult                    7.37
-## veg_freq                           4.61
-## transport_public_transportation    4.34
-## caloric_beverages1                 4.07
-## alcohol_sometimes                  2.10
-## food_between_meals_sometimes       0.81
-## age_group_young_adult              0.28
+## fam_history_overweight1           96.45
+## num_meals                         85.65
+## gender_female                     16.72
+## transport_public_transportation   14.70
+## food_between_meals_never          12.35
+## age_group_adult                   12.12
+## water_daily                       11.04
+## alcohol_never                      8.41
+## age                                8.33
+## veg_freq                           4.58
+## food_between_meals_sometimes       3.65
 ## gender_male                        0.00
 ## freq_consumption_hc_food1          0.00
-## food_between_meals_never           0.00
 ## smoke1                             0.00
-## water_daily                        0.00
+## caloric_beverages1                 0.00
 ## activity_freq                      0.00
 ## tech_use                           0.00
+## alcohol_sometimes                  0.00
 ## transport_bike                     0.00
 ## transport_motorbike                0.00
 ## transport_walking                  0.00
 ## eating_habit_binary                0.00
 ## physical_activity_binary           0.00
+## age_group_young_adult              0.00
 ## age_group_senior                   0.00</code></pre>
-<p>With a cost matrix in place, the variable importance chart now highlights a heavier emphasis on weight as a top feature, including BMI and weight-to-height ratio.</p>
+<p>With a cost matrix implemented, the variable importance chart now places a greater significance on <code>food_between_meals_frequently</code> as a top feature, along with <code>fam_history_overweight</code> and <code>num_meals</code>. These features, two of which are behavioral indicators, highlight the potential for someone overconsuming food that may contribute to becoming obese.</p>
 </div>
 </div>
 <div id="evaluate-dt" class="section level2 hasAnchor" number="6.4">
@@ -935,30 +949,30 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## 
 ##           Reference
 ## Prediction    0    1
-##          0  644   59
-##          1 2119 7557
-##                                          
-##                Accuracy : 0.7902         
-##                  95% CI : (0.7822, 0.798)
-##     No Information Rate : 0.7338         
-##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16      
-##                                          
-##                   Kappa : 0.2955         
-##                                          
-##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16      
-##                                          
-##             Sensitivity : 0.9923         
-##             Specificity : 0.2331         
-##          Pos Pred Value : 0.7810         
-##          Neg Pred Value : 0.9161         
-##              Prevalence : 0.7338         
-##          Detection Rate : 0.7281         
-##    Detection Prevalence : 0.9323         
-##       Balanced Accuracy : 0.6127         
-##                                          
-##        &#39;Positive&#39; Class : 1              
+##          0  880   90
+##          1 1883 7526
+##                                           
+##                Accuracy : 0.8099          
+##                  95% CI : (0.8022, 0.8174)
+##     No Information Rate : 0.7338          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.3866          
+##                                           
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+##                                           
+##             Sensitivity : 0.9882          
+##             Specificity : 0.3185          
+##          Pos Pred Value : 0.7999          
+##          Neg Pred Value : 0.9072          
+##              Prevalence : 0.7338          
+##          Detection Rate : 0.7251          
+##    Detection Prevalence : 0.9065          
+##       Balanced Accuracy : 0.6533          
+##                                           
+##        &#39;Positive&#39; Class : 1               
 ## </code></pre>
-<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.7902</code>, sensitivity of <code>0.9923</code>, and a Kappa coefficient of <code>0.2955</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
+<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8099</code>, sensitivity of <code>0.9882</code>, and a Kappa coefficient of <code>0.3866</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
 
 </div>
 </div>

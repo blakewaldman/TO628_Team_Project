@@ -11,9 +11,9 @@ library(randomForest)
 
 ## Introduction
 
-Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:
+Similar to decision trees, random forest is an ensemble learning method built upon decision trees to reduce overfitting and handle more complex relationships. Random forest constructs numerous decision trees during training, with each tree casting a vote on predictions. The final prediction is determined by the majority vote of all individual trees (Majority Vote System), minimizing overfitting and enhancing accuracy.
 
-Random Forest (RF) is an ensemble learning method, combining multiple decision trees to reduce overfitting and handle complex relationships. RF constructs numerous decision trees during training, with each tree casting a vote on predictions. The final prediction is derived from the majority vote of all individual trees, minimizing overfitting and enhancing accuracy (Majority Vote System). Although an advanced form of DT, RF can be computationally expensive due to longer training times compared to simpler models. We will build two RF models: a basic and fine-tuned version.
+In this module, we will develop two versions of the model: a basic RF consisting of 500 trees, and another fine-tuned version.
 
 
 ## Load Data
@@ -34,7 +34,7 @@ head(train_rf)
 
 ### Simple RF
 
-We will begin by constructing a basic RF model with 500 trees, followed by fine-tuning our RF model through grid search.
+We will begin by constructing a basic RF model with 500 trees, followed by fine-tuning our RF model through cross validation grid search.
 
 ```{r model_rf_07, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Set seed for reproducibility
@@ -54,11 +54,11 @@ summary(model_rf)
 randomForest::varImpPlot(model_rf)
 ```
 
-According to the variable importance plot, we observe a trend comparable to that of a DT model with an implemented cost matrix, indicating that RF models may be capturing the underlying dynamics between predictors effectively. The top-ranked features in this analysis are BMI, weight-to-height ratio, and water intake per weight.
+According to the variable importance plot, we observe a trend comparable to that of a DT model with an implemented cost matrix, indicating that RF models may be capturing the underlying dynamics between predictors effectively. The top-ranked features in this analysis are `age`, `fam_history_overweight`, and `food_between_meals_sometimes.`
 
 ### Tuned RF
 
-Next, we will perform tuning for our model by testing different values of `mtry`, which specifies the number of candidate features to consider at each node during tree construction. We will also execute 10-fold cross validation.
+Next, we will tune our model by examining various values of `mtry`, which determines the number of candidate features to consider at each node during tree construction. We will execute 10-fold cross validation.
 
 ```{r model_rf_tuned_07, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Set seed for reproducibility
@@ -68,14 +68,14 @@ set.seed(12345)
 ctrl <- trainControl(
   method = 'cv',
   number = 10,
-  verboseIter = TRUE,
-  savePredictions = TRUE
+  # verboseIter = TRUE,
+  # savePredictions = TRUE
   )
 
 # Define the parameter grid
 grid <- expand.grid(
   mtry = c(2, 4, 6, 8)
-  )
+)
 
 # Tune the model
 rf_tuned <- train(
@@ -97,7 +97,9 @@ summary(model_rf_tuned)
 randomForest::varImpPlot(model_rf_tuned)
 ```
 
-The final selected value for our model was `mtry = 2`, as it presented the highest Kappa score without compromising overall accuracy.
+The final selected value for our model was `r rf_tuned$finalModel$mtry`, as it presented the highest Kappa score without compromising overall accuracy.
+
+Here we see almost identical variable importance plot compared to the none tuned version. in this instance we see `water_daily`.
 
 ## Evaluate RF
 

@@ -12,12 +12,9 @@ library(ggplot2)
 
 ## Introduction
 
-Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:
+KNN, unlike logistic regression, are particularly useful for classification tasks due to their ability to identify the closest training samples (neighbors) in feature space relative to a given test instance and using their labels for predictions. However, KNN can be highly sensitive to outliers, and may lead to overfitting as a result of noises. Normalizing the dataset during the initial analysis stage is crucial for ensuring equal weights for each predictor in KNN calculations.
 
-KNN can be particularly useful for classification tasks as it identifies the closest training samples (neighbors) in feature space relative to a given test instance, and subsequently employs the labels or values of these neighbors to make predictions. however, KNN is highly sensitive to outliers and can easily lead the model to overfit due to noises.
-
-In an attempt to apply two distinct KNN models, we will initiate with a K value equal to the square root of the training set size, which is common practice. Additionally, we will experiment with another K value to assess its potential impact on our model.
-
+We plan to employ two KNN models: one with an initial k value equal to the square root of the training set size, which is a common practice; and another one through cross validation tuning to determine the optimal k value for the model.
 
 ## Load Data
 
@@ -26,6 +23,7 @@ In an attempt to apply two distinct KNN models, we will initiate with a K value 
 train_knn <- read.csv('Train Test Set/train_knn.csv')
 test_knn <- read.csv('Train Test Set/test_knn.csv')
 
+# Split features and predictor
 train_knn_x <- train_knn[, !names(train_knn) %in% 'obesity_leveloverweight']
 train_knn_y <- train_knn[['obesity_leveloverweight']]
 
@@ -47,7 +45,7 @@ head(train_knn_y)
 
 ### Default KNN
 
-We will use the square root of the number of rows in the train set as an initial value for parameter k. Next, we will employ grid search to optimize our KNN model and examine if we can enhance its accuracy and overall fit.
+We will utilize the square root of the number of rows in our training set as an initial value for the parameter k. Subsequently, we will apply grid search to fine-tune our KNN model and evaluate its potential for improving accuracy and overall fit.
 
 ```{r model_knn_04, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Set seed for reproducibility
@@ -71,7 +69,7 @@ summary(model_knn)
 
 ### Tuned KNN
 
-We will execute a grid search with 10-fold cross validation.
+We will execute a grid search with 10-fold cross validation to identify the optimal k value and subsequently use that tuned KNN model for prediction.
 
 ```{r model_knn_tuned_04, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Set seed for reproducibility
@@ -116,7 +114,7 @@ print(best_k)
 summary(model_knn_tuned)
 ```
 
-According to the results, the optimal value of k is 9.
+According to the results, the optimal value of k is ``r best_k``.
 
 
 ## Evaluate KNN

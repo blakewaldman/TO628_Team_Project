@@ -420,8 +420,8 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <ul>
 <li><strong>Gender (Gender)</strong>: Indicates whether the individual is male or female.</li>
 <li><strong>Age (Age)</strong>: Specifies the age of each individual.</li>
-<li><strong>Height (Height)</strong>: Records the height in meters of each person in the dataset. (not used in our analysis)</li>
-<li><strong>Weight (Weight)</strong>: Captures the weight in kilograms of each individual. (not used in our analysis)</li>
+<li><strong>Height (Height)</strong>: Records the height in meters of each person in the dataset. <strong>We will not use this variable in our analysis.</strong></li>
+<li><strong>Weight (Weight)</strong>: Captures the weight in kilograms of each individual. <strong>We will not use this variable in our analysis.</strong></li>
 </ul></li>
 <li><strong>Medical and Health-related Factors</strong>:
 <ul>
@@ -497,24 +497,29 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <span id="cb7-42"><a href="initial-analysis.html#cb7-42" tabindex="-1"></a>        <span class="st">&#39;Obesity_Type_III&#39;</span>,</span>
 <span id="cb7-43"><a href="initial-analysis.html#cb7-43" tabindex="-1"></a>        <span class="st">&#39;Overweight_Level_I&#39;</span>,</span>
 <span id="cb7-44"><a href="initial-analysis.html#cb7-44" tabindex="-1"></a>        <span class="st">&#39;Overweight_Level_II&#39;</span>) <span class="sc">~</span> <span class="st">&#39;overweight&#39;</span>,</span>
-<span id="cb7-45"><a href="initial-analysis.html#cb7-45" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> obesity_level))</span>
-<span id="cb7-46"><a href="initial-analysis.html#cb7-46" tabindex="-1"></a></span>
-<span id="cb7-47"><a href="initial-analysis.html#cb7-47" tabindex="-1"></a><span class="co"># Convert columns to factors</span></span>
-<span id="cb7-48"><a href="initial-analysis.html#cb7-48" tabindex="-1"></a>cols_to_factor <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb7-49"><a href="initial-analysis.html#cb7-49" tabindex="-1"></a>  <span class="st">&#39;gender&#39;</span>,</span>
-<span id="cb7-50"><a href="initial-analysis.html#cb7-50" tabindex="-1"></a>  <span class="st">&#39;fam_history_overweight&#39;</span>,</span>
-<span id="cb7-51"><a href="initial-analysis.html#cb7-51" tabindex="-1"></a>  <span class="st">&#39;freq_consumption_hc_food&#39;</span>, </span>
-<span id="cb7-52"><a href="initial-analysis.html#cb7-52" tabindex="-1"></a>  <span class="st">&#39;food_between_meals&#39;</span>,</span>
-<span id="cb7-53"><a href="initial-analysis.html#cb7-53" tabindex="-1"></a>  <span class="st">&#39;smoke&#39;</span>,</span>
-<span id="cb7-54"><a href="initial-analysis.html#cb7-54" tabindex="-1"></a>  <span class="st">&#39;alcohol&#39;</span>,</span>
-<span id="cb7-55"><a href="initial-analysis.html#cb7-55" tabindex="-1"></a>  <span class="st">&#39;caloric_beverages&#39;</span>,</span>
-<span id="cb7-56"><a href="initial-analysis.html#cb7-56" tabindex="-1"></a>  <span class="st">&#39;transport&#39;</span>,</span>
-<span id="cb7-57"><a href="initial-analysis.html#cb7-57" tabindex="-1"></a>  <span class="st">&#39;obesity_level&#39;</span></span>
-<span id="cb7-58"><a href="initial-analysis.html#cb7-58" tabindex="-1"></a>  )</span>
-<span id="cb7-59"><a href="initial-analysis.html#cb7-59" tabindex="-1"></a>cleaned[cols_to_factor] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(cleaned[cols_to_factor], as.factor)</span>
-<span id="cb7-60"><a href="initial-analysis.html#cb7-60" tabindex="-1"></a></span>
-<span id="cb7-61"><a href="initial-analysis.html#cb7-61" tabindex="-1"></a><span class="co"># Display data</span></span>
-<span id="cb7-62"><a href="initial-analysis.html#cb7-62" tabindex="-1"></a><span class="fu">str</span>(cleaned)</span></code></pre></div>
+<span id="cb7-45"><a href="initial-analysis.html#cb7-45" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> obesity_level</span>
+<span id="cb7-46"><a href="initial-analysis.html#cb7-46" tabindex="-1"></a>      )</span>
+<span id="cb7-47"><a href="initial-analysis.html#cb7-47" tabindex="-1"></a>    )</span>
+<span id="cb7-48"><a href="initial-analysis.html#cb7-48" tabindex="-1"></a></span>
+<span id="cb7-49"><a href="initial-analysis.html#cb7-49" tabindex="-1"></a><span class="co"># Convert columns to factors</span></span>
+<span id="cb7-50"><a href="initial-analysis.html#cb7-50" tabindex="-1"></a>cols_to_factor <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb7-51"><a href="initial-analysis.html#cb7-51" tabindex="-1"></a>  <span class="st">&#39;gender&#39;</span>,</span>
+<span id="cb7-52"><a href="initial-analysis.html#cb7-52" tabindex="-1"></a>  <span class="st">&#39;fam_history_overweight&#39;</span>,</span>
+<span id="cb7-53"><a href="initial-analysis.html#cb7-53" tabindex="-1"></a>  <span class="st">&#39;freq_consumption_hc_food&#39;</span>, </span>
+<span id="cb7-54"><a href="initial-analysis.html#cb7-54" tabindex="-1"></a>  <span class="st">&#39;food_between_meals&#39;</span>,</span>
+<span id="cb7-55"><a href="initial-analysis.html#cb7-55" tabindex="-1"></a>  <span class="st">&#39;smoke&#39;</span>,</span>
+<span id="cb7-56"><a href="initial-analysis.html#cb7-56" tabindex="-1"></a>  <span class="st">&#39;alcohol&#39;</span>,</span>
+<span id="cb7-57"><a href="initial-analysis.html#cb7-57" tabindex="-1"></a>  <span class="st">&#39;caloric_beverages&#39;</span>,</span>
+<span id="cb7-58"><a href="initial-analysis.html#cb7-58" tabindex="-1"></a>  <span class="st">&#39;transport&#39;</span>,</span>
+<span id="cb7-59"><a href="initial-analysis.html#cb7-59" tabindex="-1"></a>  <span class="st">&#39;obesity_level&#39;</span></span>
+<span id="cb7-60"><a href="initial-analysis.html#cb7-60" tabindex="-1"></a>  )</span>
+<span id="cb7-61"><a href="initial-analysis.html#cb7-61" tabindex="-1"></a>cleaned[cols_to_factor] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb7-62"><a href="initial-analysis.html#cb7-62" tabindex="-1"></a>  cleaned[cols_to_factor],</span>
+<span id="cb7-63"><a href="initial-analysis.html#cb7-63" tabindex="-1"></a>  as.factor</span>
+<span id="cb7-64"><a href="initial-analysis.html#cb7-64" tabindex="-1"></a>  )</span>
+<span id="cb7-65"><a href="initial-analysis.html#cb7-65" tabindex="-1"></a></span>
+<span id="cb7-66"><a href="initial-analysis.html#cb7-66" tabindex="-1"></a><span class="co"># Display data</span></span>
+<span id="cb7-67"><a href="initial-analysis.html#cb7-67" tabindex="-1"></a><span class="fu">str</span>(cleaned)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    20758 obs. of  15 variables:
 ##  $ gender                  : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 1 1 1 2 2 2 2 2 1 ...
 ##  $ age                     : int  24 18 18 21 32 18 30 30 17 26 ...
@@ -607,11 +612,13 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <span id="cb13-13"><a href="initial-analysis.html#cb13-13" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Teen&#39;</span>,</span>
 <span id="cb13-14"><a href="initial-analysis.html#cb13-14" tabindex="-1"></a>                                    <span class="st">&#39;Young Adult&#39;</span>,</span>
 <span id="cb13-15"><a href="initial-analysis.html#cb13-15" tabindex="-1"></a>                                    <span class="st">&#39;Adult&#39;</span>,</span>
-<span id="cb13-16"><a href="initial-analysis.html#cb13-16" tabindex="-1"></a>                                    <span class="st">&#39;Senior&#39;</span>),</span>
-<span id="cb13-17"><a href="initial-analysis.html#cb13-17" tabindex="-1"></a>                         <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb13-18"><a href="initial-analysis.html#cb13-18" tabindex="-1"></a></span>
-<span id="cb13-19"><a href="initial-analysis.html#cb13-19" tabindex="-1"></a><span class="co"># Display data</span></span>
-<span id="cb13-20"><a href="initial-analysis.html#cb13-20" tabindex="-1"></a><span class="fu">str</span>(cleaned)</span></code></pre></div>
+<span id="cb13-16"><a href="initial-analysis.html#cb13-16" tabindex="-1"></a>                                    <span class="st">&#39;Senior&#39;</span></span>
+<span id="cb13-17"><a href="initial-analysis.html#cb13-17" tabindex="-1"></a>                                    ),</span>
+<span id="cb13-18"><a href="initial-analysis.html#cb13-18" tabindex="-1"></a>                         <span class="at">right =</span> <span class="cn">FALSE</span></span>
+<span id="cb13-19"><a href="initial-analysis.html#cb13-19" tabindex="-1"></a>                         )</span>
+<span id="cb13-20"><a href="initial-analysis.html#cb13-20" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="initial-analysis.html#cb13-21" tabindex="-1"></a><span class="co"># Display data</span></span>
+<span id="cb13-22"><a href="initial-analysis.html#cb13-22" tabindex="-1"></a><span class="fu">str</span>(cleaned)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    20758 obs. of  18 variables:
 ##  $ gender                  : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 1 1 1 2 2 2 2 2 1 ...
 ##  $ age                     : int  24 18 18 21 32 18 30 30 17 26 ...

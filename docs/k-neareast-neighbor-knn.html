@@ -331,9 +331,8 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <!-- ## R Packages and Setup {-} -->
 <div id="introduction-3" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> Introduction<a href="k-neareast-neighbor-knn.html#introduction-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:</p>
-<p>KNN can be particularly useful for classification tasks as it identifies the closest training samples (neighbors) in feature space relative to a given test instance, and subsequently employs the labels or values of these neighbors to make predictions. however, KNN is highly sensitive to outliers and can easily lead the model to overfit due to noises.</p>
-<p>In an attempt to apply two distinct KNN models, we will initiate with a K value equal to the square root of the training set size, which is common practice. Additionally, we will experiment with another K value to assess its potential impact on our model.</p>
+<p>KNN, unlike logistic regression, are particularly useful for classification tasks due to their ability to identify the closest training samples (neighbors) in feature space relative to a given test instance and using their labels for predictions. However, KNN can be highly sensitive to outliers, and may lead to overfitting as a result of noises. Normalizing the dataset during the initial analysis stage is crucial for ensuring equal weights for each predictor in KNN calculations.</p>
+<p>We plan to employ two KNN models: one with an initial k value equal to the square root of the training set size, which is a common practice; and another one through cross validation tuning to determine the optimal k value for the model.</p>
 </div>
 <div id="load-data-3" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Load Data<a href="k-neareast-neighbor-knn.html#load-data-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -341,14 +340,15 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <span id="cb84-2"><a href="k-neareast-neighbor-knn.html#cb84-2" tabindex="-1"></a>train_knn <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_knn.csv&#39;</span>)</span>
 <span id="cb84-3"><a href="k-neareast-neighbor-knn.html#cb84-3" tabindex="-1"></a>test_knn <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_knn.csv&#39;</span>)</span>
 <span id="cb84-4"><a href="k-neareast-neighbor-knn.html#cb84-4" tabindex="-1"></a></span>
-<span id="cb84-5"><a href="k-neareast-neighbor-knn.html#cb84-5" tabindex="-1"></a>train_knn_x <span class="ot">&lt;-</span> train_knn[, <span class="sc">!</span><span class="fu">names</span>(train_knn) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
-<span id="cb84-6"><a href="k-neareast-neighbor-knn.html#cb84-6" tabindex="-1"></a>train_knn_y <span class="ot">&lt;-</span> train_knn[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
-<span id="cb84-7"><a href="k-neareast-neighbor-knn.html#cb84-7" tabindex="-1"></a></span>
-<span id="cb84-8"><a href="k-neareast-neighbor-knn.html#cb84-8" tabindex="-1"></a>test_knn_x <span class="ot">&lt;-</span> test_knn[, <span class="sc">!</span><span class="fu">names</span>(test_knn) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
-<span id="cb84-9"><a href="k-neareast-neighbor-knn.html#cb84-9" tabindex="-1"></a>test_knn_y <span class="ot">&lt;-</span> test_knn[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
-<span id="cb84-10"><a href="k-neareast-neighbor-knn.html#cb84-10" tabindex="-1"></a></span>
-<span id="cb84-11"><a href="k-neareast-neighbor-knn.html#cb84-11" tabindex="-1"></a><span class="co"># Display statistics</span></span>
-<span id="cb84-12"><a href="k-neareast-neighbor-knn.html#cb84-12" tabindex="-1"></a><span class="fu">str</span>(train_knn_x)</span></code></pre></div>
+<span id="cb84-5"><a href="k-neareast-neighbor-knn.html#cb84-5" tabindex="-1"></a><span class="co"># Split features and predictor</span></span>
+<span id="cb84-6"><a href="k-neareast-neighbor-knn.html#cb84-6" tabindex="-1"></a>train_knn_x <span class="ot">&lt;-</span> train_knn[, <span class="sc">!</span><span class="fu">names</span>(train_knn) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
+<span id="cb84-7"><a href="k-neareast-neighbor-knn.html#cb84-7" tabindex="-1"></a>train_knn_y <span class="ot">&lt;-</span> train_knn[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
+<span id="cb84-8"><a href="k-neareast-neighbor-knn.html#cb84-8" tabindex="-1"></a></span>
+<span id="cb84-9"><a href="k-neareast-neighbor-knn.html#cb84-9" tabindex="-1"></a>test_knn_x <span class="ot">&lt;-</span> test_knn[, <span class="sc">!</span><span class="fu">names</span>(test_knn) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
+<span id="cb84-10"><a href="k-neareast-neighbor-knn.html#cb84-10" tabindex="-1"></a>test_knn_y <span class="ot">&lt;-</span> test_knn[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
+<span id="cb84-11"><a href="k-neareast-neighbor-knn.html#cb84-11" tabindex="-1"></a></span>
+<span id="cb84-12"><a href="k-neareast-neighbor-knn.html#cb84-12" tabindex="-1"></a><span class="co"># Display statistics</span></span>
+<span id="cb84-13"><a href="k-neareast-neighbor-knn.html#cb84-13" tabindex="-1"></a><span class="fu">str</span>(train_knn_x)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    10379 obs. of  26 variables:
 ##  $ gender_female                  : int  1 1 1 0 1 1 1 0 1 1 ...
 ##  $ gender_male                    : int  0 0 0 1 0 0 0 1 0 0 ...
@@ -502,7 +502,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <h2><span class="header-section-number">5.3</span> Model KNN<a href="k-neareast-neighbor-knn.html#model-knn" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="default-knn" class="section level3 hasAnchor" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Default KNN<a href="k-neareast-neighbor-knn.html#default-knn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We will use the square root of the number of rows in the train set as an initial value for parameter k. Next, we will employ grid search to optimize our KNN model and examine if we can enhance its accuracy and overall fit.</p>
+<p>We will utilize the square root of the number of rows in our training set as an initial value for the parameter k. Subsequently, we will apply grid search to fine-tune our KNN model and evaluate its potential for improving accuracy and overall fit.</p>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="k-neareast-neighbor-knn.html#cb96-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
 <span id="cb96-2"><a href="k-neareast-neighbor-knn.html#cb96-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
 <span id="cb96-3"><a href="k-neareast-neighbor-knn.html#cb96-3" tabindex="-1"></a></span>
@@ -522,7 +522,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 </div>
 <div id="tuned-knn" class="section level3 hasAnchor" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> Tuned KNN<a href="k-neareast-neighbor-knn.html#tuned-knn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We will execute a grid search with 10-fold cross validation.</p>
+<p>We will execute a grid search with 10-fold cross validation to identify the optimal k value and subsequently use that tuned KNN model for prediction.</p>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="k-neareast-neighbor-knn.html#cb99-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
 <span id="cb99-2"><a href="k-neareast-neighbor-knn.html#cb99-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
 <span id="cb99-3"><a href="k-neareast-neighbor-knn.html#cb99-3" tabindex="-1"></a></span>
@@ -563,7 +563,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="k-neareast-neighbor-knn.html#cb102-1" tabindex="-1"></a><span class="fu">summary</span>(model_knn_tuned)</span></code></pre></div>
 <pre><code>##    0    1 
 ## 2498 7881</code></pre>
-<p>According to the results, the optimal value of k is 9.</p>
+<p>According to the results, the optimal value of k is <code>16</code>.</p>
 </div>
 </div>
 <div id="evaluate-knn" class="section level2 hasAnchor" number="5.4">

@@ -331,8 +331,8 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <!-- ## R Packages and Setup {-} -->
 <div id="introduction-6" class="section level2 hasAnchor" number="8.1">
 <h2><span class="header-section-number">8.1</span> Introduction<a href="random-forest-rf.html#introduction-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:</p>
-<p>Random Forest (RF) is an ensemble learning method, combining multiple decision trees to reduce overfitting and handle complex relationships. RF constructs numerous decision trees during training, with each tree casting a vote on predictions. The final prediction is derived from the majority vote of all individual trees, minimizing overfitting and enhancing accuracy (Majority Vote System). Although an advanced form of DT, RF can be computationally expensive due to longer training times compared to simpler models. We will build two RF models: a basic and fine-tuned version.</p>
+<p>Similar to decision trees, random forest is an ensemble learning method built upon decision trees to reduce overfitting and handle more complex relationships. Random forest constructs numerous decision trees during training, with each tree casting a vote on predictions. The final prediction is determined by the majority vote of all individual trees (Majority Vote System), minimizing overfitting and enhancing accuracy.</p>
+<p>In this module, we will develop two versions of the model: a basic RF consisting of 500 trees, and another fine-tuned version.</p>
 </div>
 <div id="load-data-6" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> Load Data<a href="random-forest-rf.html#load-data-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -496,7 +496,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <h2><span class="header-section-number">8.3</span> Model RF<a href="random-forest-rf.html#model-rf" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="simple-rf" class="section level3 hasAnchor" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> Simple RF<a href="random-forest-rf.html#simple-rf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We will begin by constructing a basic RF model with 500 trees, followed by fine-tuning our RF model through grid search.</p>
+<p>We will begin by constructing a basic RF model with 500 trees, followed by fine-tuning our RF model through cross validation grid search.</p>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="random-forest-rf.html#cb165-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
 <span id="cb165-2"><a href="random-forest-rf.html#cb165-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
 <span id="cb165-3"><a href="random-forest-rf.html#cb165-3" tabindex="-1"></a></span>
@@ -530,11 +530,11 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## terms               3  terms  call</code></pre>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="random-forest-rf.html#cb168-1" tabindex="-1"></a>randomForest<span class="sc">::</span><span class="fu">varImpPlot</span>(model_rf)</span></code></pre></div>
 <p><img src="_main_files/figure-html/model_rf_summary_07-1.png" width="672" /></p>
-<p>According to the variable importance plot, we observe a trend comparable to that of a DT model with an implemented cost matrix, indicating that RF models may be capturing the underlying dynamics between predictors effectively. The top-ranked features in this analysis are BMI, weight-to-height ratio, and water intake per weight.</p>
+<p>According to the variable importance plot, we observe a trend comparable to that of a DT model with an implemented cost matrix, indicating that RF models may be capturing the underlying dynamics between predictors effectively. The top-ranked features in this analysis are <code>age</code>, <code>fam_history_overweight</code>, and <code>food_between_meals_sometimes.</code></p>
 </div>
 <div id="tuned-rf" class="section level3 hasAnchor" number="8.3.2">
 <h3><span class="header-section-number">8.3.2</span> Tuned RF<a href="random-forest-rf.html#tuned-rf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Next, we will perform tuning for our model by testing different values of <code>mtry</code>, which specifies the number of candidate features to consider at each node during tree construction. We will also execute 10-fold cross validation.</p>
+<p>Next, we will tune our model by examining various values of <code>mtry</code>, which determines the number of candidate features to consider at each node during tree construction. We will execute 10-fold cross validation.</p>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="random-forest-rf.html#cb169-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
 <span id="cb169-2"><a href="random-forest-rf.html#cb169-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
 <span id="cb169-3"><a href="random-forest-rf.html#cb169-3" tabindex="-1"></a></span>
@@ -542,14 +542,14 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <span id="cb169-5"><a href="random-forest-rf.html#cb169-5" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(</span>
 <span id="cb169-6"><a href="random-forest-rf.html#cb169-6" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;cv&#39;</span>,</span>
 <span id="cb169-7"><a href="random-forest-rf.html#cb169-7" tabindex="-1"></a>  <span class="at">number =</span> <span class="dv">10</span>,</span>
-<span id="cb169-8"><a href="random-forest-rf.html#cb169-8" tabindex="-1"></a>  <span class="at">verboseIter =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb169-9"><a href="random-forest-rf.html#cb169-9" tabindex="-1"></a>  <span class="at">savePredictions =</span> <span class="cn">TRUE</span></span>
+<span id="cb169-8"><a href="random-forest-rf.html#cb169-8" tabindex="-1"></a>  <span class="co"># verboseIter = TRUE,</span></span>
+<span id="cb169-9"><a href="random-forest-rf.html#cb169-9" tabindex="-1"></a>  <span class="co"># savePredictions = TRUE</span></span>
 <span id="cb169-10"><a href="random-forest-rf.html#cb169-10" tabindex="-1"></a>  )</span>
 <span id="cb169-11"><a href="random-forest-rf.html#cb169-11" tabindex="-1"></a></span>
 <span id="cb169-12"><a href="random-forest-rf.html#cb169-12" tabindex="-1"></a><span class="co"># Define the parameter grid</span></span>
 <span id="cb169-13"><a href="random-forest-rf.html#cb169-13" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
 <span id="cb169-14"><a href="random-forest-rf.html#cb169-14" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
-<span id="cb169-15"><a href="random-forest-rf.html#cb169-15" tabindex="-1"></a>  )</span>
+<span id="cb169-15"><a href="random-forest-rf.html#cb169-15" tabindex="-1"></a>)</span>
 <span id="cb169-16"><a href="random-forest-rf.html#cb169-16" tabindex="-1"></a></span>
 <span id="cb169-17"><a href="random-forest-rf.html#cb169-17" tabindex="-1"></a><span class="co"># Tune the model</span></span>
 <span id="cb169-18"><a href="random-forest-rf.html#cb169-18" tabindex="-1"></a>rf_tuned <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
@@ -610,7 +610,8 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## param               0  -none-     list</code></pre>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="random-forest-rf.html#cb174-1" tabindex="-1"></a>randomForest<span class="sc">::</span><span class="fu">varImpPlot</span>(model_rf_tuned)</span></code></pre></div>
 <p><img src="_main_files/figure-html/model_rf_tuned_summary_07-1.png" width="672" /></p>
-<p>The final selected value for our model was <code>mtry = 2</code>, as it presented the highest Kappa score without compromising overall accuracy.</p>
+<p>The final selected value for our model was 6, as it presented the highest Kappa score without compromising overall accuracy.</p>
+<p>Here we see almost identical variable importance plot compared to the none tuned version. in this instance we see <code>water_daily</code>.</p>
 </div>
 </div>
 <div id="evaluate-rf" class="section level2 hasAnchor" number="8.4">

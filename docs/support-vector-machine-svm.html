@@ -331,9 +331,8 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <!-- ## R Packages and Setup {-} -->
 <div id="introduction-5" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Introduction<a href="support-vector-machine-svm.html#introduction-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:</p>
-<p>Support Vector Machines (SVMs) are algorithms for classification and regression tasks. Linear (Vanilla Dot) and Radial Basis Function (RBF) kernels are popular choices. The Vanilla Dot kernel is simple, effective for linearly separable data, but can’t handle complex non-linear relationships. RBF transforms data into a high-dimensional space to model non-linear relationships but requires careful tuning for optimal performance.</p>
-<p>In SVM, we will use both Vanilla SVM and RBF SVM. Our objective is to evaluate the performance of these two methods in terms of accuracy and sensitivity when predicting our test dataset.</p>
+<p>Support Vector Machines (SVMs) are algorithms applicable for both classification and regression tasks. Linear (Vanilla Dot) and Radial Basis Function (RBF) kernels are commonly used choices. The Vanilla Dot kernel is simple and effective for linearly separable data, but it cannot handle complex non-linear relationships. RBF transforms the data into a high-dimensional space to model non-linear relationships, but it requires careful tuning for optimal performance.</p>
+<p>In our SVM implementation, we will utilize both Vanilla SVM and RBF SVM.</p>
 </div>
 <div id="load-data-5" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Load Data<a href="support-vector-machine-svm.html#load-data-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -497,6 +496,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <h2><span class="header-section-number">7.3</span> Model SVM<a href="support-vector-machine-svm.html#model-svm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="vanilla-svm" class="section level3 hasAnchor" number="7.3.1">
 <h3><span class="header-section-number">7.3.1</span> Vanilla SVM<a href="support-vector-machine-svm.html#vanilla-svm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will begin by implementing a vanilla kernel SVM. We suspect that this may result in lower accuracy compared to RBF due to our dataset’s complexity and less straightforward nature.</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="support-vector-machine-svm.html#cb145-1" tabindex="-1"></a><span class="co"># Build a vanilla model</span></span>
 <span id="cb145-2"><a href="support-vector-machine-svm.html#cb145-2" tabindex="-1"></a>model_svm_vanilla <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(</span>
 <span id="cb145-3"><a href="support-vector-machine-svm.html#cb145-3" tabindex="-1"></a>  obesity_leveloverweight <span class="sc">~</span> .,</span>

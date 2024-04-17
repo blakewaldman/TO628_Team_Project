@@ -11,11 +11,13 @@ library(C50)
 
 ## Introduction
 
-Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:
+Decision trees are tree-based models that excel at classification tasks. In contrast, regression trees are effective for continuous outcome predictions rather than distinct classes.
 
-A Decision Tree (DT) is a machine learning model that uses a tree structure for decision making based on given features (predictors). It partitions the input space with tests at nodes to output predictions at leaves. One of its strengths is the ability to handle both categorical and numerical data easily. However, DT can overfit training data and may require pruning or adjustments. Therefore, RF or GB often provide better performance.
+Decision trees structure their decisions based on given features using a tree with one trunk and multiple nodes. Starting from the root node, the tree branches out and makes decisions throughout each step, ultimately outputting predictions at leaves.
 
-In our case, DTs are particularly effective for binary classification problems. In this module, we will utilize two DT models: a simple DT and a DT with a cost matrix. Our goal is to improve our model’s sensitivity through the employment of these trees as they will yield the highest profit given the cost structure discussed earlier.
+Decision trees can easily handle both categorical and numerical data, but they have a tendency to overfit training data, necessitating potential pruning and adjustments. This is why RF or XGB might sometimes yield better results while preventing overfitting.
+
+In our case, decision trees can prove effective for solving our binary classification problem. In this module, we will utilize two models: a basic DT and a DT with a cost-considering cost structure.
 
 
 ## Load Data
@@ -40,8 +42,10 @@ First, let's construct a DT model without considering the misclassification erro
 
 ```{r model_dt_05, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Build a model
-model_dt <- C5.0(as.factor(obesity_leveloverweight) ~ .,
-                 data = train_dt)
+model_dt <- C5.0(
+  as.factor(obesity_leveloverweight) ~ .,
+  data = train_dt
+  )
 ```
 
 ```{r model_dt_summary_05}
@@ -51,7 +55,7 @@ plot(model_dt)
 varImp(model_dt)
 ```
 
-According to the variable importance chart, BMI is identified as one of the most significant features for making decisions. This makes intuitive sense since BMI and obesity are highly correlated. Age, on the other hand, exhibits an intriguing aspect as it ranks second in importance but noticeably lower than BMI. We suspect that older individuals may be more prone to obesity due to slower metabolism.
+According to the variable importance chart, `fam_history_overweight` is identified as one of the most significant features for making decisions. This makes intuitive sense since family who are overweight tend to have children who are also overweight. `Age`, on the other hand, exhibits an intriguing aspect as it ranks second in importance. We suspect that older individuals may be more prone to obesity due to slower metabolism.
 
 ### DT with Cost Matrix
 
@@ -59,14 +63,16 @@ Now, we will introduce a cost matrix where misclassifying an individual as not o
 
 ```{r model_dt_cost_05, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Build cost matrix
-cost_matrix_dt <- matrix(c(0, 8, 1, 0), nrow = 2, byrow = TRUE,
+cost_matrix_dt <- matrix(c(0, 5, 1, 0), nrow = 2, byrow = TRUE,
                          dimnames = list(Actual = c('0', '1'),
                                          Predicted = c('0', '1')))
 
 # Build a model
-model_dt_cost <- C5.0(as.factor(obesity_leveloverweight) ~ .,
-                      data = train_dt,
-                      costs = cost_matrix_dt)
+model_dt_cost <- C5.0(
+  as.factor(obesity_leveloverweight) ~ .,
+  data = train_dt,
+  costs = cost_matrix_dt
+  )
 ```
 
 ```{r model_dt_cost_summary_05}
@@ -76,7 +82,7 @@ plot(model_dt_cost)
 varImp(model_dt_cost)
 ```
 
-With a cost matrix in place, the variable importance chart now highlights a heavier emphasis on weight as a top feature, including BMI and weight-to-height ratio.
+With a cost matrix implemented, the variable importance chart now places a greater significance on `food_between_meals_frequently` as a top feature, along with `fam_history_overweight` and `num_meals`. These features, two of which are behavioral indicators, highlight the potential for someone overconsuming food that may contribute to becoming obese.
 
 ## Evaluate DT
 

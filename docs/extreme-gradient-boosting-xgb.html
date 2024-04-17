@@ -331,7 +331,9 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <!-- ## R Packages and Setup {-} -->
 <div id="introduction-7" class="section level2 hasAnchor" number="9.1">
 <h2><span class="header-section-number">9.1</span> Introduction<a href="extreme-gradient-boosting-xgb.html#introduction-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Placeholder.</p>
+<p>XGBoost is a valuable addition to our current data analytics process due to its use of the ensemble method for constructing sequential trees and weak learners to learn from mistakes, ultimately capturing the true outcome more effectively.</p>
+<p>We chose to experiment with this model, though it is not required for the course, as we believe its capabilities could significantly improve accuracy compared to other models.</p>
+<p>We will construct two models: a basic XGBoost model and a fine-tuned version to prevent overfitting.</p>
 </div>
 <div id="load-data-7" class="section level2 hasAnchor" number="9.2">
 <h2><span class="header-section-number">9.2</span> Load Data<a href="extreme-gradient-boosting-xgb.html#load-data-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -339,14 +341,15 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <span id="cb185-2"><a href="extreme-gradient-boosting-xgb.html#cb185-2" tabindex="-1"></a>train_xgb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_xgb.csv&#39;</span>)</span>
 <span id="cb185-3"><a href="extreme-gradient-boosting-xgb.html#cb185-3" tabindex="-1"></a>test_xgb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_xgb.csv&#39;</span>)</span>
 <span id="cb185-4"><a href="extreme-gradient-boosting-xgb.html#cb185-4" tabindex="-1"></a></span>
-<span id="cb185-5"><a href="extreme-gradient-boosting-xgb.html#cb185-5" tabindex="-1"></a>train_xgb_x <span class="ot">&lt;-</span> train_xgb[, <span class="sc">!</span><span class="fu">names</span>(train_xgb) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
-<span id="cb185-6"><a href="extreme-gradient-boosting-xgb.html#cb185-6" tabindex="-1"></a>train_xgb_y <span class="ot">&lt;-</span> train_xgb[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
-<span id="cb185-7"><a href="extreme-gradient-boosting-xgb.html#cb185-7" tabindex="-1"></a></span>
-<span id="cb185-8"><a href="extreme-gradient-boosting-xgb.html#cb185-8" tabindex="-1"></a>test_xgb_x <span class="ot">&lt;-</span> test_xgb[, <span class="sc">!</span><span class="fu">names</span>(test_xgb) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
-<span id="cb185-9"><a href="extreme-gradient-boosting-xgb.html#cb185-9" tabindex="-1"></a>test_xgb_y <span class="ot">&lt;-</span> test_xgb[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
-<span id="cb185-10"><a href="extreme-gradient-boosting-xgb.html#cb185-10" tabindex="-1"></a></span>
-<span id="cb185-11"><a href="extreme-gradient-boosting-xgb.html#cb185-11" tabindex="-1"></a><span class="co"># Display statistics</span></span>
-<span id="cb185-12"><a href="extreme-gradient-boosting-xgb.html#cb185-12" tabindex="-1"></a><span class="fu">str</span>(train_xgb)</span></code></pre></div>
+<span id="cb185-5"><a href="extreme-gradient-boosting-xgb.html#cb185-5" tabindex="-1"></a><span class="co"># Split features and predictor</span></span>
+<span id="cb185-6"><a href="extreme-gradient-boosting-xgb.html#cb185-6" tabindex="-1"></a>train_xgb_x <span class="ot">&lt;-</span> train_xgb[, <span class="sc">!</span><span class="fu">names</span>(train_xgb) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
+<span id="cb185-7"><a href="extreme-gradient-boosting-xgb.html#cb185-7" tabindex="-1"></a>train_xgb_y <span class="ot">&lt;-</span> train_xgb[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
+<span id="cb185-8"><a href="extreme-gradient-boosting-xgb.html#cb185-8" tabindex="-1"></a></span>
+<span id="cb185-9"><a href="extreme-gradient-boosting-xgb.html#cb185-9" tabindex="-1"></a>test_xgb_x <span class="ot">&lt;-</span> test_xgb[, <span class="sc">!</span><span class="fu">names</span>(test_xgb) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
+<span id="cb185-10"><a href="extreme-gradient-boosting-xgb.html#cb185-10" tabindex="-1"></a>test_xgb_y <span class="ot">&lt;-</span> test_xgb[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
+<span id="cb185-11"><a href="extreme-gradient-boosting-xgb.html#cb185-11" tabindex="-1"></a></span>
+<span id="cb185-12"><a href="extreme-gradient-boosting-xgb.html#cb185-12" tabindex="-1"></a><span class="co"># Display statistics</span></span>
+<span id="cb185-13"><a href="extreme-gradient-boosting-xgb.html#cb185-13" tabindex="-1"></a><span class="fu">str</span>(train_xgb)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    10379 obs. of  27 variables:
 ##  $ gender_female                  : int  1 1 1 0 1 1 1 0 1 1 ...
 ##  $ gender_male                    : int  0 0 0 1 0 0 0 1 0 0 ...
@@ -691,9 +694,11 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <div id="tuned-xgb-1" class="section level3 hasAnchor" number="9.4.2">
 <h3><span class="header-section-number">9.4.2</span> Tuned XGB<a href="extreme-gradient-boosting-xgb.html#tuned-xgb-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="extreme-gradient-boosting-xgb.html#cb205-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
-<span id="cb205-2"><a href="extreme-gradient-boosting-xgb.html#cb205-2" tabindex="-1"></a>prediction_xgb_tuned_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_xgb_tuned, <span class="fu">as.matrix</span>(test_xgb_x))</span>
-<span id="cb205-3"><a href="extreme-gradient-boosting-xgb.html#cb205-3" tabindex="-1"></a>prediction_xgb_tuned <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_xgb_tuned_probability <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb205-4"><a href="extreme-gradient-boosting-xgb.html#cb205-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_xgb_tuned_probability)</span></code></pre></div>
+<span id="cb205-2"><a href="extreme-gradient-boosting-xgb.html#cb205-2" tabindex="-1"></a>prediction_xgb_tuned_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(</span>
+<span id="cb205-3"><a href="extreme-gradient-boosting-xgb.html#cb205-3" tabindex="-1"></a>  model_xgb_tuned,</span>
+<span id="cb205-4"><a href="extreme-gradient-boosting-xgb.html#cb205-4" tabindex="-1"></a>  <span class="fu">as.matrix</span>(test_xgb_x))</span>
+<span id="cb205-5"><a href="extreme-gradient-boosting-xgb.html#cb205-5" tabindex="-1"></a>prediction_xgb_tuned <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_xgb_tuned_probability <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb205-6"><a href="extreme-gradient-boosting-xgb.html#cb205-6" tabindex="-1"></a><span class="fu">summary</span>(prediction_xgb_tuned_probability)</span></code></pre></div>
 <pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 ## 0.0002856 0.0034169 0.0383439 0.2662891 0.5447414 0.9967414</code></pre>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="extreme-gradient-boosting-xgb.html#cb207-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>

@@ -12,7 +12,11 @@ library(xgboost)
 
 ## Introduction
 
-Placeholder.
+XGBoost is a valuable addition to our current data analytics process due to its use of the ensemble method for constructing sequential trees and weak learners to learn from mistakes, ultimately capturing the true outcome more effectively.
+
+We chose to experiment with this model, though it is not required for the course, as we believe its capabilities could significantly improve accuracy compared to other models.
+
+We will construct two models: a basic XGBoost model and a fine-tuned version to prevent overfitting.
 
 
 ## Load Data
@@ -22,6 +26,7 @@ Placeholder.
 train_xgb <- read.csv('Train Test Set/train_xgb.csv')
 test_xgb <- read.csv('Train Test Set/test_xgb.csv')
 
+# Split features and predictor
 train_xgb_x <- train_xgb[, !names(train_xgb) %in% 'obesity_leveloverweight']
 train_xgb_y <- train_xgb[['obesity_leveloverweight']]
 
@@ -165,7 +170,9 @@ write.csv(
 
 ```{r evaluate_xgb_tuned_08}
 # Make a prediction
-prediction_xgb_tuned_probability <- predict(model_xgb_tuned, as.matrix(test_xgb_x))
+prediction_xgb_tuned_probability <- predict(
+  model_xgb_tuned,
+  as.matrix(test_xgb_x))
 prediction_xgb_tuned <- ifelse(prediction_xgb_tuned_probability > 0.5, 0, 1)
 summary(prediction_xgb_tuned_probability)
 

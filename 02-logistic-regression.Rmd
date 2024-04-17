@@ -10,13 +10,13 @@ library(caret)
 
 ## Introduction
 
-Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:
+We will begin by employing Logistic Regression (LR) for our initial model as it is a widely used algorithm for binary classification tasks.
 
-Logistic Regression (LR) is a popular algorithm for binary classification tasks, modeling the relationship between features and the probability of an event occurrence.
+It can run quickly and efficiently, making it suitable for calculating the probability of true or false based on the given dataset features.
 
-LR’s simplicity makes it an excellent choice for initial modeling. Yet, it may struggle with complex relationships between features, limiting its performance on intricate datasets relative to other algorithms, such as RF or ANN, which will be covered in a later module.
+However, it is important to keep in mind that LR may encounter challenges with complex relationships between features, limiting its performance on higher dimensional datasets compared to other methods such as Random Forest (RF) or XGBoost (XGB).
 
-Our initial model will utilize LR. With LR, we can efficiently calculate the probability of a ‘yes’ or ‘no’ response based on all features in the dataset.
+To further explore the intricacies within our dataset, we will incorporate interaction terms into our LR models.
 
 
 ## Load Data
@@ -55,13 +55,28 @@ summary(model_lr)
 
 Based on the logistic regression results, we can make the following observations:
 
-  - Gender: Being female is a significant predictor of being overweight, with a positive coefficient of `1.19523`. This suggests that females are more likely to be overweight compared to males.
-  - Family history of overweight: Individuals with a family history of overweight have a slightly higher odds of being overweight, as indicated by the positive coefficient of `0.24989`.
-  - Vegetable consumption: Higher vegetable consumption is associated with a lower likelihood of being overweight, with a negative coefficient of `-0.47774`. This emphasizes the importance of a balanced diet in maintaining a healthy weight.
-  - Number of meals per day: The frequency of meals per day is negatively associated with overweight status, with individuals having fewer meals per day being more likely to be overweight (coefficient of `-0.49194`).
-  - Alcohol consumption: Individuals who never consume alcohol are less likely to be overweight, as indicated by the negative coefficients for alcohol_never (`-1.96064`) and alcohol_sometimes (`-1.20386`).
-  - Age group: Young adults are less likely to be overweight compared to other age groups, with a negative coefficient of `-0.77593`.
-  - BMI, height, and weight: Surprisingly, these variables do not show a strong significance in predicting overweight status in this model. This suggests that other factors in the model may have a stronger influence on obesity level than these traditional measures of body size.
+- **Gender**: Being female is significantly associated with a lesser likelihood of being overweight, as the negative coefficient of `-0.31157` suggests. This indicates that, compared to males, females are less likely to be overweight.
+
+- **Age**: Age is a significant predictor, with a positive coefficient of `0.30465`. This means that as age increases, the likelihood of being overweight also increases.
+
+- **Family History of Overweight**: Individuals with a family history of overweight are significantly more likely to be overweight themselves, indicated by the positive coefficient of `2.14091`.
+
+- **Vegetable Consumption**: Higher frequency of vegetable consumption is linked with a lower probability of being overweight, which is demonstrated by the negative coefficient of `-0.15872`.
+
+- **Number of Meals Per Day**: Eating fewer meals per day is associated with a higher chance of being overweight, as shown by the negative coefficient of `-0.60948`.
+
+- **Food Between Meals**: Consuming food frequently between meals has a negligible effect (coefficient of `-0.10316` with a high p-value), but never eating between meals (`coefficient 2.87107`) and sometimes eating between meals (`coefficient 2.10943`) significantly increase the likelihood of being overweight.
+
+- **Water Intake Daily**: Higher daily water intake is associated with a lesser likelihood of being overweight, as indicated by the positive coefficient of `0.91563`.
+
+- **Physical Activity**: Higher frequency of physical activity is correlated with a lower likelihood of being overweight, demonstrated by the negative coefficient of `-0.13055`.
+
+- **Alcohol Consumption**: The analysis shows that individuals who never (`-2.72373`) or sometimes (`-2.18747`) consume alcohol are less likely to be overweight compared to those who more frequently consume alcohol.
+
+- **Transportation Mode**: Using public transportation (`coefficient 1.21311`) or walking (`coefficient 1.00078`) are both significantly associated with a higher likelihood of being overweight. In contrast, using a bike for transportation (`coefficient -1.43488`) slightly reduces the likelihood.
+
+- **Age Group**: Young adults have a marginally less likelihood of being overweight (`coefficient -0.26825` with a p-value close to significant), whereas adults (`coefficient -1.16505`) and seniors (`coefficient -6.03456`) show significantly lower likelihoods compared to the base group, which might be composed of a younger cohort or teenagers.
+
 
 ### Complex LR
 
@@ -83,7 +98,7 @@ Once we introduced interaction terms, we noticed that both weight and height bec
 
 ### Stepwise LR
 
-Because of prolonged runtime issues, we opted against including stepwise Logistic Regression in our project.
+Due to extended runtime issues, we decided against incorporating stepwise Logistic Regression in our project. Please find the code block left commented out below for your reference.
 
 ```{r model_lr_step_02, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # # Build a model
@@ -122,7 +137,6 @@ cm_lr <- confusionMatrix(
 cm_lr
 ```
 
-
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_lr$overall[1], 4)``, sensitivity of ``r round(cm_lr$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_lr$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
 ```{r plot_auc_lr_02}
@@ -149,14 +163,18 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 
 ```{r write_prediction_lr_probability_02, echo=FALSE}
 # write to csv
-write.csv(prediction_lr_probability,
-          file = 'Predictions/prediction_lr_probability.csv',
-          row.names = FALSE)
+write.csv(
+  prediction_lr_probability,
+  file = 'Predictions/prediction_lr_probability.csv',
+  row.names = FALSE
+  )
 
 # Extract confusion matrix
-write.csv(cm_lr$table,
-          file = 'Confusion Matrix/cm_lr.csv',
-          row.names = FALSE)
+write.csv(
+  cm_lr$table,
+  file = 'Confusion Matrix/cm_lr.csv',
+  row.names = FALSE
+  )
 ```
 
 ### Complex LR
@@ -171,8 +189,6 @@ prediction_lr_complex_probability <- predict(
 
 attr(prediction_lr_complex_probability, "non-estim")
 attr(prediction_lr_complex_probability, "non-estim") <- NULL
-
-
 
 prediction_lr_complex <- ifelse(prediction_lr_complex_probability > 0.5, 1, 0)
 summary(prediction_lr_complex_probability)
@@ -229,30 +245,3 @@ write.csv(
 ### Stepwise LR
 
 No evaluation will be conducted since we abandoned running stepwise Logistic Regression.
-
-<!-- ```{r evaluate_lr_step_02} -->
-<!-- # Make a step LR prediction -->
-<!-- prediction_lr_step_probability <- predict(model_lr_step, -->
-<!--                                           newdata = test_lr, -->
-<!--                                           type = 'response') -->
-<!-- prediction_lr_step <- ifelse(prediction_lr_step_probability > 0.5, 1, 0) -->
-<!-- summary(prediction_lr_step_probability) -->
-
-<!-- # Perform confusion matrix -->
-<!-- cm_lr_step <- confusionMatrix(as.factor(prediction_lr_step), -->
-<!--                               as.factor(test_lr$obesity_leveloverweight), -->
-<!--                               positive = '1') -->
-<!-- cm_lr_step -->
-<!-- ``` -->
-
-<!-- ```{r write_prediction_lr_step_probability_02, echo=FALSE} -->
-<!-- # Write to csv -->
-<!-- write.csv(prediction_lr_step_probability, -->
-<!--           file = '../Predictions/prediction_lr_step_probability.csv', -->
-<!--           row.names = FALSE) -->
-
-<!-- # Extract confusion matrix -->
-<!-- write.csv(cm_lr_step$table, -->
-<!--           file = '../Confusion Matrix/cm_lr_step.csv', -->
-<!--           row.names = FALSE) -->
-<!-- ``` -->
