@@ -209,7 +209,7 @@ Based on the confusion matrix, we observe that the model achieves an accuracy of
 
 With all models completed, we will now assess their performance and compile a comprehensive accuracy table that showcases essential metrics for each model. In subsequent stages, we will explore the business implications to determine the potential impact of our models.
 
-```{r accuracy_table}
+```{r}
 # Load data
 file_paths <- c(
   'Confusion Matrix/cm_lr.csv',
@@ -311,10 +311,13 @@ accuracy_table <- accuracy_table[order(accuracy_table$Accuracy, decreasing = TRU
 rownames(accuracy_table) <- NULL
 
 # Make table into kable
-kable(accuracy_table, caption = 'Accuracy Table by Model') |>
-  footnote(general = 'All metrics are calculated using the test set.',
-           general_title = 'Please Note: ',
-           footnote_as_chunk = T)
+kable_output <- kable(accuracy_table, caption = "Accuracy Table by Model", format = "html") |>
+  kable_styling(bootstrap_options = c("striped", "hover")) |>
+  footnote(general = "All metrics are calculated using the test set.",
+           general_title = "Please Note:",
+           footnote_as_chunk = TRUE)
+
+kable_output
 ```
 
 

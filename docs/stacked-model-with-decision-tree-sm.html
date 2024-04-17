@@ -1008,13 +1008,16 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <span id="cb263-99"><a href="stacked-model-with-decision-tree-sm.html#cb263-99" tabindex="-1"></a><span class="fu">rownames</span>(accuracy_table) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb263-100"><a href="stacked-model-with-decision-tree-sm.html#cb263-100" tabindex="-1"></a></span>
 <span id="cb263-101"><a href="stacked-model-with-decision-tree-sm.html#cb263-101" tabindex="-1"></a><span class="co"># Make table into kable</span></span>
-<span id="cb263-102"><a href="stacked-model-with-decision-tree-sm.html#cb263-102" tabindex="-1"></a><span class="fu">kable</span>(accuracy_table, <span class="at">caption =</span> <span class="st">&#39;Accuracy Table by Model&#39;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb263-103"><a href="stacked-model-with-decision-tree-sm.html#cb263-103" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="at">general =</span> <span class="st">&#39;All metrics are calculated using the test set.&#39;</span>,</span>
-<span id="cb263-104"><a href="stacked-model-with-decision-tree-sm.html#cb263-104" tabindex="-1"></a>           <span class="at">general_title =</span> <span class="st">&#39;Please Note: &#39;</span>,</span>
-<span id="cb263-105"><a href="stacked-model-with-decision-tree-sm.html#cb263-105" tabindex="-1"></a>           <span class="at">footnote_as_chunk =</span> T)</span></code></pre></div>
-<table style="NAborder-bottom: 0;">
+<span id="cb263-102"><a href="stacked-model-with-decision-tree-sm.html#cb263-102" tabindex="-1"></a>kable_output <span class="ot">&lt;-</span> <span class="fu">kable</span>(accuracy_table, <span class="at">caption =</span> <span class="st">&quot;Accuracy Table by Model&quot;</span>, <span class="at">format =</span> <span class="st">&quot;html&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb263-103"><a href="stacked-model-with-decision-tree-sm.html#cb263-103" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb263-104"><a href="stacked-model-with-decision-tree-sm.html#cb263-104" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="at">general =</span> <span class="st">&quot;All metrics are calculated using the test set.&quot;</span>,</span>
+<span id="cb263-105"><a href="stacked-model-with-decision-tree-sm.html#cb263-105" tabindex="-1"></a>           <span class="at">general_title =</span> <span class="st">&quot;Please Note:&quot;</span>,</span>
+<span id="cb263-106"><a href="stacked-model-with-decision-tree-sm.html#cb263-106" tabindex="-1"></a>           <span class="at">footnote_as_chunk =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb263-107"><a href="stacked-model-with-decision-tree-sm.html#cb263-107" tabindex="-1"></a></span>
+<span id="cb263-108"><a href="stacked-model-with-decision-tree-sm.html#cb263-108" tabindex="-1"></a>kable_output</span></code></pre></div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
 <caption>
-(#tab:accuracy_table)(#tab:accuracy_table)Accuracy Table by Model
+<span id="tab:unnamed-chunk-63">Table 10.1: </span>Accuracy Table by Model
 </caption>
 <thead>
 <tr>
@@ -1261,7 +1264,7 @@ SM with Cost
 <tfoot>
 <tr>
 <td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Please Note: </span> <sup></sup> All metrics are calculated using the test set.
+<span style="font-style: italic;">Please Note:</span> <sup></sup> All metrics are calculated using the test set.
 </td>
 </tr>
 </tfoot>
