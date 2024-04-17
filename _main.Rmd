@@ -1,0 +1,398 @@
+---
+title: "Indirect Obesity Forecasting"
+author:
+- Aaron Zhao
+- Arneet Singh
+- Blake Waldman
+- Grace Coleman
+- Tyler James Phillips
+- Yousuf Altameemi
+date: "April 18, 2024"
+subtitle: Proxy Health Evaluation System (PHES)
+site: bookdown::bookdown_site
+description: "This is our team project for TO628. In this project, we are exploring
+  innovative predictive analytics methods to assess and manage obesity in the context
+  of potential government-imposed BMI usage restrictions. Utilizing the Proxy Health
+  Evaluation System (PHES), our approach circumvents these potential limitations,
+  providing health insurance companies and medical professionals with essential insights
+  to develop proactive health programs and enhance patient outcomes.\n"
+link-citations: true
+---
+
+# Introduction
+
+Placeholder
+
+
+## Dataset Overview {-}
+## Audience and Impact {-}
+## Challenges in Health Insurance {-}
+## Medical Professional Engagement {-}
+## Research Questions {-}
+## Adoption and Implementation {-}
+## Strategic Impact {-}
+
+<!--chapter:end:index.Rmd-->
+
+
+# Initial Analysis
+
+Placeholder
+
+
+## Load Data
+## Clean Data
+## Feature Engineering
+## Visualize Data
+## Split Data
+### Split Train Test
+### Split LR
+### Split DT
+### Split SVM
+### Split RF
+### Split XGB
+### Split ANN
+### Split KNN
+
+<!--chapter:end:01-initial-analysis.Rmd-->
+
+
+# Logistic Regression (LR)
+
+Placeholder
+
+
+## Introduction
+## Load Data
+## Model LR
+### Simple LR
+### Complex LR
+### Stepwise LR
+## Evaluate LR
+### Simple LR
+### Complex LR
+### Stepwise LR
+
+<!--chapter:end:02-logistic-regression.Rmd-->
+
+# Artificial Neural Network (ANN)
+
+<!-- ## R Packages and Setup {-} -->
+
+
+```{r load_libraries_03, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(caret)
+library(neuralnet)
+```
+
+
+## Introduction
+
+Below paragraph is copied from the assignment, we are planning on updating this as we formulate our narrative for the final deliverable:
+
+Artificial Neural Networks (ANNs) are modeled after the human brain and capable of learning and improving from experience. One strength is their ability to adapt to complex patterns and relationships in high-dimensional data, making them powerful tools for our dataset. However, ANNs require large amounts of training data and computational resources, which can make implementation time-consuming and resource-intensive.
+
+We will now attempt using an ANN. Despite being considered a ‘black box’ model due to its difficulty in interpreting decision-making processes compared to models like DT, ANNs may perform slightly better than LR in terms of accuracy.
+
+
+## Load Data
+
+```{r load_data_03}
+# Load data
+train_ann <- read.csv('Train Test Set/train_ann.csv')
+test_ann <- read.csv('Train Test Set/test_ann.csv')
+
+# Display statistics
+str(train_ann)
+summary(train_ann)
+head(train_ann)
+```
+
+
+## Model ANN
+
+### Simple ANN
+
+We will initiate with a single neuron (single node) ANN to run a preliminary simple model. Once we have finished working on that model, we will create a more complex model consisting of one hidden layer and one neuron.
+
+```{r model_ann_03, cache=TRUE}
+# Build a model
+model_ann <- neuralnet(
+  obesity_leveloverweight ~ .,
+  data = train_ann,
+  hidden = 1
+  )
+```
+
+```{r model_ann_summary_03}
+# Display summary
+summary(model_ann)
+```
+
+### Complex ANN
+
+Adding hidden layers increases computational requirements, so this will take significantly longer to run compared to a simple ANN.
+
+
+```{r model_ann_complex_03, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+# Display summary
+model_ann_complex <- neuralnet(
+  obesity_leveloverweight ~ .,
+  data = train_ann,
+  hidden = c(1, 1),
+  stepmax = 1e+07
+  )
+```
+
+```{r model_ann_complex_summary_03}
+# Display summary
+summary(model_ann_complex)
+```
+
+
+
+## Evaluate ANN
+
+### Simple ANN
+
+```{r evaluate_ann_03}
+# Make a prediction
+prediction_ann_probability <- predict(model_ann, test_ann)
+prediction_ann <- ifelse(prediction_ann_probability >= 0.5, 1, 0)
+summary(prediction_ann_probability)
+
+
+# Perform confusion matrix
+cm_ann <- confusionMatrix(
+  as.factor(prediction_ann),
+  as.factor(test_ann$obesity_leveloverweight),
+  positive = '1'
+  )
+cm_ann
+```
+
+Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_ann$overall[1], 4)``, sensitivity of ``r round(cm_ann$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_ann$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
+
+
+```{r plot_auc_ann_03}
+# Plot AUC
+pred <- ROCR::prediction(
+  prediction_ann_probability,
+  test_ann$obesity_leveloverweight
+  )
+perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
+auc <- ROCR::performance(pred, measure="auc")
+
+auc <- round(auc@y.values[[1]],3)
+roc.data <- data.frame(fpr=unlist(perf@x.values),
+                       tpr=unlist(perf@y.values),
+                       model="GLM")
+
+ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
+    geom_ribbon(alpha=0.2, fill = "blue") +
+    geom_line(aes(y=tpr), col = "blue") +
+    geom_abline(intercept = 0, slope = 1, lty = "dashed") +
+    labs(title = paste0("Simple ANN ROC Curve w/ AUC=", auc)) +
+    theme_bw()
+```
+
+```{r write_prediction_ann_probability_03, echo=FALSE}
+# write to csv
+write.csv(
+  prediction_ann_probability,
+  file = 'Predictions/prediction_ann_probability.csv',
+  row.names = FALSE
+  )
+
+# Extract confusion matrix
+write.csv(
+  cm_ann$table,
+  file = 'Confusion Matrix/cm_ann.csv',
+  row.names = FALSE
+  )
+```
+
+### Complex ANN
+
+```{r evaluate_ann_complex_03}
+# Make a prediction
+prediction_ann_complex_probability <- predict(model_ann_complex, test_ann)
+prediction_ann_complex <- ifelse(prediction_ann_complex_probability >= 0.5, 1, 0)
+summary(prediction_ann_complex_probability)
+
+# Perform confusion matrix
+cm_ann_complex <- confusionMatrix(
+  as.factor(prediction_ann_complex),
+  as.factor(test_ann$obesity_leveloverweight),
+  positive = '1'
+  )
+cm_ann_complex
+```
+
+Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_ann_complex$overall[1], 4)``, sensitivity of ``r round(cm_ann_complex$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_ann_complex$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
+
+```{r plot_auc_ann_complex_03}
+# Plot AUC
+pred <- ROCR::prediction(
+  prediction_ann_complex_probability,
+  test_ann$obesity_leveloverweight
+  )
+perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
+auc <- ROCR::performance(pred, measure="auc")
+
+
+auc <- round(auc@y.values[[1]],3)
+roc.data <- data.frame(fpr=unlist(perf@x.values),
+                       tpr=unlist(perf@y.values),
+                       model="GLM")
+
+ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
+    geom_ribbon(alpha=0.2, fill = "blue") +
+    geom_line(aes(y=tpr), col = "blue") +
+    geom_abline(intercept = 0, slope = 1, lty = "dashed") +
+    labs(title = paste0("Complex ANN ROC Curve w/ AUC=", auc)) +
+    theme_bw()
+```
+
+```{r write_prediction_ann_complex_probability_03, echo=FALSE}
+# write to csv
+write.csv(
+  prediction_ann_complex_probability,
+  file = 'Predictions/prediction_ann_complex_probability.csv',
+  row.names = FALSE
+  )
+
+# Extract confusion matrix
+write.csv(
+  cm_ann_complex$table,
+  file = 'Confusion Matrix/cm_ann_complex.csv',
+  row.names = FALSE
+  )
+```
+
+<!--chapter:end:03-artificial-neural-network.Rmd-->
+
+
+# K-Neareast Neighbor (KNN)
+
+Placeholder
+
+
+## Introduction
+## Load Data
+## Model KNN
+### Default KNN
+### Tuned KNN
+## Evaluate KNN
+### Default KNN
+### Tuned KNN
+
+<!--chapter:end:04-k-neareast-neighbor.Rmd-->
+
+
+# Decision Tree (DT)
+
+Placeholder
+
+
+## R Packages and Setup {-}
+## Introduction
+## Load Data
+## Model DT
+### Simple DT
+### DT with Cost Matrix
+## Evaluate DT
+### Simple DT
+### DT with Cost Matrix
+
+<!--chapter:end:05-decision-tree.Rmd-->
+
+
+# Support Vector Machine (SVM)
+
+Placeholder
+
+
+## R Packages and Setup {-}
+## Introduction
+## Load Data
+## Model SVM
+### Vanilla SVM
+### RBF SVM
+## Evaluate SVM
+### Vanilla SVM
+### RBF SVM
+
+<!--chapter:end:06-support-vector-machine.Rmd-->
+
+
+# Random Forest (RF)
+
+Placeholder
+
+
+## R Packages and Setup {-}
+## Introduction
+## Load Data
+## Model RF
+### Simple RF
+### Tuned RF
+## Evaluate RF
+### Simple RF
+### Tuned RF
+
+<!--chapter:end:07-random-forest.Rmd-->
+
+
+# XGBoost (XGB)
+
+Placeholder
+
+
+## Introduction
+## Load Data
+## Model XGB
+### Simple XGB
+### Tuned XGB
+## Evaluate XGB
+### Simple XGB
+### Tuned XGB
+
+<!--chapter:end:08-xgboost.Rmd-->
+
+
+# Stacked Model with Decision Tree (SM)
+
+Placeholder
+
+
+## R Packages and Setup {-}
+## Introduction
+## Load Data
+## Split Data
+## Define Cost Matrix
+## Model SM
+### Simple SM
+### SM with Cost Matrix
+## Evaluate SM
+### Simple SM
+### SM with Cost Matrix
+## Model Evaluations
+
+<!--chapter:end:09-stacked-model.Rmd-->
+
+# Conclusion
+
+## Takeaways
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet mauris commodo quis imperdiet massa tincidunt. Netus et malesuada fames ac turpis egestas maecenas pharetra. Viverra suspendisse potenti nullam ac tortor vitae. Quis blandit turpis cursus in hac habitasse. Lobortis elementum nibh tellus molestie nunc. Habitant morbi tristique senectus et netus et malesuada. A iaculis at erat pellentesque adipiscing commodo. Nisl pretium fusce id velit ut tortor pretium. Scelerisque eu ultrices vitae auctor eu. Fusce id velit ut tortor pretium viverra suspendisse potenti nullam. Eget gravida cum sociis natoque penatibus et. Erat velit scelerisque in dictum non. Nulla facilisi cras fermentum odio eu feugiat pretium nibh. Tempus egestas sed sed risus pretium.
+
+Nulla at volutpat diam ut. Amet mattis vulputate enim nulla aliquet porttitor lacus luctus. Sit amet volutpat consequat mauris nunc congue nisi. Cursus mattis molestie a iaculis at erat. Posuere morbi leo urna molestie. In fermentum posuere urna nec tincidunt praesent. Arcu risus quis varius quam quisque id. Proin nibh nisl condimentum id venenatis a. Dui faucibus in ornare quam viverra orci sagittis. Est velit egestas dui id ornare. Adipiscing commodo elit at imperdiet dui accumsan. Vel quam elementum pulvinar etiam non. Nascetur ridiculus mus mauris vitae ultricies leo integer. Mattis rhoncus urna neque viverra justo nec ultrices dui sapien. Sed risus pretium quam vulputate dignissim suspendisse in. Eu feugiat pretium nibh ipsum consequat nisl. Elit at imperdiet dui accumsan sit amet nulla facilisi morbi.
+
+## Business Impact
+
+Sit amet aliquam id diam maecenas. Convallis posuere morbi leo urna molestie at elementum eu. Nunc non blandit massa enim nec dui nunc. In arcu cursus euismod quis. Fermentum dui faucibus in ornare quam viverra. Tortor at risus viverra adipiscing at. Sit amet tellus cras adipiscing enim eu turpis. Dui accumsan sit amet nulla facilisi morbi tempus iaculis urna. Ac odio tempor orci dapibus ultrices in iaculis nunc sed. Tellus id interdum velit laoreet id donec. Pellentesque massa placerat duis ultricies lacus. Vitae et leo duis ut diam quam nulla. Nunc scelerisque viverra mauris in. Tristique magna sit amet purus gravida quis. Sodales neque sodales ut etiam sit amet. Pulvinar elementum integer enim neque volutpat ac tincidunt vitae semper. Nec feugiat in fermentum posuere urna nec tincidunt. Purus in massa tempor nec feugiat nisl pretium fusce.
+
+<!--chapter:end:10-conclusion.Rmd-->
+

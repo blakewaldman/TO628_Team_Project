@@ -1,9 +1,9 @@
 
 # Initial Analysis
 
-## R Packages and Setup {-}
+<!-- ## R Packages and Setup {-} -->
 
-```{r, include=FALSE}
+```{r load_libraries_01, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(janitor)
 library(dplyr)
@@ -16,7 +16,7 @@ library(skimr)
 
 Let's begin by loading the dataset and examining its crucial variables and values.
 
-```{r}
+```{r load_data_01}
 # Load data
 raw <- read.csv('obesity_level.csv')
 
@@ -56,7 +56,7 @@ According to the dataset, the following facts can be observed:
 
 We will perform data cleaning in the following steps, as the dataset is rather messy.
 
-```{r}
+```{r clean_data_01}
 # Copy raw data
 cleaned <- raw
 
@@ -133,7 +133,7 @@ With the dataset cleaned, we will now attempt some basic levels of feature engin
 
 **Note that we are not using `BMI`, `Height`, or `Weight` as predictors given that we are trying to build models without these variables.**
 
-```{r}
+```{r feature_engineering_01}
 # Create BMI column
 # cleaned$bmi <- cleaned$weight / (cleaned$height ^ 2)
 
@@ -172,7 +172,7 @@ head(cleaned)
 
 Now that all features have been added, we will proceed with our exploratory data analysis
 
-```{r}
+```{r visualize_data_01}
 # Identify categorical and numerical columns
 categorical_cols <- sapply(cleaned, is.factor)
 numerical_cols <- sapply(cleaned, is.numeric)
@@ -244,7 +244,7 @@ Based on the visuals, we can see that:
 
 We will initially split the data with a 50-50 ratio for train and test sets in our stacked models, reserving sufficient data for re-splitting during the second level model.
 
-```{r}
+```{r split_data_01}
 # Copy cleaned data
 split <- cleaned
 
@@ -267,13 +267,13 @@ train_rows <- sample(1:nrow(dummied), train_ratio * nrow(dummied))
 
 ### Split Train Test
 
-```{r}
+```{r split_train_test_01}
 # Train test split
 train <- dummied[train_rows, ]
 test <- dummied[-train_rows, ]
 ```
 
-```{r, echo=FALSE}
+```{r write_train_test_01, echo=FALSE}
 # Write to csv
 write.csv(train, 'Train Test Set/train.csv', row.names = FALSE)
 write.csv(test, 'Train Test Set/test.csv', row.names = FALSE)
@@ -282,13 +282,13 @@ write.csv(test, 'Train Test Set/test.csv', row.names = FALSE)
 
 ### Split LR
 
-```{r}
+```{r split_lr_01}
 # LR split
 train_lr <- dummied[train_rows, ]
 test_lr <- dummied[-train_rows, ]
 ```
 
-```{r, echo=FALSE}
+```{r write_lr_01, echo=FALSE}
 # Write to csv
 write.csv(train_lr, 'Train Test Set/train_lr.csv', row.names = FALSE)
 write.csv(test_lr, 'Train Test Set/test_lr.csv', row.names = FALSE)
@@ -297,13 +297,13 @@ write.csv(test_lr, 'Train Test Set/test_lr.csv', row.names = FALSE)
 
 ### Split DT
 
-```{r}
+```{r split_dt_01}
 # DT Split
 train_dt <- dummied[train_rows, ]
 test_dt <- dummied[-train_rows, ]
 ```
 
-```{r, echo=FALSE}
+```{r write_dt_01, echo=FALSE}
 write.csv(train_dt, 'Train Test Set/train_dt.csv', row.names = FALSE)
 write.csv(test_dt, 'Train Test Set/test_dt.csv', row.names = FALSE)
 ```
@@ -311,13 +311,13 @@ write.csv(test_dt, 'Train Test Set/test_dt.csv', row.names = FALSE)
 
 ### Split SVM
 
-```{r}
+```{r split_svm_01}
 # DT Split
 train_svm <- dummied[train_rows, ]
 test_svm <- dummied[-train_rows, ]
 ```
 
-```{r, echo=FALSE}
+```{r write_svm_01, echo=FALSE}
 write.csv(train_svm, 'Train Test Set/train_svm.csv', row.names = FALSE)
 write.csv(test_svm, 'Train Test Set/test_svm.csv', row.names = FALSE)
 ```
@@ -325,13 +325,13 @@ write.csv(test_svm, 'Train Test Set/test_svm.csv', row.names = FALSE)
 
 ### Split RF
 
-```{r}
+```{r split_rf_01}
 # DT Split
 train_rf <- dummied[train_rows, ]
 test_rf <- dummied[-train_rows, ]
 ```
 
-```{r, echo=FALSE}
+```{r write_rf_01, echo=FALSE}
 write.csv(train_rf, 'Train Test Set/train_rf.csv', row.names = FALSE)
 write.csv(test_rf, 'Train Test Set/test_rf.csv', row.names = FALSE)
 ```
@@ -339,13 +339,13 @@ write.csv(test_rf, 'Train Test Set/test_rf.csv', row.names = FALSE)
 
 ### Split XGB
 
-```{r}
+```{r split_xgb_01}
 # DT Split
 train_xgb <- dummied[train_rows, ]
 test_xgb <- dummied[-train_rows, ]
 ```
 
-```{r, echo=FALSE}
+```{r write_xgb_01, echo=FALSE}
 write.csv(train_xgb, 'Train Test Set/train_xgb.csv', row.names = FALSE)
 write.csv(test_xgb, 'Train Test Set/test_xgb.csv', row.names = FALSE)
 ```
@@ -355,7 +355,7 @@ write.csv(test_xgb, 'Train Test Set/test_xgb.csv', row.names = FALSE)
 
 Remember that ANN necessitate normalized data. We will implement min-max normalization, excluding the outcome variable, for successful integration into our models.
 
-```{r}
+```{r split_ann_01}
 # ANN split
 
 # Normalize data
@@ -375,7 +375,7 @@ train_ann <- dummied[train_rows, ]
 test_ann <- dummied[-train_rows, ]
 ```
 
-```{r, echo=FALSE}
+```{r write_ann_01, echo=FALSE}
 # Write to csv
 write.csv(train_ann, 'Train Test Set/train_ann.csv', row.names = FALSE)
 write.csv(test_ann, 'Train Test Set/test_ann.csv', row.names = FALSE)
@@ -384,28 +384,18 @@ write.csv(test_ann, 'Train Test Set/test_ann.csv', row.names = FALSE)
 
 ### Split KNN
 
-Similar to ANN, KNN also require a min-max normalized dataset for optimal performance. Additionally, it is essential to distinguish between predictor and outcome variables when running the model.
+Similar to ANN, KNN also require a min-max normalized dataset for optimal performance.
 
-```{r}
+```{r split_knn_01}
 # KNN split
 train_knn <- train_ann
 test_knn <- test_ann
-
-train_knn_x <- train_knn
-train_knn_x$obesity_leveloverweight <- NULL
-train_knn_y <- train_knn$obesity_leveloverweight
-
-test_knn_x <- test_knn
-test_knn_x$obesity_leveloverweight <- NULL
-test_knn_y <- test_knn$obesity_leveloverweight
 ```
 
-```{r, echo=FALSE}
+```{r write_knn_01, echo=FALSE}
 # Write to csv
-write.csv(train_knn_y,'Train Test Set/train_knn_y.csv', row.names = FALSE)
-write.csv(train_knn_x,'Train Test Set/train_knn_x.csv', row.names = FALSE)
-write.csv(test_knn_y,'Train Test Set/test_knn_y.csv', row.names = FALSE)
-write.csv(test_knn_x,'Train Test Set/test_knn_x.csv', row.names = FALSE)
+write.csv(train_knn,'Train Test Set/train_knn.csv', row.names = FALSE)
+write.csv(test_knn,'Train Test Set/test_knn.csv', row.names = FALSE)
 ```
 
 Once all train and test sets have been split, we will proceed to module 1 for L1 modeling.

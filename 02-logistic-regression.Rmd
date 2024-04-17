@@ -1,8 +1,8 @@
 # Logistic Regression (LR)
 
-## R Packages and Setup {-}
+<!-- ## R Packages and Setup {-} -->
 
-```{r, include=FALSE}
+```{r load_libraries_02, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(caret)
 ```
@@ -21,7 +21,7 @@ Our initial model will utilize LR. With LR, we can efficiently calculate the pro
 
 ## Load Data
 
-```{r}
+```{r load_data_02}
 # Load data
 train_lr <- read.csv('Train Test Set/train_lr.csv')
 test_lr <- read.csv('Train Test Set/test_lr.csv')
@@ -39,14 +39,14 @@ head(train_lr)
 
 The model we are building here is a simple LR model that utilizes all the features as predictors and considers a binary outcome labeled `obesity_leveloverweight`.
 
-```{r model_lr, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r model_lr_02, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Build a model
 model_lr <- glm(obesity_leveloverweight ~ .,
                 data = train_lr,
                 family = 'binomial')
 ```
 
-```{r model_lr_summary, collapse=TRUE}
+```{r model_lr_summary_02, collapse=TRUE}
 # Display summary
 summary(model_lr)
 ```
@@ -63,14 +63,14 @@ Based on the logistic regression results, we can make the following observations
 
 ### Complex LR
 
-```{r model_lr_complex, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r model_lr_complex_02, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Build a model
 model_lr_complex <- glm(obesity_leveloverweight ~ . + . * .,
                         data = train_lr,
                         family = 'binomial')
 ```
 
-```{r model_lr_complex_summary, collapse=TRUE}
+```{r model_lr_complex_summary_02, collapse=TRUE}
 # Display summary
 summary(model_lr_complex)
 ```
@@ -81,13 +81,13 @@ Once we introduced interaction terms, we noticed that both weight and height bec
 
 Because of prolonged runtime issues, we opted against including stepwise Logistic Regression in our project.
 
-```{r model_lr_step, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r model_lr_step_02, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # # Build a model
 # model_lr_step <- step(model_lr_complex,
 #                       direction = 'backward')
 ```
 
-```{r model_lr_step_summary}
+```{r model_lr_step_summary_02}
 # # Display summary
 # summary(model_lr_step)
 ```
@@ -97,7 +97,7 @@ Because of prolonged runtime issues, we opted against including stepwise Logisti
 
 ### Simple LR
 
-```{r evaluate_lr}
+```{r evaluate_lr_02}
 # Make a LR prediction
 prediction_lr_probability <- predict(model_lr,
                                      newdata = test_lr,
@@ -115,7 +115,8 @@ cm_lr
 
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_lr$overall[1], 4)``, sensitivity of ``r round(cm_lr$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_lr$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
-```{r}
+```{r plot_auc_lr_02}
+# Plot AUC
 pred <- ROCR::prediction(prediction_lr_probability, test_lr$obesity_leveloverweight)
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
 auc <- ROCR::performance(pred, measure="auc")
@@ -134,7 +135,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     theme_bw()
 ```
 
-```{r write_prediction_lr_probability, echo=FALSE}
+```{r write_prediction_lr_probability_02, echo=FALSE}
 # write to csv
 write.csv(prediction_lr_probability,
           file = 'Predictions/prediction_lr_probability.csv',
@@ -148,7 +149,7 @@ write.csv(cm_lr$table,
 
 ### Complex LR
 
-```{r evaluate_lr_complex}
+```{r evaluate_lr_complex_02}
 # Make a complex LR prediction
 prediction_lr_complex_probability <- predict(model_lr_complex,
                                              newdata = test_lr,
@@ -171,11 +172,11 @@ cm_lr_complex
 
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_lr_complex$overall[1], 4)``, sensitivity of ``r round(cm_lr_complex$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_lr_complex$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
-```{r}
+```{r plot_auc_lr_complex_02}
+# Plot AUC
 pred <- ROCR::prediction(prediction_lr_complex_probability, test_lr$obesity_leveloverweight)
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
 auc <- ROCR::performance(pred, measure="auc")
-
 
 auc <- round(auc@y.values[[1]],3)
 roc.data <- data.frame(fpr=unlist(perf@x.values),
@@ -190,7 +191,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     theme_bw()
 ```
 
-```{r write_prediction_lr_complex_probability, echo=FALSE}
+```{r write_prediction_lr_complex_probability_02, echo=FALSE}
 # Write to csv
 write.csv(prediction_lr_complex_probability,
           file = 'Predictions/prediction_lr_complex_probability.csv',
@@ -206,7 +207,7 @@ write.csv(cm_lr_complex$table,
 
 No evaluation will be conducted since we abandoned running stepwise Logistic Regression.
 
-<!-- ```{r evaluate_lr_step} -->
+<!-- ```{r evaluate_lr_step_02} -->
 <!-- # Make a step LR prediction -->
 <!-- prediction_lr_step_probability <- predict(model_lr_step, -->
 <!--                                           newdata = test_lr, -->
@@ -221,7 +222,7 @@ No evaluation will be conducted since we abandoned running stepwise Logistic Reg
 <!-- cm_lr_step -->
 <!-- ``` -->
 
-<!-- ```{r write_prediction_lr_step_probability, echo=FALSE} -->
+<!-- ```{r write_prediction_lr_step_probability_02, echo=FALSE} -->
 <!-- # Write to csv -->
 <!-- write.csv(prediction_lr_step_probability, -->
 <!--           file = '../Predictions/prediction_lr_step_probability.csv', -->

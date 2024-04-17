@@ -1,9 +1,9 @@
 # Artificial Neural Network (ANN)
 
-## R Packages and Setup {-}
+<!-- ## R Packages and Setup {-} -->
 
 
-```{r, include=FALSE}
+```{r load_libraries_03, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(caret)
 library(neuralnet)
@@ -21,7 +21,7 @@ We will now attempt using an ANN. Despite being considered a ‘black box’ mod
 
 ## Load Data
 
-```{r}
+```{r load_data_03}
 # Load data
 train_ann <- read.csv('Train Test Set/train_ann.csv')
 test_ann <- read.csv('Train Test Set/test_ann.csv')
@@ -39,14 +39,16 @@ head(train_ann)
 
 We will initiate with a single neuron (single node) ANN to run a preliminary simple model. Once we have finished working on that model, we will create a more complex model consisting of one hidden layer and one neuron.
 
-```{r, cache=TRUE}
+```{r model_ann_03, cache=TRUE}
 # Build a model
-model_ann <- neuralnet(obesity_leveloverweight ~ .,
-                       data = train_ann,
-                       hidden = 1)
+model_ann <- neuralnet(
+  obesity_leveloverweight ~ .,
+  data = train_ann,
+  hidden = 1
+  )
 ```
 
-```{r}
+```{r model_ann_summary_03}
 # Display summary
 summary(model_ann)
 ```
@@ -56,14 +58,19 @@ summary(model_ann)
 Adding hidden layers increases computational requirements, so this will take significantly longer to run compared to a simple ANN.
 
 
-```{r, cache=TRUE}
+```{r model_ann_complex_03, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Display summary
-model_ann_complex <- neuralnet(obesity_leveloverweight ~ .,
-                               data = train_ann,
-                               hidden = c(1, 1), stepmax = 1e+07)
+model_ann_complex <- neuralnet(
+  obesity_leveloverweight ~ .,
+  data = train_ann,
+  hidden = c(1, 1),
+  stepmax = 1e+07
+  )
+```
 
+```{r model_ann_complex_summary_03}
+# Display summary
 summary(model_ann_complex)
-
 ```
 
 
@@ -72,7 +79,7 @@ summary(model_ann_complex)
 
 ### Simple ANN
 
-```{r}
+```{r evaluate_ann_03}
 # Make a prediction
 prediction_ann_probability <- predict(model_ann, test_ann)
 prediction_ann <- ifelse(prediction_ann_probability >= 0.5, 1, 0)
@@ -80,20 +87,25 @@ summary(prediction_ann_probability)
 
 
 # Perform confusion matrix
-cm_ann <- confusionMatrix(as.factor(prediction_ann),
-                          as.factor(test_ann$obesity_leveloverweight),
-                          positive = '1')
+cm_ann <- confusionMatrix(
+  as.factor(prediction_ann),
+  as.factor(test_ann$obesity_leveloverweight),
+  positive = '1'
+  )
 cm_ann
 ```
 
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_ann$overall[1], 4)``, sensitivity of ``r round(cm_ann$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_ann$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
 
-```{r}
-pred <- ROCR::prediction(prediction_ann_probability, test_ann$obesity_leveloverweight)
+```{r plot_auc_ann_03}
+# Plot AUC
+pred <- ROCR::prediction(
+  prediction_ann_probability,
+  test_ann$obesity_leveloverweight
+  )
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
 auc <- ROCR::performance(pred, measure="auc")
-
 
 auc <- round(auc@y.values[[1]],3)
 roc.data <- data.frame(fpr=unlist(perf@x.values),
@@ -108,38 +120,47 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     theme_bw()
 ```
 
-```{r, echo=FALSE}
+```{r write_prediction_ann_probability_03, echo=FALSE}
 # write to csv
-write.csv(prediction_ann_probability,
-          file = 'Predictions/prediction_ann_probability.csv',
-          row.names = FALSE)
+write.csv(
+  prediction_ann_probability,
+  file = 'Predictions/prediction_ann_probability.csv',
+  row.names = FALSE
+  )
 
 # Extract confusion matrix
-write.csv(cm_ann$table,
-          file = 'Confusion Matrix/cm_ann.csv',
-          row.names = FALSE)
+write.csv(
+  cm_ann$table,
+  file = 'Confusion Matrix/cm_ann.csv',
+  row.names = FALSE
+  )
 ```
 
 ### Complex ANN
 
-```{r}
+```{r evaluate_ann_complex_03}
 # Make a prediction
 prediction_ann_complex_probability <- predict(model_ann_complex, test_ann)
 prediction_ann_complex <- ifelse(prediction_ann_complex_probability >= 0.5, 1, 0)
 summary(prediction_ann_complex_probability)
 
 # Perform confusion matrix
-cm_ann_complex <- confusionMatrix(as.factor(prediction_ann_complex),
-                                  as.factor(test_ann$obesity_leveloverweight),
-                                  positive = '1')
+cm_ann_complex <- confusionMatrix(
+  as.factor(prediction_ann_complex),
+  as.factor(test_ann$obesity_leveloverweight),
+  positive = '1'
+  )
 cm_ann_complex
-
 ```
 
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_ann_complex$overall[1], 4)``, sensitivity of ``r round(cm_ann_complex$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_ann_complex$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
-```{r}
-pred <- ROCR::prediction(prediction_ann_complex_probability, test_ann$obesity_leveloverweight)
+```{r plot_auc_ann_complex_03}
+# Plot AUC
+pred <- ROCR::prediction(
+  prediction_ann_complex_probability,
+  test_ann$obesity_leveloverweight
+  )
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
 auc <- ROCR::performance(pred, measure="auc")
 
@@ -157,14 +178,18 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     theme_bw()
 ```
 
-```{r, echo=FALSE}
+```{r write_prediction_ann_complex_probability_03, echo=FALSE}
 # write to csv
-write.csv(prediction_ann_complex_probability,
-          file = 'Predictions/prediction_ann_complex_probability.csv',
-          row.names = FALSE)
+write.csv(
+  prediction_ann_complex_probability,
+  file = 'Predictions/prediction_ann_complex_probability.csv',
+  row.names = FALSE
+  )
 
 # Extract confusion matrix
-write.csv(cm_ann_complex$table,
-          file = 'Confusion Matrix/cm_ann_complex.csv',
-          row.names = FALSE)
+write.csv(
+  cm_ann_complex$table,
+  file = 'Confusion Matrix/cm_ann_complex.csv',
+  row.names = FALSE
+  )
 ```

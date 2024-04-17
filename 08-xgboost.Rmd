@@ -2,7 +2,7 @@
 
 <!-- ## R Packages and Setup {-} -->
 
-```{r libraries, include=FALSE}
+```{r load_libraries_08, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(caret)
 library(pROC)
@@ -17,7 +17,7 @@ Placeholder.
 
 ## Load Data
 
-```{r load_data}
+```{r load_data_08}
 # Load data
 train_xgb <- read.csv('Train Test Set/train_xgb.csv')
 test_xgb <- read.csv('Train Test Set/test_xgb.csv')
@@ -39,7 +39,7 @@ head(train_xgb)
 
 ### Simple XGB
 
-```{r model_xgb, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r model_xgb_08, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Set seed for reproducibility
 set.seed(12345)
 
@@ -52,14 +52,14 @@ model_xgb <- xgboost(
   )
 ```
 
-```{r model_xgb_summary}
+```{r model_xgb_summary_08}
 # Display summary
 summary(model_xgb)
 ```
 
 ### Tuned XGB
 
-```{r model_xgb_tuned_setup}
+```{r model_xgb_tuned_setup_08}
 # Set seed for reproducibility
 set.seed(12345)
 
@@ -83,7 +83,7 @@ grid <- expand.grid(
 ```
 
 
-```{r model_xgb_tuned, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+```{r model_xgb_tuned_08, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
 # Tune the model
 xgb_tuned <- train(
   x = as.matrix(train_xgb_x),
@@ -97,7 +97,7 @@ xgb_tuned <- train(
 model_xgb_tuned <- xgb_tuned$finalModel
 ```
 
-```{r model_xgb_tuned_summary}
+```{r model_xgb_tuned_summary_08}
 # Display summary
 print(xgb_tuned)
 summary(model_xgb_tuned)
@@ -108,7 +108,7 @@ summary(model_xgb_tuned)
 
 ### Simple XGB
 
-```{r evaluate_xgb}
+```{r evaluate_xgb_08}
 # Make a prediction
 prediction_xgb_probability <- predict(model_xgb, as.matrix(test_xgb_x))
 prediction_xgb <- ifelse(prediction_xgb_probability > 0.5, 1, 0)
@@ -126,7 +126,7 @@ cm_xgb
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_xgb$overall[1], 4)``, sensitivity of ``r round(cm_xgb$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_xgb$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
 
-```{r plot_auc_xgb}
+```{r plot_auc_xgb_08}
 # Plot AUC
 pred <- ROCR::prediction(prediction_xgb_probability, test_xgb_y)
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
@@ -145,7 +145,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     theme_bw()
 ```
 
-```{r write_prediction_xgb, echo=FALSE}
+```{r write_prediction_xgb_08, echo=FALSE}
 # Write to csv
 write.csv(
   prediction_xgb_probability,
@@ -163,7 +163,7 @@ write.csv(
 
 ### Tuned XGB
 
-```{r evaluate_xgb_tuned}
+```{r evaluate_xgb_tuned_08}
 # Make a prediction
 prediction_xgb_tuned_probability <- predict(model_xgb_tuned, as.matrix(test_xgb_x))
 prediction_xgb_tuned <- ifelse(prediction_xgb_tuned_probability > 0.5, 0, 1)
@@ -181,7 +181,7 @@ cm_xgb_tuned
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_xgb_tuned$overall[1], 4)``, sensitivity of ``r round(cm_xgb_tuned$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_xgb_tuned$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
 
-```{r plot_auc_xgb_tuned}
+```{r plot_auc_xgb_tuned_08}
 # Plot AUC
 pred <- ROCR::prediction(prediction_xgb_tuned_probability, 1-test_xgb_y)
 perf <- ROCR::performance(pred, measure = "tpr", x.measure = "fpr")
@@ -200,7 +200,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     theme_bw()
 ```
 
-```{r write_prediction_xgb_tuned, echo=FALSE}
+```{r write_prediction_xgb_tuned_08, echo=FALSE}
 # Write to csv
 write.csv(
   prediction_xgb_tuned_probability,
