@@ -130,7 +130,6 @@ cm_xgb
 
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_xgb$overall[1], 4)``, sensitivity of ``r round(cm_xgb$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_xgb$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
 
-
 ```{r plot_auc_xgb_08}
 # Plot AUC
 pred <- ROCR::prediction(prediction_xgb_probability, test_xgb_y)
@@ -186,7 +185,6 @@ cm_xgb_tuned
 ```
 
 Based on the confusion matrix, we observe that the model achieves an accuracy of ``r round(cm_xgb_tuned$overall[1], 4)``, sensitivity of ``r round(cm_xgb_tuned$byClass[1], 4)``, and a Kappa coefficient of ``r round(cm_xgb_tuned$overall[2], 4)``. We will assess these results towards the conclusion of the assignment when we have completed stacked models.
-
 
 ```{r plot_auc_xgb_tuned_08}
 # Plot AUC

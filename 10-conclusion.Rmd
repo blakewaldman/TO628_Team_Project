@@ -2,10 +2,23 @@
 
 ## Takeaways
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet mauris commodo quis imperdiet massa tincidunt. Netus et malesuada fames ac turpis egestas maecenas pharetra. Viverra suspendisse potenti nullam ac tortor vitae. Quis blandit turpis cursus in hac habitasse. Lobortis elementum nibh tellus molestie nunc. Habitant morbi tristique senectus et netus et malesuada. A iaculis at erat pellentesque adipiscing commodo. Nisl pretium fusce id velit ut tortor pretium. Scelerisque eu ultrices vitae auctor eu. Fusce id velit ut tortor pretium viverra suspendisse potenti nullam. Eget gravida cum sociis natoque penatibus et. Erat velit scelerisque in dictum non. Nulla facilisi cras fermentum odio eu feugiat pretium nibh. Tempus egestas sed sed risus pretium.
+If insurance companies were to stop using height and weight as part of their models for calculating insurance rates, a shift toward utilizing behavioral and lifestyle factors such as dietary habits and physical activities would become increasingly important. This approach would enable them to effectively market insurance products to individuals more likely to require their services, thereby potentially increasing the associated costs.
 
-Nulla at volutpat diam ut. Amet mattis vulputate enim nulla aliquet porttitor lacus luctus. Sit amet volutpat consequat mauris nunc congue nisi. Cursus mattis molestie a iaculis at erat. Posuere morbi leo urna molestie. In fermentum posuere urna nec tincidunt praesent. Arcu risus quis varius quam quisque id. Proin nibh nisl condimentum id venenatis a. Dui faucibus in ornare quam viverra orci sagittis. Est velit egestas dui id ornare. Adipiscing commodo elit at imperdiet dui accumsan. Vel quam elementum pulvinar etiam non. Nascetur ridiculus mus mauris vitae ultricies leo integer. Mattis rhoncus urna neque viverra justo nec ultrices dui sapien. Sed risus pretium quam vulputate dignissim suspendisse in. Eu feugiat pretium nibh ipsum consequat nisl. Elit at imperdiet dui accumsan sit amet nulla facilisi morbi.
+With our models, we could accurately predict potential obese individuals using only lifestyle factors, achieving high accuracy levels of 90%. Insurance companies, by leveraging our modeling pipeline, could price health insurance premiums more appropriately.
 
-## Business Impact
+By integrating the typical additional healthcare costs of $2,500 for obese individuals with the probability of obesity calculated by our model, insurers could refine their premium policy adjustments to better reflect individual risk profiles, thus potentially enhancing their financial outlook.
 
-Sit amet aliquam id diam maecenas. Convallis posuere morbi leo urna molestie at elementum eu. Nunc non blandit massa enim nec dui nunc. In arcu cursus euismod quis. Fermentum dui faucibus in ornare quam viverra. Tortor at risus viverra adipiscing at. Sit amet tellus cras adipiscing enim eu turpis. Dui accumsan sit amet nulla facilisi morbi tempus iaculis urna. Ac odio tempor orci dapibus ultrices in iaculis nunc sed. Tellus id interdum velit laoreet id donec. Pellentesque massa placerat duis ultricies lacus. Vitae et leo duis ut diam quam nulla. Nunc scelerisque viverra mauris in. Tristique magna sit amet purus gravida quis. Sodales neque sodales ut etiam sit amet. Pulvinar elementum integer enim neque volutpat ac tincidunt vitae semper. Nec feugiat in fermentum posuere urna nec tincidunt. Purus in massa tempor nec feugiat nisl pretium fusce.
+We would advise insurance companies to prioritize stacked models without the cost matrix to minimize false negatives, ensuring that high-risk individuals are accurately identified. This approach could lead to a reduction in overall insurance payouts.
+
+
+## Business Impact - Recommendations
+
+Here are some additional recommendations we will provide based on this analysis:
+
+  - Improve the model by incorporating additional behavioral variables such as sleep patterns and occupational details. This could enhance risk prediction accuracy and prepare the companies for potential regulatory changes that might limit the use of traditional metrics like BMI.
+
+  - Develop incentive programs that reward insured clients for measurable health improvements and engagement in preventive health programs. These incentives could take the form of premium reductions or rebates, aligning financial savings with healthy outcomes.
+
+  - Adjust policies to ensure that premium adjustments are fair and transparently communicated to customers. This would provide trust in health management programs, ultimately leading to reduced insurance claims.
+
+We believe it is important to continuously monitor the effectiveness of the model on real world data and its impact on insurance payouts.
