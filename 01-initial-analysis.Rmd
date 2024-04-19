@@ -9,6 +9,9 @@ library(janitor)
 library(dplyr)
 library(ggplot2)
 library(corrplot)
+library(caret)
+library(kableExtra)
+library(naniar)
 library(skimr)
 ```
 
@@ -16,14 +19,15 @@ library(skimr)
 
 Let's begin by loading the dataset and examining its crucial variables and values.
 
-```{r load_data_01}
+```{r}
 # Load data
 raw <- read.csv('obesity_level.csv')
 
 # Display statistics
-str(raw)
+kable(raw, caption = "The Raw Obesity Data", digits = 4) |>
+    kable_styling(bootstrap_options = c("responsive", "striped", "hover", "condensed")) |>
+    scroll_box(width = "100%", height = "300px")
 summary(raw)
-head(raw)
 ```
 
 According to the dataset, the following facts can be observed:
@@ -56,9 +60,15 @@ According to the dataset, the following facts can be observed:
 
 We will perform data cleaning in the following steps, as the dataset is rather messy.
 
-```{r clean_data_01}
+```{r}
 # Copy raw data
 cleaned <- raw
+
+mis_var <- cleaned |> miss_var_summary()
+
+kable(mis_var, caption = "Missing Variable Summary", digits = 2) |>
+      kable_styling(bootstrap_options = 
+                      c("responsive", "striped", "hover", "condensed")) 
 
 # Drop unnecessary columns
 cleaned <- cleaned %>%

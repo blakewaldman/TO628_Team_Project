@@ -59,11 +59,35 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Code Chunks") elem.value = "Show Code Chunks";
+    else elem.value = "Hide Code Chunks";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Code Chunks" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -73,7 +97,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -336,19 +360,19 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 </div>
 <div id="load-data-3" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Load Data<a href="k-neareast-neighbor-knn.html#load-data-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="k-neareast-neighbor-knn.html#cb84-1" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb84-2"><a href="k-neareast-neighbor-knn.html#cb84-2" tabindex="-1"></a>train_knn <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_knn.csv&#39;</span>)</span>
-<span id="cb84-3"><a href="k-neareast-neighbor-knn.html#cb84-3" tabindex="-1"></a>test_knn <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_knn.csv&#39;</span>)</span>
-<span id="cb84-4"><a href="k-neareast-neighbor-knn.html#cb84-4" tabindex="-1"></a></span>
-<span id="cb84-5"><a href="k-neareast-neighbor-knn.html#cb84-5" tabindex="-1"></a><span class="co"># Split features and predictor</span></span>
-<span id="cb84-6"><a href="k-neareast-neighbor-knn.html#cb84-6" tabindex="-1"></a>train_knn_x <span class="ot">&lt;-</span> train_knn[, <span class="sc">!</span><span class="fu">names</span>(train_knn) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
-<span id="cb84-7"><a href="k-neareast-neighbor-knn.html#cb84-7" tabindex="-1"></a>train_knn_y <span class="ot">&lt;-</span> train_knn[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
-<span id="cb84-8"><a href="k-neareast-neighbor-knn.html#cb84-8" tabindex="-1"></a></span>
-<span id="cb84-9"><a href="k-neareast-neighbor-knn.html#cb84-9" tabindex="-1"></a>test_knn_x <span class="ot">&lt;-</span> test_knn[, <span class="sc">!</span><span class="fu">names</span>(test_knn) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
-<span id="cb84-10"><a href="k-neareast-neighbor-knn.html#cb84-10" tabindex="-1"></a>test_knn_y <span class="ot">&lt;-</span> test_knn[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
-<span id="cb84-11"><a href="k-neareast-neighbor-knn.html#cb84-11" tabindex="-1"></a></span>
-<span id="cb84-12"><a href="k-neareast-neighbor-knn.html#cb84-12" tabindex="-1"></a><span class="co"># Display statistics</span></span>
-<span id="cb84-13"><a href="k-neareast-neighbor-knn.html#cb84-13" tabindex="-1"></a><span class="fu">str</span>(train_knn_x)</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="k-neareast-neighbor-knn.html#cb82-1" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb82-2"><a href="k-neareast-neighbor-knn.html#cb82-2" tabindex="-1"></a>train_knn <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_knn.csv&#39;</span>)</span>
+<span id="cb82-3"><a href="k-neareast-neighbor-knn.html#cb82-3" tabindex="-1"></a>test_knn <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_knn.csv&#39;</span>)</span>
+<span id="cb82-4"><a href="k-neareast-neighbor-knn.html#cb82-4" tabindex="-1"></a></span>
+<span id="cb82-5"><a href="k-neareast-neighbor-knn.html#cb82-5" tabindex="-1"></a><span class="co"># Split features and predictor</span></span>
+<span id="cb82-6"><a href="k-neareast-neighbor-knn.html#cb82-6" tabindex="-1"></a>train_knn_x <span class="ot">&lt;-</span> train_knn[, <span class="sc">!</span><span class="fu">names</span>(train_knn) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
+<span id="cb82-7"><a href="k-neareast-neighbor-knn.html#cb82-7" tabindex="-1"></a>train_knn_y <span class="ot">&lt;-</span> train_knn[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
+<span id="cb82-8"><a href="k-neareast-neighbor-knn.html#cb82-8" tabindex="-1"></a></span>
+<span id="cb82-9"><a href="k-neareast-neighbor-knn.html#cb82-9" tabindex="-1"></a>test_knn_x <span class="ot">&lt;-</span> test_knn[, <span class="sc">!</span><span class="fu">names</span>(test_knn) <span class="sc">%in%</span> <span class="st">&#39;obesity_leveloverweight&#39;</span>]</span>
+<span id="cb82-10"><a href="k-neareast-neighbor-knn.html#cb82-10" tabindex="-1"></a>test_knn_y <span class="ot">&lt;-</span> test_knn[[<span class="st">&#39;obesity_leveloverweight&#39;</span>]]</span>
+<span id="cb82-11"><a href="k-neareast-neighbor-knn.html#cb82-11" tabindex="-1"></a></span>
+<span id="cb82-12"><a href="k-neareast-neighbor-knn.html#cb82-12" tabindex="-1"></a><span class="co"># Display statistics</span></span>
+<span id="cb82-13"><a href="k-neareast-neighbor-knn.html#cb82-13" tabindex="-1"></a><span class="fu">str</span>(train_knn_x)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    10379 obs. of  26 variables:
 ##  $ gender_female                  : int  1 1 1 0 1 1 1 0 1 1 ...
 ##  $ gender_male                    : int  0 0 0 1 0 0 0 1 0 0 ...
@@ -376,7 +400,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  $ age_group_young_adult          : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ age_group_adult                : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ age_group_senior               : int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="k-neareast-neighbor-knn.html#cb86-1" tabindex="-1"></a><span class="fu">summary</span>(train_knn_x)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="k-neareast-neighbor-knn.html#cb84-1" tabindex="-1"></a><span class="fu">summary</span>(train_knn_x)</span></code></pre></div>
 <pre><code>##  gender_female     gender_male          age         fam_history_overweight1
 ##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000         
 ##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.1277   1st Qu.:1.0000         
@@ -440,7 +464,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  Mean   :0.003276  
 ##  3rd Qu.:0.000000  
 ##  Max.   :1.000000</code></pre>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="k-neareast-neighbor-knn.html#cb88-1" tabindex="-1"></a><span class="fu">head</span>(train_knn_x)</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="k-neareast-neighbor-knn.html#cb86-1" tabindex="-1"></a><span class="fu">head</span>(train_knn_x)</span></code></pre></div>
 <pre><code>##   gender_female gender_male       age fam_history_overweight1
 ## 1             1           0 0.2127660                       1
 ## 2             1           0 0.4255319                       1
@@ -490,12 +514,12 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## 4                     1               0                0
 ## 5                     1               0                0
 ## 6                     1               0                0</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="k-neareast-neighbor-knn.html#cb90-1" tabindex="-1"></a><span class="fu">str</span>(train_knn_y)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="k-neareast-neighbor-knn.html#cb88-1" tabindex="-1"></a><span class="fu">str</span>(train_knn_y)</span></code></pre></div>
 <pre><code>##  int [1:10379] 1 1 1 1 1 1 1 1 1 0 ...</code></pre>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="k-neareast-neighbor-knn.html#cb92-1" tabindex="-1"></a><span class="fu">summary</span>(train_knn_y)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="k-neareast-neighbor-knn.html#cb90-1" tabindex="-1"></a><span class="fu">summary</span>(train_knn_y)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.0000  0.0000  1.0000  0.7262  1.0000  1.0000</code></pre>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="k-neareast-neighbor-knn.html#cb94-1" tabindex="-1"></a><span class="fu">head</span>(train_knn_y)</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="k-neareast-neighbor-knn.html#cb92-1" tabindex="-1"></a><span class="fu">head</span>(train_knn_y)</span></code></pre></div>
 <pre><code>## [1] 1 1 1 1 1 1</code></pre>
 </div>
 <div id="model-knn" class="section level2 hasAnchor" number="5.3">
@@ -503,64 +527,64 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <div id="default-knn" class="section level3 hasAnchor" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Default KNN<a href="k-neareast-neighbor-knn.html#default-knn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will utilize the square root of the number of rows in our training set as an initial value for the parameter k. Subsequently, we will apply grid search to fine-tune our KNN model and evaluate its potential for improving accuracy and overall fit.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="k-neareast-neighbor-knn.html#cb96-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
-<span id="cb96-2"><a href="k-neareast-neighbor-knn.html#cb96-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb96-3"><a href="k-neareast-neighbor-knn.html#cb96-3" tabindex="-1"></a></span>
-<span id="cb96-4"><a href="k-neareast-neighbor-knn.html#cb96-4" tabindex="-1"></a><span class="co"># Build a model</span></span>
-<span id="cb96-5"><a href="k-neareast-neighbor-knn.html#cb96-5" tabindex="-1"></a>model_knn <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
-<span id="cb96-6"><a href="k-neareast-neighbor-knn.html#cb96-6" tabindex="-1"></a>  <span class="at">train =</span> train_knn_x,</span>
-<span id="cb96-7"><a href="k-neareast-neighbor-knn.html#cb96-7" tabindex="-1"></a>  <span class="at">test =</span> test_knn_x,</span>
-<span id="cb96-8"><a href="k-neareast-neighbor-knn.html#cb96-8" tabindex="-1"></a>  <span class="at">cl =</span> train_knn_y,</span>
-<span id="cb96-9"><a href="k-neareast-neighbor-knn.html#cb96-9" tabindex="-1"></a>  <span class="at">k =</span> <span class="fu">sqrt</span>(<span class="fu">nrow</span>(train_knn_x)),</span>
-<span id="cb96-10"><a href="k-neareast-neighbor-knn.html#cb96-10" tabindex="-1"></a>  <span class="at">prob =</span> <span class="cn">TRUE</span></span>
-<span id="cb96-11"><a href="k-neareast-neighbor-knn.html#cb96-11" tabindex="-1"></a>  )</span>
-<span id="cb96-12"><a href="k-neareast-neighbor-knn.html#cb96-12" tabindex="-1"></a>prediction_knn_probability <span class="ot">&lt;-</span> <span class="fu">attributes</span>(model_knn)<span class="sc">$</span>prob</span></code></pre></div>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="k-neareast-neighbor-knn.html#cb97-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
-<span id="cb97-2"><a href="k-neareast-neighbor-knn.html#cb97-2" tabindex="-1"></a><span class="fu">summary</span>(model_knn)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="k-neareast-neighbor-knn.html#cb94-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb94-2"><a href="k-neareast-neighbor-knn.html#cb94-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb94-3"><a href="k-neareast-neighbor-knn.html#cb94-3" tabindex="-1"></a></span>
+<span id="cb94-4"><a href="k-neareast-neighbor-knn.html#cb94-4" tabindex="-1"></a><span class="co"># Build a model</span></span>
+<span id="cb94-5"><a href="k-neareast-neighbor-knn.html#cb94-5" tabindex="-1"></a>model_knn <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
+<span id="cb94-6"><a href="k-neareast-neighbor-knn.html#cb94-6" tabindex="-1"></a>  <span class="at">train =</span> train_knn_x,</span>
+<span id="cb94-7"><a href="k-neareast-neighbor-knn.html#cb94-7" tabindex="-1"></a>  <span class="at">test =</span> test_knn_x,</span>
+<span id="cb94-8"><a href="k-neareast-neighbor-knn.html#cb94-8" tabindex="-1"></a>  <span class="at">cl =</span> train_knn_y,</span>
+<span id="cb94-9"><a href="k-neareast-neighbor-knn.html#cb94-9" tabindex="-1"></a>  <span class="at">k =</span> <span class="fu">sqrt</span>(<span class="fu">nrow</span>(train_knn_x)),</span>
+<span id="cb94-10"><a href="k-neareast-neighbor-knn.html#cb94-10" tabindex="-1"></a>  <span class="at">prob =</span> <span class="cn">TRUE</span></span>
+<span id="cb94-11"><a href="k-neareast-neighbor-knn.html#cb94-11" tabindex="-1"></a>  )</span>
+<span id="cb94-12"><a href="k-neareast-neighbor-knn.html#cb94-12" tabindex="-1"></a>prediction_knn_probability <span class="ot">&lt;-</span> <span class="fu">attributes</span>(model_knn)<span class="sc">$</span>prob</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="k-neareast-neighbor-knn.html#cb95-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
+<span id="cb95-2"><a href="k-neareast-neighbor-knn.html#cb95-2" tabindex="-1"></a><span class="fu">summary</span>(model_knn)</span></code></pre></div>
 <pre><code>##    0    1 
 ## 2218 8161</code></pre>
 </div>
 <div id="tuned-knn" class="section level3 hasAnchor" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> Tuned KNN<a href="k-neareast-neighbor-knn.html#tuned-knn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will execute a grid search with 10-fold cross validation to identify the optimal k value and subsequently use that tuned KNN model for prediction.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="k-neareast-neighbor-knn.html#cb99-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
-<span id="cb99-2"><a href="k-neareast-neighbor-knn.html#cb99-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb99-3"><a href="k-neareast-neighbor-knn.html#cb99-3" tabindex="-1"></a></span>
-<span id="cb99-4"><a href="k-neareast-neighbor-knn.html#cb99-4" tabindex="-1"></a><span class="co"># Set up control parameters</span></span>
-<span id="cb99-5"><a href="k-neareast-neighbor-knn.html#cb99-5" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(</span>
-<span id="cb99-6"><a href="k-neareast-neighbor-knn.html#cb99-6" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;cv&#39;</span>,</span>
-<span id="cb99-7"><a href="k-neareast-neighbor-knn.html#cb99-7" tabindex="-1"></a>  <span class="at">number =</span> <span class="dv">10</span></span>
-<span id="cb99-8"><a href="k-neareast-neighbor-knn.html#cb99-8" tabindex="-1"></a>  )</span>
-<span id="cb99-9"><a href="k-neareast-neighbor-knn.html#cb99-9" tabindex="-1"></a></span>
-<span id="cb99-10"><a href="k-neareast-neighbor-knn.html#cb99-10" tabindex="-1"></a><span class="co"># Define the tuning grid</span></span>
-<span id="cb99-11"><a href="k-neareast-neighbor-knn.html#cb99-11" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb99-12"><a href="k-neareast-neighbor-knn.html#cb99-12" tabindex="-1"></a>  <span class="at">k =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
-<span id="cb99-13"><a href="k-neareast-neighbor-knn.html#cb99-13" tabindex="-1"></a>  )</span>
-<span id="cb99-14"><a href="k-neareast-neighbor-knn.html#cb99-14" tabindex="-1"></a></span>
-<span id="cb99-15"><a href="k-neareast-neighbor-knn.html#cb99-15" tabindex="-1"></a><span class="co"># Tune the model</span></span>
-<span id="cb99-16"><a href="k-neareast-neighbor-knn.html#cb99-16" tabindex="-1"></a>knn_tuned <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
-<span id="cb99-17"><a href="k-neareast-neighbor-knn.html#cb99-17" tabindex="-1"></a>  <span class="at">x =</span> train_knn_x,</span>
-<span id="cb99-18"><a href="k-neareast-neighbor-knn.html#cb99-18" tabindex="-1"></a>  <span class="at">y =</span> train_knn_y,</span>
-<span id="cb99-19"><a href="k-neareast-neighbor-knn.html#cb99-19" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;knn&#39;</span>,</span>
-<span id="cb99-20"><a href="k-neareast-neighbor-knn.html#cb99-20" tabindex="-1"></a>  <span class="at">trControl =</span> ctrl,</span>
-<span id="cb99-21"><a href="k-neareast-neighbor-knn.html#cb99-21" tabindex="-1"></a>  <span class="at">tuneGrid =</span> grid</span>
-<span id="cb99-22"><a href="k-neareast-neighbor-knn.html#cb99-22" tabindex="-1"></a>  )</span>
-<span id="cb99-23"><a href="k-neareast-neighbor-knn.html#cb99-23" tabindex="-1"></a></span>
-<span id="cb99-24"><a href="k-neareast-neighbor-knn.html#cb99-24" tabindex="-1"></a><span class="co"># Store best parameter</span></span>
-<span id="cb99-25"><a href="k-neareast-neighbor-knn.html#cb99-25" tabindex="-1"></a>best_k <span class="ot">&lt;-</span> knn_tuned<span class="sc">$</span>bestTune<span class="sc">$</span>k</span>
-<span id="cb99-26"><a href="k-neareast-neighbor-knn.html#cb99-26" tabindex="-1"></a></span>
-<span id="cb99-27"><a href="k-neareast-neighbor-knn.html#cb99-27" tabindex="-1"></a><span class="co"># Build a model</span></span>
-<span id="cb99-28"><a href="k-neareast-neighbor-knn.html#cb99-28" tabindex="-1"></a>model_knn_tuned <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
-<span id="cb99-29"><a href="k-neareast-neighbor-knn.html#cb99-29" tabindex="-1"></a>  <span class="at">train =</span> train_knn_x,</span>
-<span id="cb99-30"><a href="k-neareast-neighbor-knn.html#cb99-30" tabindex="-1"></a>  <span class="at">test =</span> test_knn_x,</span>
-<span id="cb99-31"><a href="k-neareast-neighbor-knn.html#cb99-31" tabindex="-1"></a>  <span class="at">cl =</span> train_knn_y,</span>
-<span id="cb99-32"><a href="k-neareast-neighbor-knn.html#cb99-32" tabindex="-1"></a>  <span class="at">k =</span> best_k,</span>
-<span id="cb99-33"><a href="k-neareast-neighbor-knn.html#cb99-33" tabindex="-1"></a>  <span class="at">prob =</span> <span class="cn">TRUE</span></span>
-<span id="cb99-34"><a href="k-neareast-neighbor-knn.html#cb99-34" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="k-neareast-neighbor-knn.html#cb100-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
-<span id="cb100-2"><a href="k-neareast-neighbor-knn.html#cb100-2" tabindex="-1"></a><span class="fu">print</span>(best_k)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="k-neareast-neighbor-knn.html#cb97-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb97-2"><a href="k-neareast-neighbor-knn.html#cb97-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb97-3"><a href="k-neareast-neighbor-knn.html#cb97-3" tabindex="-1"></a></span>
+<span id="cb97-4"><a href="k-neareast-neighbor-knn.html#cb97-4" tabindex="-1"></a><span class="co"># Set up control parameters</span></span>
+<span id="cb97-5"><a href="k-neareast-neighbor-knn.html#cb97-5" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(</span>
+<span id="cb97-6"><a href="k-neareast-neighbor-knn.html#cb97-6" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;cv&#39;</span>,</span>
+<span id="cb97-7"><a href="k-neareast-neighbor-knn.html#cb97-7" tabindex="-1"></a>  <span class="at">number =</span> <span class="dv">10</span></span>
+<span id="cb97-8"><a href="k-neareast-neighbor-knn.html#cb97-8" tabindex="-1"></a>  )</span>
+<span id="cb97-9"><a href="k-neareast-neighbor-knn.html#cb97-9" tabindex="-1"></a></span>
+<span id="cb97-10"><a href="k-neareast-neighbor-knn.html#cb97-10" tabindex="-1"></a><span class="co"># Define the tuning grid</span></span>
+<span id="cb97-11"><a href="k-neareast-neighbor-knn.html#cb97-11" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb97-12"><a href="k-neareast-neighbor-knn.html#cb97-12" tabindex="-1"></a>  <span class="at">k =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb97-13"><a href="k-neareast-neighbor-knn.html#cb97-13" tabindex="-1"></a>  )</span>
+<span id="cb97-14"><a href="k-neareast-neighbor-knn.html#cb97-14" tabindex="-1"></a></span>
+<span id="cb97-15"><a href="k-neareast-neighbor-knn.html#cb97-15" tabindex="-1"></a><span class="co"># Tune the model</span></span>
+<span id="cb97-16"><a href="k-neareast-neighbor-knn.html#cb97-16" tabindex="-1"></a>knn_tuned <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb97-17"><a href="k-neareast-neighbor-knn.html#cb97-17" tabindex="-1"></a>  <span class="at">x =</span> train_knn_x,</span>
+<span id="cb97-18"><a href="k-neareast-neighbor-knn.html#cb97-18" tabindex="-1"></a>  <span class="at">y =</span> train_knn_y,</span>
+<span id="cb97-19"><a href="k-neareast-neighbor-knn.html#cb97-19" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;knn&#39;</span>,</span>
+<span id="cb97-20"><a href="k-neareast-neighbor-knn.html#cb97-20" tabindex="-1"></a>  <span class="at">trControl =</span> ctrl,</span>
+<span id="cb97-21"><a href="k-neareast-neighbor-knn.html#cb97-21" tabindex="-1"></a>  <span class="at">tuneGrid =</span> grid</span>
+<span id="cb97-22"><a href="k-neareast-neighbor-knn.html#cb97-22" tabindex="-1"></a>  )</span>
+<span id="cb97-23"><a href="k-neareast-neighbor-knn.html#cb97-23" tabindex="-1"></a></span>
+<span id="cb97-24"><a href="k-neareast-neighbor-knn.html#cb97-24" tabindex="-1"></a><span class="co"># Store best parameter</span></span>
+<span id="cb97-25"><a href="k-neareast-neighbor-knn.html#cb97-25" tabindex="-1"></a>best_k <span class="ot">&lt;-</span> knn_tuned<span class="sc">$</span>bestTune<span class="sc">$</span>k</span>
+<span id="cb97-26"><a href="k-neareast-neighbor-knn.html#cb97-26" tabindex="-1"></a></span>
+<span id="cb97-27"><a href="k-neareast-neighbor-knn.html#cb97-27" tabindex="-1"></a><span class="co"># Build a model</span></span>
+<span id="cb97-28"><a href="k-neareast-neighbor-knn.html#cb97-28" tabindex="-1"></a>model_knn_tuned <span class="ot">&lt;-</span> <span class="fu">knn</span>(</span>
+<span id="cb97-29"><a href="k-neareast-neighbor-knn.html#cb97-29" tabindex="-1"></a>  <span class="at">train =</span> train_knn_x,</span>
+<span id="cb97-30"><a href="k-neareast-neighbor-knn.html#cb97-30" tabindex="-1"></a>  <span class="at">test =</span> test_knn_x,</span>
+<span id="cb97-31"><a href="k-neareast-neighbor-knn.html#cb97-31" tabindex="-1"></a>  <span class="at">cl =</span> train_knn_y,</span>
+<span id="cb97-32"><a href="k-neareast-neighbor-knn.html#cb97-32" tabindex="-1"></a>  <span class="at">k =</span> best_k,</span>
+<span id="cb97-33"><a href="k-neareast-neighbor-knn.html#cb97-33" tabindex="-1"></a>  <span class="at">prob =</span> <span class="cn">TRUE</span></span>
+<span id="cb97-34"><a href="k-neareast-neighbor-knn.html#cb97-34" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="k-neareast-neighbor-knn.html#cb98-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
+<span id="cb98-2"><a href="k-neareast-neighbor-knn.html#cb98-2" tabindex="-1"></a><span class="fu">print</span>(best_k)</span></code></pre></div>
 <pre><code>## [1] 16</code></pre>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="k-neareast-neighbor-knn.html#cb102-1" tabindex="-1"></a><span class="fu">summary</span>(model_knn_tuned)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="k-neareast-neighbor-knn.html#cb100-1" tabindex="-1"></a><span class="fu">summary</span>(model_knn_tuned)</span></code></pre></div>
 <pre><code>##    0    1 
 ## 2498 7881</code></pre>
 <p>According to the results, the optimal value of k is <code>16</code>.</p>
@@ -570,19 +594,19 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <h2><span class="header-section-number">5.4</span> Evaluate KNN<a href="k-neareast-neighbor-knn.html#evaluate-knn" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="default-knn-1" class="section level3 hasAnchor" number="5.4.1">
 <h3><span class="header-section-number">5.4.1</span> Default KNN<a href="k-neareast-neighbor-knn.html#default-knn-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="k-neareast-neighbor-knn.html#cb104-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
-<span id="cb104-2"><a href="k-neareast-neighbor-knn.html#cb104-2" tabindex="-1"></a>prediction_knn <span class="ot">&lt;-</span> model_knn</span>
-<span id="cb104-3"><a href="k-neareast-neighbor-knn.html#cb104-3" tabindex="-1"></a>prediction_knn_probability <span class="ot">&lt;-</span> <span class="fu">attributes</span>(prediction_knn)<span class="sc">$</span>prob</span>
-<span id="cb104-4"><a href="k-neareast-neighbor-knn.html#cb104-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_knn_probability)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="k-neareast-neighbor-knn.html#cb102-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
+<span id="cb102-2"><a href="k-neareast-neighbor-knn.html#cb102-2" tabindex="-1"></a>prediction_knn <span class="ot">&lt;-</span> model_knn</span>
+<span id="cb102-3"><a href="k-neareast-neighbor-knn.html#cb102-3" tabindex="-1"></a>prediction_knn_probability <span class="ot">&lt;-</span> <span class="fu">attributes</span>(prediction_knn)<span class="sc">$</span>prob</span>
+<span id="cb102-4"><a href="k-neareast-neighbor-knn.html#cb102-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_knn_probability)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.5000  0.7723  0.9109  0.8657  0.9802  1.0000</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="k-neareast-neighbor-knn.html#cb106-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
-<span id="cb106-2"><a href="k-neareast-neighbor-knn.html#cb106-2" tabindex="-1"></a>cm_knn <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
-<span id="cb106-3"><a href="k-neareast-neighbor-knn.html#cb106-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_knn),</span>
-<span id="cb106-4"><a href="k-neareast-neighbor-knn.html#cb106-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_knn_y),</span>
-<span id="cb106-5"><a href="k-neareast-neighbor-knn.html#cb106-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
-<span id="cb106-6"><a href="k-neareast-neighbor-knn.html#cb106-6" tabindex="-1"></a>  )</span>
-<span id="cb106-7"><a href="k-neareast-neighbor-knn.html#cb106-7" tabindex="-1"></a>cm_knn</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="k-neareast-neighbor-knn.html#cb104-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
+<span id="cb104-2"><a href="k-neareast-neighbor-knn.html#cb104-2" tabindex="-1"></a>cm_knn <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
+<span id="cb104-3"><a href="k-neareast-neighbor-knn.html#cb104-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_knn),</span>
+<span id="cb104-4"><a href="k-neareast-neighbor-knn.html#cb104-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_knn_y),</span>
+<span id="cb104-5"><a href="k-neareast-neighbor-knn.html#cb104-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
+<span id="cb104-6"><a href="k-neareast-neighbor-knn.html#cb104-6" tabindex="-1"></a>  )</span>
+<span id="cb104-7"><a href="k-neareast-neighbor-knn.html#cb104-7" tabindex="-1"></a>cm_knn</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -611,39 +635,39 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##        &#39;Positive&#39; Class : 1               
 ## </code></pre>
 <p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8454</code>, sensitivity of <code>0.9304</code>, and a Kappa coefficient of <code>0.5776</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="k-neareast-neighbor-knn.html#cb108-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
-<span id="cb108-2"><a href="k-neareast-neighbor-knn.html#cb108-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_knn_probability, test_knn_y)</span>
-<span id="cb108-3"><a href="k-neareast-neighbor-knn.html#cb108-3" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb108-4"><a href="k-neareast-neighbor-knn.html#cb108-4" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb108-5"><a href="k-neareast-neighbor-knn.html#cb108-5" tabindex="-1"></a></span>
-<span id="cb108-6"><a href="k-neareast-neighbor-knn.html#cb108-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
-<span id="cb108-7"><a href="k-neareast-neighbor-knn.html#cb108-7" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
-<span id="cb108-8"><a href="k-neareast-neighbor-knn.html#cb108-8" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
-<span id="cb108-9"><a href="k-neareast-neighbor-knn.html#cb108-9" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
-<span id="cb108-10"><a href="k-neareast-neighbor-knn.html#cb108-10" tabindex="-1"></a></span>
-<span id="cb108-11"><a href="k-neareast-neighbor-knn.html#cb108-11" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
-<span id="cb108-12"><a href="k-neareast-neighbor-knn.html#cb108-12" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb108-13"><a href="k-neareast-neighbor-knn.html#cb108-13" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb108-14"><a href="k-neareast-neighbor-knn.html#cb108-14" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb108-15"><a href="k-neareast-neighbor-knn.html#cb108-15" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Simple KNN ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
-<span id="cb108-16"><a href="k-neareast-neighbor-knn.html#cb108-16" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="k-neareast-neighbor-knn.html#cb106-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
+<span id="cb106-2"><a href="k-neareast-neighbor-knn.html#cb106-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_knn_probability, test_knn_y)</span>
+<span id="cb106-3"><a href="k-neareast-neighbor-knn.html#cb106-3" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb106-4"><a href="k-neareast-neighbor-knn.html#cb106-4" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb106-5"><a href="k-neareast-neighbor-knn.html#cb106-5" tabindex="-1"></a></span>
+<span id="cb106-6"><a href="k-neareast-neighbor-knn.html#cb106-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
+<span id="cb106-7"><a href="k-neareast-neighbor-knn.html#cb106-7" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
+<span id="cb106-8"><a href="k-neareast-neighbor-knn.html#cb106-8" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
+<span id="cb106-9"><a href="k-neareast-neighbor-knn.html#cb106-9" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
+<span id="cb106-10"><a href="k-neareast-neighbor-knn.html#cb106-10" tabindex="-1"></a></span>
+<span id="cb106-11"><a href="k-neareast-neighbor-knn.html#cb106-11" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
+<span id="cb106-12"><a href="k-neareast-neighbor-knn.html#cb106-12" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb106-13"><a href="k-neareast-neighbor-knn.html#cb106-13" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb106-14"><a href="k-neareast-neighbor-knn.html#cb106-14" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb106-15"><a href="k-neareast-neighbor-knn.html#cb106-15" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Simple KNN ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
+<span id="cb106-16"><a href="k-neareast-neighbor-knn.html#cb106-16" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/plot_auc_knn_04-1.png" width="672" /></p>
 </div>
 <div id="tuned-knn-1" class="section level3 hasAnchor" number="5.4.2">
 <h3><span class="header-section-number">5.4.2</span> Tuned KNN<a href="k-neareast-neighbor-knn.html#tuned-knn-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="k-neareast-neighbor-knn.html#cb109-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
-<span id="cb109-2"><a href="k-neareast-neighbor-knn.html#cb109-2" tabindex="-1"></a>prediction_knn_tuned <span class="ot">&lt;-</span> model_knn_tuned</span>
-<span id="cb109-3"><a href="k-neareast-neighbor-knn.html#cb109-3" tabindex="-1"></a>prediction_knn_tuned_probability <span class="ot">&lt;-</span> <span class="fu">attributes</span>(prediction_knn_tuned)<span class="sc">$</span>prob</span>
-<span id="cb109-4"><a href="k-neareast-neighbor-knn.html#cb109-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_knn_tuned_probability)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="k-neareast-neighbor-knn.html#cb107-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
+<span id="cb107-2"><a href="k-neareast-neighbor-knn.html#cb107-2" tabindex="-1"></a>prediction_knn_tuned <span class="ot">&lt;-</span> model_knn_tuned</span>
+<span id="cb107-3"><a href="k-neareast-neighbor-knn.html#cb107-3" tabindex="-1"></a>prediction_knn_tuned_probability <span class="ot">&lt;-</span> <span class="fu">attributes</span>(prediction_knn_tuned)<span class="sc">$</span>prob</span>
+<span id="cb107-4"><a href="k-neareast-neighbor-knn.html#cb107-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_knn_tuned_probability)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.5000  0.7647  0.9375  0.8771  1.0000  1.0000</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="k-neareast-neighbor-knn.html#cb111-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
-<span id="cb111-2"><a href="k-neareast-neighbor-knn.html#cb111-2" tabindex="-1"></a>cm_knn_tuned <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
-<span id="cb111-3"><a href="k-neareast-neighbor-knn.html#cb111-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_knn_tuned),</span>
-<span id="cb111-4"><a href="k-neareast-neighbor-knn.html#cb111-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_knn_y),</span>
-<span id="cb111-5"><a href="k-neareast-neighbor-knn.html#cb111-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
-<span id="cb111-6"><a href="k-neareast-neighbor-knn.html#cb111-6" tabindex="-1"></a>  )</span>
-<span id="cb111-7"><a href="k-neareast-neighbor-knn.html#cb111-7" tabindex="-1"></a>cm_knn_tuned</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="k-neareast-neighbor-knn.html#cb109-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
+<span id="cb109-2"><a href="k-neareast-neighbor-knn.html#cb109-2" tabindex="-1"></a>cm_knn_tuned <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
+<span id="cb109-3"><a href="k-neareast-neighbor-knn.html#cb109-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_knn_tuned),</span>
+<span id="cb109-4"><a href="k-neareast-neighbor-knn.html#cb109-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_knn_y),</span>
+<span id="cb109-5"><a href="k-neareast-neighbor-knn.html#cb109-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
+<span id="cb109-6"><a href="k-neareast-neighbor-knn.html#cb109-6" tabindex="-1"></a>  )</span>
+<span id="cb109-7"><a href="k-neareast-neighbor-knn.html#cb109-7" tabindex="-1"></a>cm_knn_tuned</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -672,22 +696,22 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##        &#39;Positive&#39; Class : 1              
 ## </code></pre>
 <p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8579</code>, sensitivity of <code>0.9206</code>, and a Kappa coefficient of <code>0.6248</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="k-neareast-neighbor-knn.html#cb113-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
-<span id="cb113-2"><a href="k-neareast-neighbor-knn.html#cb113-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_knn_tuned_probability, test_knn_y)</span>
-<span id="cb113-3"><a href="k-neareast-neighbor-knn.html#cb113-3" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb113-4"><a href="k-neareast-neighbor-knn.html#cb113-4" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb113-5"><a href="k-neareast-neighbor-knn.html#cb113-5" tabindex="-1"></a></span>
-<span id="cb113-6"><a href="k-neareast-neighbor-knn.html#cb113-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
-<span id="cb113-7"><a href="k-neareast-neighbor-knn.html#cb113-7" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
-<span id="cb113-8"><a href="k-neareast-neighbor-knn.html#cb113-8" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
-<span id="cb113-9"><a href="k-neareast-neighbor-knn.html#cb113-9" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
-<span id="cb113-10"><a href="k-neareast-neighbor-knn.html#cb113-10" tabindex="-1"></a></span>
-<span id="cb113-11"><a href="k-neareast-neighbor-knn.html#cb113-11" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
-<span id="cb113-12"><a href="k-neareast-neighbor-knn.html#cb113-12" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb113-13"><a href="k-neareast-neighbor-knn.html#cb113-13" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb113-14"><a href="k-neareast-neighbor-knn.html#cb113-14" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb113-15"><a href="k-neareast-neighbor-knn.html#cb113-15" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Tuned KNN ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
-<span id="cb113-16"><a href="k-neareast-neighbor-knn.html#cb113-16" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="k-neareast-neighbor-knn.html#cb111-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
+<span id="cb111-2"><a href="k-neareast-neighbor-knn.html#cb111-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(prediction_knn_tuned_probability, test_knn_y)</span>
+<span id="cb111-3"><a href="k-neareast-neighbor-knn.html#cb111-3" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb111-4"><a href="k-neareast-neighbor-knn.html#cb111-4" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb111-5"><a href="k-neareast-neighbor-knn.html#cb111-5" tabindex="-1"></a></span>
+<span id="cb111-6"><a href="k-neareast-neighbor-knn.html#cb111-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
+<span id="cb111-7"><a href="k-neareast-neighbor-knn.html#cb111-7" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
+<span id="cb111-8"><a href="k-neareast-neighbor-knn.html#cb111-8" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
+<span id="cb111-9"><a href="k-neareast-neighbor-knn.html#cb111-9" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
+<span id="cb111-10"><a href="k-neareast-neighbor-knn.html#cb111-10" tabindex="-1"></a></span>
+<span id="cb111-11"><a href="k-neareast-neighbor-knn.html#cb111-11" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
+<span id="cb111-12"><a href="k-neareast-neighbor-knn.html#cb111-12" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-13"><a href="k-neareast-neighbor-knn.html#cb111-13" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-14"><a href="k-neareast-neighbor-knn.html#cb111-14" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-15"><a href="k-neareast-neighbor-knn.html#cb111-15" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Tuned KNN ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
+<span id="cb111-16"><a href="k-neareast-neighbor-knn.html#cb111-16" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/plot_auc_knn_tuned_04-1.png" width="672" /></p>
 
 </div>

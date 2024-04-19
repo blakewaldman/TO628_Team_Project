@@ -59,11 +59,35 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Code Chunks") elem.value = "Show Code Chunks";
+    else elem.value = "Hide Code Chunks";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Code Chunks" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -73,7 +97,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -336,12 +360,12 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 </div>
 <div id="load-data-6" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> Load Data<a href="random-forest-rf.html#load-data-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="random-forest-rf.html#cb159-1" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb159-2"><a href="random-forest-rf.html#cb159-2" tabindex="-1"></a>train_rf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_rf.csv&#39;</span>)</span>
-<span id="cb159-3"><a href="random-forest-rf.html#cb159-3" tabindex="-1"></a>test_rf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_rf.csv&#39;</span>)</span>
-<span id="cb159-4"><a href="random-forest-rf.html#cb159-4" tabindex="-1"></a></span>
-<span id="cb159-5"><a href="random-forest-rf.html#cb159-5" tabindex="-1"></a><span class="co"># Display statistics</span></span>
-<span id="cb159-6"><a href="random-forest-rf.html#cb159-6" tabindex="-1"></a><span class="fu">str</span>(train_rf)</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="random-forest-rf.html#cb157-1" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb157-2"><a href="random-forest-rf.html#cb157-2" tabindex="-1"></a>train_rf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_rf.csv&#39;</span>)</span>
+<span id="cb157-3"><a href="random-forest-rf.html#cb157-3" tabindex="-1"></a>test_rf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_rf.csv&#39;</span>)</span>
+<span id="cb157-4"><a href="random-forest-rf.html#cb157-4" tabindex="-1"></a></span>
+<span id="cb157-5"><a href="random-forest-rf.html#cb157-5" tabindex="-1"></a><span class="co"># Display statistics</span></span>
+<span id="cb157-6"><a href="random-forest-rf.html#cb157-6" tabindex="-1"></a><span class="fu">str</span>(train_rf)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    10379 obs. of  27 variables:
 ##  $ gender_female                  : int  1 1 1 0 1 1 1 0 1 1 ...
 ##  $ gender_male                    : int  0 0 0 1 0 0 0 1 0 0 ...
@@ -370,7 +394,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  $ age_group_young_adult          : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ age_group_adult                : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ age_group_senior               : int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="random-forest-rf.html#cb161-1" tabindex="-1"></a><span class="fu">summary</span>(train_rf)</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="random-forest-rf.html#cb159-1" tabindex="-1"></a><span class="fu">summary</span>(train_rf)</span></code></pre></div>
 <pre><code>##  gender_female     gender_male          age        fam_history_overweight1
 ##  Min.   :0.0000   Min.   :0.0000   Min.   :14.00   Min.   :0.0000         
 ##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:20.00   1st Qu.:1.0000         
@@ -434,7 +458,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  Mean   :0.05222   Mean   :0.003276  
 ##  3rd Qu.:0.00000   3rd Qu.:0.000000  
 ##  Max.   :1.00000   Max.   :1.000000</code></pre>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="random-forest-rf.html#cb163-1" tabindex="-1"></a><span class="fu">head</span>(train_rf)</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="random-forest-rf.html#cb161-1" tabindex="-1"></a><span class="fu">head</span>(train_rf)</span></code></pre></div>
 <pre><code>##   gender_female gender_male age fam_history_overweight1
 ## 1             1           0  24                       1
 ## 2             1           0  34                       1
@@ -497,17 +521,17 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <div id="simple-rf" class="section level3 hasAnchor" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> Simple RF<a href="random-forest-rf.html#simple-rf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will begin by constructing a basic RF model with 500 trees, followed by fine-tuning our RF model through cross validation grid search.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="random-forest-rf.html#cb165-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
-<span id="cb165-2"><a href="random-forest-rf.html#cb165-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb165-3"><a href="random-forest-rf.html#cb165-3" tabindex="-1"></a></span>
-<span id="cb165-4"><a href="random-forest-rf.html#cb165-4" tabindex="-1"></a><span class="co"># Build a model</span></span>
-<span id="cb165-5"><a href="random-forest-rf.html#cb165-5" tabindex="-1"></a>model_rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
-<span id="cb165-6"><a href="random-forest-rf.html#cb165-6" tabindex="-1"></a>  <span class="fu">as.factor</span>(obesity_leveloverweight) <span class="sc">~</span> .,</span>
-<span id="cb165-7"><a href="random-forest-rf.html#cb165-7" tabindex="-1"></a>  <span class="at">data =</span> train_rf,</span>
-<span id="cb165-8"><a href="random-forest-rf.html#cb165-8" tabindex="-1"></a>  <span class="at">ntree =</span> <span class="dv">500</span></span>
-<span id="cb165-9"><a href="random-forest-rf.html#cb165-9" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="random-forest-rf.html#cb166-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
-<span id="cb166-2"><a href="random-forest-rf.html#cb166-2" tabindex="-1"></a><span class="fu">summary</span>(model_rf)</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="random-forest-rf.html#cb163-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb163-2"><a href="random-forest-rf.html#cb163-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb163-3"><a href="random-forest-rf.html#cb163-3" tabindex="-1"></a></span>
+<span id="cb163-4"><a href="random-forest-rf.html#cb163-4" tabindex="-1"></a><span class="co"># Build a model</span></span>
+<span id="cb163-5"><a href="random-forest-rf.html#cb163-5" tabindex="-1"></a>model_rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(</span>
+<span id="cb163-6"><a href="random-forest-rf.html#cb163-6" tabindex="-1"></a>  <span class="fu">as.factor</span>(obesity_leveloverweight) <span class="sc">~</span> .,</span>
+<span id="cb163-7"><a href="random-forest-rf.html#cb163-7" tabindex="-1"></a>  <span class="at">data =</span> train_rf,</span>
+<span id="cb163-8"><a href="random-forest-rf.html#cb163-8" tabindex="-1"></a>  <span class="at">ntree =</span> <span class="dv">500</span></span>
+<span id="cb163-9"><a href="random-forest-rf.html#cb163-9" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="random-forest-rf.html#cb164-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
+<span id="cb164-2"><a href="random-forest-rf.html#cb164-2" tabindex="-1"></a><span class="fu">summary</span>(model_rf)</span></code></pre></div>
 <pre><code>##                 Length Class  Mode     
 ## call                4  -none- call     
 ## type                1  -none- character
@@ -528,42 +552,42 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## test                0  -none- NULL     
 ## inbag               0  -none- NULL     
 ## terms               3  terms  call</code></pre>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="random-forest-rf.html#cb168-1" tabindex="-1"></a>randomForest<span class="sc">::</span><span class="fu">varImpPlot</span>(model_rf)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="random-forest-rf.html#cb166-1" tabindex="-1"></a>randomForest<span class="sc">::</span><span class="fu">varImpPlot</span>(model_rf)</span></code></pre></div>
 <p><img src="_main_files/figure-html/model_rf_summary_07-1.png" width="672" /></p>
 <p>According to the variable importance plot, we observe a trend comparable to that of a DT model with an implemented cost matrix, indicating that RF models may be capturing the underlying dynamics between predictors effectively. The top-ranked features in this analysis are <code>age</code>, <code>fam_history_overweight</code>, and <code>food_between_meals_sometimes.</code></p>
 </div>
 <div id="tuned-rf" class="section level3 hasAnchor" number="8.3.2">
 <h3><span class="header-section-number">8.3.2</span> Tuned RF<a href="random-forest-rf.html#tuned-rf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Next, we will tune our model by examining various values of <code>mtry</code>, which determines the number of candidate features to consider at each node during tree construction. We will execute 10-fold cross validation.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="random-forest-rf.html#cb169-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
-<span id="cb169-2"><a href="random-forest-rf.html#cb169-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb169-3"><a href="random-forest-rf.html#cb169-3" tabindex="-1"></a></span>
-<span id="cb169-4"><a href="random-forest-rf.html#cb169-4" tabindex="-1"></a><span class="co"># Set up control parameters</span></span>
-<span id="cb169-5"><a href="random-forest-rf.html#cb169-5" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(</span>
-<span id="cb169-6"><a href="random-forest-rf.html#cb169-6" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;cv&#39;</span>,</span>
-<span id="cb169-7"><a href="random-forest-rf.html#cb169-7" tabindex="-1"></a>  <span class="at">number =</span> <span class="dv">10</span>,</span>
-<span id="cb169-8"><a href="random-forest-rf.html#cb169-8" tabindex="-1"></a>  <span class="co"># verboseIter = TRUE,</span></span>
-<span id="cb169-9"><a href="random-forest-rf.html#cb169-9" tabindex="-1"></a>  <span class="co"># savePredictions = TRUE</span></span>
-<span id="cb169-10"><a href="random-forest-rf.html#cb169-10" tabindex="-1"></a>  )</span>
-<span id="cb169-11"><a href="random-forest-rf.html#cb169-11" tabindex="-1"></a></span>
-<span id="cb169-12"><a href="random-forest-rf.html#cb169-12" tabindex="-1"></a><span class="co"># Define the parameter grid</span></span>
-<span id="cb169-13"><a href="random-forest-rf.html#cb169-13" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb169-14"><a href="random-forest-rf.html#cb169-14" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
-<span id="cb169-15"><a href="random-forest-rf.html#cb169-15" tabindex="-1"></a>)</span>
-<span id="cb169-16"><a href="random-forest-rf.html#cb169-16" tabindex="-1"></a></span>
-<span id="cb169-17"><a href="random-forest-rf.html#cb169-17" tabindex="-1"></a><span class="co"># Tune the model</span></span>
-<span id="cb169-18"><a href="random-forest-rf.html#cb169-18" tabindex="-1"></a>rf_tuned <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
-<span id="cb169-19"><a href="random-forest-rf.html#cb169-19" tabindex="-1"></a>  <span class="fu">as.factor</span>(obesity_leveloverweight) <span class="sc">~</span> .,</span>
-<span id="cb169-20"><a href="random-forest-rf.html#cb169-20" tabindex="-1"></a>  <span class="at">data =</span> train_rf,</span>
-<span id="cb169-21"><a href="random-forest-rf.html#cb169-21" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;rf&#39;</span>,</span>
-<span id="cb169-22"><a href="random-forest-rf.html#cb169-22" tabindex="-1"></a>  <span class="at">trControl =</span> ctrl,</span>
-<span id="cb169-23"><a href="random-forest-rf.html#cb169-23" tabindex="-1"></a>  <span class="at">tuneGrid =</span> grid</span>
-<span id="cb169-24"><a href="random-forest-rf.html#cb169-24" tabindex="-1"></a>  )</span>
-<span id="cb169-25"><a href="random-forest-rf.html#cb169-25" tabindex="-1"></a></span>
-<span id="cb169-26"><a href="random-forest-rf.html#cb169-26" tabindex="-1"></a><span class="co"># Retrieve best model</span></span>
-<span id="cb169-27"><a href="random-forest-rf.html#cb169-27" tabindex="-1"></a>model_rf_tuned <span class="ot">&lt;-</span> rf_tuned<span class="sc">$</span>finalModel</span></code></pre></div>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="random-forest-rf.html#cb170-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
-<span id="cb170-2"><a href="random-forest-rf.html#cb170-2" tabindex="-1"></a><span class="fu">print</span>(rf_tuned)</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="random-forest-rf.html#cb167-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb167-2"><a href="random-forest-rf.html#cb167-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb167-3"><a href="random-forest-rf.html#cb167-3" tabindex="-1"></a></span>
+<span id="cb167-4"><a href="random-forest-rf.html#cb167-4" tabindex="-1"></a><span class="co"># Set up control parameters</span></span>
+<span id="cb167-5"><a href="random-forest-rf.html#cb167-5" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(</span>
+<span id="cb167-6"><a href="random-forest-rf.html#cb167-6" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;cv&#39;</span>,</span>
+<span id="cb167-7"><a href="random-forest-rf.html#cb167-7" tabindex="-1"></a>  <span class="at">number =</span> <span class="dv">10</span>,</span>
+<span id="cb167-8"><a href="random-forest-rf.html#cb167-8" tabindex="-1"></a>  <span class="co"># verboseIter = TRUE,</span></span>
+<span id="cb167-9"><a href="random-forest-rf.html#cb167-9" tabindex="-1"></a>  <span class="co"># savePredictions = TRUE</span></span>
+<span id="cb167-10"><a href="random-forest-rf.html#cb167-10" tabindex="-1"></a>  )</span>
+<span id="cb167-11"><a href="random-forest-rf.html#cb167-11" tabindex="-1"></a></span>
+<span id="cb167-12"><a href="random-forest-rf.html#cb167-12" tabindex="-1"></a><span class="co"># Define the parameter grid</span></span>
+<span id="cb167-13"><a href="random-forest-rf.html#cb167-13" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb167-14"><a href="random-forest-rf.html#cb167-14" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
+<span id="cb167-15"><a href="random-forest-rf.html#cb167-15" tabindex="-1"></a>)</span>
+<span id="cb167-16"><a href="random-forest-rf.html#cb167-16" tabindex="-1"></a></span>
+<span id="cb167-17"><a href="random-forest-rf.html#cb167-17" tabindex="-1"></a><span class="co"># Tune the model</span></span>
+<span id="cb167-18"><a href="random-forest-rf.html#cb167-18" tabindex="-1"></a>rf_tuned <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb167-19"><a href="random-forest-rf.html#cb167-19" tabindex="-1"></a>  <span class="fu">as.factor</span>(obesity_leveloverweight) <span class="sc">~</span> .,</span>
+<span id="cb167-20"><a href="random-forest-rf.html#cb167-20" tabindex="-1"></a>  <span class="at">data =</span> train_rf,</span>
+<span id="cb167-21"><a href="random-forest-rf.html#cb167-21" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;rf&#39;</span>,</span>
+<span id="cb167-22"><a href="random-forest-rf.html#cb167-22" tabindex="-1"></a>  <span class="at">trControl =</span> ctrl,</span>
+<span id="cb167-23"><a href="random-forest-rf.html#cb167-23" tabindex="-1"></a>  <span class="at">tuneGrid =</span> grid</span>
+<span id="cb167-24"><a href="random-forest-rf.html#cb167-24" tabindex="-1"></a>  )</span>
+<span id="cb167-25"><a href="random-forest-rf.html#cb167-25" tabindex="-1"></a></span>
+<span id="cb167-26"><a href="random-forest-rf.html#cb167-26" tabindex="-1"></a><span class="co"># Retrieve best model</span></span>
+<span id="cb167-27"><a href="random-forest-rf.html#cb167-27" tabindex="-1"></a>model_rf_tuned <span class="ot">&lt;-</span> rf_tuned<span class="sc">$</span>finalModel</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="random-forest-rf.html#cb168-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
+<span id="cb168-2"><a href="random-forest-rf.html#cb168-2" tabindex="-1"></a><span class="fu">print</span>(rf_tuned)</span></code></pre></div>
 <pre><code>## Random Forest 
 ## 
 ## 10379 samples
@@ -583,7 +607,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## 
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final value used for the model was mtry = 6.</code></pre>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="random-forest-rf.html#cb172-1" tabindex="-1"></a><span class="fu">summary</span>(model_rf_tuned)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="random-forest-rf.html#cb170-1" tabindex="-1"></a><span class="fu">summary</span>(model_rf_tuned)</span></code></pre></div>
 <pre><code>##                 Length Class      Mode     
 ## call                4  -none-     call     
 ## type                1  -none-     character
@@ -608,7 +632,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ## tuneValue           1  data.frame list     
 ## obsLevels           2  -none-     character
 ## param               0  -none-     list</code></pre>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="random-forest-rf.html#cb174-1" tabindex="-1"></a>randomForest<span class="sc">::</span><span class="fu">varImpPlot</span>(model_rf_tuned)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="random-forest-rf.html#cb172-1" tabindex="-1"></a>randomForest<span class="sc">::</span><span class="fu">varImpPlot</span>(model_rf_tuned)</span></code></pre></div>
 <p><img src="_main_files/figure-html/model_rf_tuned_summary_07-1.png" width="672" /></p>
 <p>The final selected value for our model was 6, as it presented the highest Kappa score without compromising overall accuracy.</p>
 <p>Here we see almost identical variable importance plot compared to the none tuned version. in this instance we see <code>water_daily</code>.</p>
@@ -618,20 +642,20 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <h2><span class="header-section-number">8.4</span> Evaluate RF<a href="random-forest-rf.html#evaluate-rf" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="simple-rf-1" class="section level3 hasAnchor" number="8.4.1">
 <h3><span class="header-section-number">8.4.1</span> Simple RF<a href="random-forest-rf.html#simple-rf-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="random-forest-rf.html#cb175-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
-<span id="cb175-2"><a href="random-forest-rf.html#cb175-2" tabindex="-1"></a>prediction_rf <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf, test_rf)</span>
-<span id="cb175-3"><a href="random-forest-rf.html#cb175-3" tabindex="-1"></a>prediction_rf_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf, test_rf, <span class="at">type =</span> <span class="st">&#39;prob&#39;</span>)</span>
-<span id="cb175-4"><a href="random-forest-rf.html#cb175-4" tabindex="-1"></a></span>
-<span id="cb175-5"><a href="random-forest-rf.html#cb175-5" tabindex="-1"></a><span class="fu">summary</span>(prediction_rf)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="random-forest-rf.html#cb173-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
+<span id="cb173-2"><a href="random-forest-rf.html#cb173-2" tabindex="-1"></a>prediction_rf <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf, test_rf)</span>
+<span id="cb173-3"><a href="random-forest-rf.html#cb173-3" tabindex="-1"></a>prediction_rf_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf, test_rf, <span class="at">type =</span> <span class="st">&#39;prob&#39;</span>)</span>
+<span id="cb173-4"><a href="random-forest-rf.html#cb173-4" tabindex="-1"></a></span>
+<span id="cb173-5"><a href="random-forest-rf.html#cb173-5" tabindex="-1"></a><span class="fu">summary</span>(prediction_rf)</span></code></pre></div>
 <pre><code>##    0    1 
 ## 2748 7631</code></pre>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="random-forest-rf.html#cb177-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
-<span id="cb177-2"><a href="random-forest-rf.html#cb177-2" tabindex="-1"></a>cm_rf <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
-<span id="cb177-3"><a href="random-forest-rf.html#cb177-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_rf),</span>
-<span id="cb177-4"><a href="random-forest-rf.html#cb177-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_rf<span class="sc">$</span>obesity_leveloverweight),</span>
-<span id="cb177-5"><a href="random-forest-rf.html#cb177-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
-<span id="cb177-6"><a href="random-forest-rf.html#cb177-6" tabindex="-1"></a>  )</span>
-<span id="cb177-7"><a href="random-forest-rf.html#cb177-7" tabindex="-1"></a>cm_rf</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="random-forest-rf.html#cb175-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
+<span id="cb175-2"><a href="random-forest-rf.html#cb175-2" tabindex="-1"></a>cm_rf <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
+<span id="cb175-3"><a href="random-forest-rf.html#cb175-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_rf),</span>
+<span id="cb175-4"><a href="random-forest-rf.html#cb175-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_rf<span class="sc">$</span>obesity_leveloverweight),</span>
+<span id="cb175-5"><a href="random-forest-rf.html#cb175-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
+<span id="cb175-6"><a href="random-forest-rf.html#cb175-6" tabindex="-1"></a>  )</span>
+<span id="cb175-7"><a href="random-forest-rf.html#cb175-7" tabindex="-1"></a>cm_rf</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -660,91 +684,91 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##        &#39;Positive&#39; Class : 1               
 ## </code></pre>
 <p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8897</code>, sensitivity of <code>0.9258</code>, and a Kappa coefficient of <code>0.7171</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="random-forest-rf.html#cb179-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
-<span id="cb179-2"><a href="random-forest-rf.html#cb179-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(</span>
-<span id="cb179-3"><a href="random-forest-rf.html#cb179-3" tabindex="-1"></a>  prediction_rf_prob[,<span class="dv">2</span>],</span>
-<span id="cb179-4"><a href="random-forest-rf.html#cb179-4" tabindex="-1"></a>  test_rf<span class="sc">$</span>obesity_leveloverweight</span>
-<span id="cb179-5"><a href="random-forest-rf.html#cb179-5" tabindex="-1"></a>  )</span>
-<span id="cb179-6"><a href="random-forest-rf.html#cb179-6" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb179-7"><a href="random-forest-rf.html#cb179-7" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb179-8"><a href="random-forest-rf.html#cb179-8" tabindex="-1"></a></span>
-<span id="cb179-9"><a href="random-forest-rf.html#cb179-9" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
-<span id="cb179-10"><a href="random-forest-rf.html#cb179-10" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
-<span id="cb179-11"><a href="random-forest-rf.html#cb179-11" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
-<span id="cb179-12"><a href="random-forest-rf.html#cb179-12" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
-<span id="cb179-13"><a href="random-forest-rf.html#cb179-13" tabindex="-1"></a></span>
-<span id="cb179-14"><a href="random-forest-rf.html#cb179-14" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
-<span id="cb179-15"><a href="random-forest-rf.html#cb179-15" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb179-16"><a href="random-forest-rf.html#cb179-16" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb179-17"><a href="random-forest-rf.html#cb179-17" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb179-18"><a href="random-forest-rf.html#cb179-18" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Simple Random Forest ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
-<span id="cb179-19"><a href="random-forest-rf.html#cb179-19" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="random-forest-rf.html#cb177-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
+<span id="cb177-2"><a href="random-forest-rf.html#cb177-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(</span>
+<span id="cb177-3"><a href="random-forest-rf.html#cb177-3" tabindex="-1"></a>  prediction_rf_prob[,<span class="dv">2</span>],</span>
+<span id="cb177-4"><a href="random-forest-rf.html#cb177-4" tabindex="-1"></a>  test_rf<span class="sc">$</span>obesity_leveloverweight</span>
+<span id="cb177-5"><a href="random-forest-rf.html#cb177-5" tabindex="-1"></a>  )</span>
+<span id="cb177-6"><a href="random-forest-rf.html#cb177-6" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb177-7"><a href="random-forest-rf.html#cb177-7" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb177-8"><a href="random-forest-rf.html#cb177-8" tabindex="-1"></a></span>
+<span id="cb177-9"><a href="random-forest-rf.html#cb177-9" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
+<span id="cb177-10"><a href="random-forest-rf.html#cb177-10" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
+<span id="cb177-11"><a href="random-forest-rf.html#cb177-11" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
+<span id="cb177-12"><a href="random-forest-rf.html#cb177-12" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
+<span id="cb177-13"><a href="random-forest-rf.html#cb177-13" tabindex="-1"></a></span>
+<span id="cb177-14"><a href="random-forest-rf.html#cb177-14" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
+<span id="cb177-15"><a href="random-forest-rf.html#cb177-15" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb177-16"><a href="random-forest-rf.html#cb177-16" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb177-17"><a href="random-forest-rf.html#cb177-17" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb177-18"><a href="random-forest-rf.html#cb177-18" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Simple Random Forest ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
+<span id="cb177-19"><a href="random-forest-rf.html#cb177-19" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/plot_auc_rf_07-1.png" width="672" /></p>
 </div>
 <div id="tuned-rf-1" class="section level3 hasAnchor" number="8.4.2">
 <h3><span class="header-section-number">8.4.2</span> Tuned RF<a href="random-forest-rf.html#tuned-rf-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="random-forest-rf.html#cb180-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
-<span id="cb180-2"><a href="random-forest-rf.html#cb180-2" tabindex="-1"></a>prediction_rf_tuned <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf_tuned, test_rf)</span>
-<span id="cb180-3"><a href="random-forest-rf.html#cb180-3" tabindex="-1"></a></span>
-<span id="cb180-4"><a href="random-forest-rf.html#cb180-4" tabindex="-1"></a>prediction_rf_tuned_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf_tuned, test_rf, <span class="at">type =</span> <span class="st">&#39;prob&#39;</span>)</span>
-<span id="cb180-5"><a href="random-forest-rf.html#cb180-5" tabindex="-1"></a></span>
-<span id="cb180-6"><a href="random-forest-rf.html#cb180-6" tabindex="-1"></a><span class="fu">summary</span>(prediction_rf_tuned)</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="random-forest-rf.html#cb178-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
+<span id="cb178-2"><a href="random-forest-rf.html#cb178-2" tabindex="-1"></a>prediction_rf_tuned <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf_tuned, test_rf)</span>
+<span id="cb178-3"><a href="random-forest-rf.html#cb178-3" tabindex="-1"></a></span>
+<span id="cb178-4"><a href="random-forest-rf.html#cb178-4" tabindex="-1"></a>prediction_rf_tuned_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf_tuned, test_rf, <span class="at">type =</span> <span class="st">&#39;prob&#39;</span>)</span>
+<span id="cb178-5"><a href="random-forest-rf.html#cb178-5" tabindex="-1"></a></span>
+<span id="cb178-6"><a href="random-forest-rf.html#cb178-6" tabindex="-1"></a><span class="fu">summary</span>(prediction_rf_tuned)</span></code></pre></div>
 <pre><code>##    0    1 
-## 2773 7606</code></pre>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="random-forest-rf.html#cb182-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
-<span id="cb182-2"><a href="random-forest-rf.html#cb182-2" tabindex="-1"></a>cm_rf_tuned <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
-<span id="cb182-3"><a href="random-forest-rf.html#cb182-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_rf_tuned),</span>
-<span id="cb182-4"><a href="random-forest-rf.html#cb182-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_rf<span class="sc">$</span>obesity_leveloverweight),</span>
-<span id="cb182-5"><a href="random-forest-rf.html#cb182-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
-<span id="cb182-6"><a href="random-forest-rf.html#cb182-6" tabindex="-1"></a>  )</span>
-<span id="cb182-7"><a href="random-forest-rf.html#cb182-7" tabindex="-1"></a>cm_rf_tuned</span></code></pre></div>
+## 2775 7604</code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="random-forest-rf.html#cb180-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
+<span id="cb180-2"><a href="random-forest-rf.html#cb180-2" tabindex="-1"></a>cm_rf_tuned <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
+<span id="cb180-3"><a href="random-forest-rf.html#cb180-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_rf_tuned),</span>
+<span id="cb180-4"><a href="random-forest-rf.html#cb180-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_rf<span class="sc">$</span>obesity_leveloverweight),</span>
+<span id="cb180-5"><a href="random-forest-rf.html#cb180-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
+<span id="cb180-6"><a href="random-forest-rf.html#cb180-6" tabindex="-1"></a>  )</span>
+<span id="cb180-7"><a href="random-forest-rf.html#cb180-7" tabindex="-1"></a>cm_rf_tuned</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction    0    1
-##          0 2190  583
-##          1  573 7033
+##          0 2191  584
+##          1  572 7032
 ##                                           
 ##                Accuracy : 0.8886          
 ##                  95% CI : (0.8824, 0.8946)
 ##     No Information Rate : 0.7338          
 ##     P-Value [Acc &gt; NIR] : &lt;2e-16          
 ##                                           
-##                   Kappa : 0.7152          
+##                   Kappa : 0.7153          
 ##                                           
-##  Mcnemar&#39;s Test P-Value : 0.7912          
+##  Mcnemar&#39;s Test P-Value : 0.7463          
 ##                                           
-##             Sensitivity : 0.9235          
-##             Specificity : 0.7926          
-##          Pos Pred Value : 0.9247          
-##          Neg Pred Value : 0.7898          
+##             Sensitivity : 0.9233          
+##             Specificity : 0.7930          
+##          Pos Pred Value : 0.9248          
+##          Neg Pred Value : 0.7895          
 ##              Prevalence : 0.7338          
-##          Detection Rate : 0.6776          
-##    Detection Prevalence : 0.7328          
-##       Balanced Accuracy : 0.8580          
+##          Detection Rate : 0.6775          
+##    Detection Prevalence : 0.7326          
+##       Balanced Accuracy : 0.8581          
 ##                                           
 ##        &#39;Positive&#39; Class : 1               
 ## </code></pre>
-<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8886</code>, sensitivity of <code>0.9235</code>, and a Kappa coefficient of <code>0.7152</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="random-forest-rf.html#cb184-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
-<span id="cb184-2"><a href="random-forest-rf.html#cb184-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(</span>
-<span id="cb184-3"><a href="random-forest-rf.html#cb184-3" tabindex="-1"></a>  prediction_rf_tuned_prob[,<span class="dv">2</span>],</span>
-<span id="cb184-4"><a href="random-forest-rf.html#cb184-4" tabindex="-1"></a>  test_rf<span class="sc">$</span>obesity_leveloverweight</span>
-<span id="cb184-5"><a href="random-forest-rf.html#cb184-5" tabindex="-1"></a>  )</span>
-<span id="cb184-6"><a href="random-forest-rf.html#cb184-6" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb184-7"><a href="random-forest-rf.html#cb184-7" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb184-8"><a href="random-forest-rf.html#cb184-8" tabindex="-1"></a></span>
-<span id="cb184-9"><a href="random-forest-rf.html#cb184-9" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
-<span id="cb184-10"><a href="random-forest-rf.html#cb184-10" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
-<span id="cb184-11"><a href="random-forest-rf.html#cb184-11" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
-<span id="cb184-12"><a href="random-forest-rf.html#cb184-12" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
-<span id="cb184-13"><a href="random-forest-rf.html#cb184-13" tabindex="-1"></a></span>
-<span id="cb184-14"><a href="random-forest-rf.html#cb184-14" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
-<span id="cb184-15"><a href="random-forest-rf.html#cb184-15" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb184-16"><a href="random-forest-rf.html#cb184-16" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb184-17"><a href="random-forest-rf.html#cb184-17" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb184-18"><a href="random-forest-rf.html#cb184-18" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Tuned Random Forest ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
-<span id="cb184-19"><a href="random-forest-rf.html#cb184-19" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8886</code>, sensitivity of <code>0.9233</code>, and a Kappa coefficient of <code>0.7153</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="random-forest-rf.html#cb182-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
+<span id="cb182-2"><a href="random-forest-rf.html#cb182-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(</span>
+<span id="cb182-3"><a href="random-forest-rf.html#cb182-3" tabindex="-1"></a>  prediction_rf_tuned_prob[,<span class="dv">2</span>],</span>
+<span id="cb182-4"><a href="random-forest-rf.html#cb182-4" tabindex="-1"></a>  test_rf<span class="sc">$</span>obesity_leveloverweight</span>
+<span id="cb182-5"><a href="random-forest-rf.html#cb182-5" tabindex="-1"></a>  )</span>
+<span id="cb182-6"><a href="random-forest-rf.html#cb182-6" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb182-7"><a href="random-forest-rf.html#cb182-7" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb182-8"><a href="random-forest-rf.html#cb182-8" tabindex="-1"></a></span>
+<span id="cb182-9"><a href="random-forest-rf.html#cb182-9" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
+<span id="cb182-10"><a href="random-forest-rf.html#cb182-10" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
+<span id="cb182-11"><a href="random-forest-rf.html#cb182-11" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
+<span id="cb182-12"><a href="random-forest-rf.html#cb182-12" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
+<span id="cb182-13"><a href="random-forest-rf.html#cb182-13" tabindex="-1"></a></span>
+<span id="cb182-14"><a href="random-forest-rf.html#cb182-14" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
+<span id="cb182-15"><a href="random-forest-rf.html#cb182-15" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb182-16"><a href="random-forest-rf.html#cb182-16" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb182-17"><a href="random-forest-rf.html#cb182-17" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb182-18"><a href="random-forest-rf.html#cb182-18" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Tuned Random Forest ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
+<span id="cb182-19"><a href="random-forest-rf.html#cb182-19" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/plot_auc_rf_tuned_07-1.png" width="672" /></p>
 
 </div>

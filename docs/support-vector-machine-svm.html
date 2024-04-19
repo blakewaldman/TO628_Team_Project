@@ -59,11 +59,35 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Code Chunks") elem.value = "Show Code Chunks";
+    else elem.value = "Hide Code Chunks";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Code Chunks" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -73,7 +97,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -336,12 +360,12 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 </div>
 <div id="load-data-5" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Load Data<a href="support-vector-machine-svm.html#load-data-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="support-vector-machine-svm.html#cb139-1" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb139-2"><a href="support-vector-machine-svm.html#cb139-2" tabindex="-1"></a>train_svm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_svm.csv&#39;</span>)</span>
-<span id="cb139-3"><a href="support-vector-machine-svm.html#cb139-3" tabindex="-1"></a>test_svm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_svm.csv&#39;</span>)</span>
-<span id="cb139-4"><a href="support-vector-machine-svm.html#cb139-4" tabindex="-1"></a></span>
-<span id="cb139-5"><a href="support-vector-machine-svm.html#cb139-5" tabindex="-1"></a><span class="co"># Display statistics</span></span>
-<span id="cb139-6"><a href="support-vector-machine-svm.html#cb139-6" tabindex="-1"></a><span class="fu">str</span>(train_svm)</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="support-vector-machine-svm.html#cb137-1" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb137-2"><a href="support-vector-machine-svm.html#cb137-2" tabindex="-1"></a>train_svm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/train_svm.csv&#39;</span>)</span>
+<span id="cb137-3"><a href="support-vector-machine-svm.html#cb137-3" tabindex="-1"></a>test_svm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;Train Test Set/test_svm.csv&#39;</span>)</span>
+<span id="cb137-4"><a href="support-vector-machine-svm.html#cb137-4" tabindex="-1"></a></span>
+<span id="cb137-5"><a href="support-vector-machine-svm.html#cb137-5" tabindex="-1"></a><span class="co"># Display statistics</span></span>
+<span id="cb137-6"><a href="support-vector-machine-svm.html#cb137-6" tabindex="-1"></a><span class="fu">str</span>(train_svm)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    10379 obs. of  27 variables:
 ##  $ gender_female                  : int  1 1 1 0 1 1 1 0 1 1 ...
 ##  $ gender_male                    : int  0 0 0 1 0 0 0 1 0 0 ...
@@ -370,7 +394,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  $ age_group_young_adult          : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ age_group_adult                : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ age_group_senior               : int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="support-vector-machine-svm.html#cb141-1" tabindex="-1"></a><span class="fu">summary</span>(train_svm)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="support-vector-machine-svm.html#cb139-1" tabindex="-1"></a><span class="fu">summary</span>(train_svm)</span></code></pre></div>
 <pre><code>##  gender_female     gender_male          age        fam_history_overweight1
 ##  Min.   :0.0000   Min.   :0.0000   Min.   :14.00   Min.   :0.0000         
 ##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:20.00   1st Qu.:1.0000         
@@ -434,7 +458,7 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  Mean   :0.05222   Mean   :0.003276  
 ##  3rd Qu.:0.00000   3rd Qu.:0.000000  
 ##  Max.   :1.00000   Max.   :1.000000</code></pre>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="support-vector-machine-svm.html#cb143-1" tabindex="-1"></a><span class="fu">head</span>(train_svm)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="support-vector-machine-svm.html#cb141-1" tabindex="-1"></a><span class="fu">head</span>(train_svm)</span></code></pre></div>
 <pre><code>##   gender_female gender_male age fam_history_overweight1
 ## 1             1           0  24                       1
 ## 2             1           0  34                       1
@@ -497,27 +521,27 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <div id="vanilla-svm" class="section level3 hasAnchor" number="7.3.1">
 <h3><span class="header-section-number">7.3.1</span> Vanilla SVM<a href="support-vector-machine-svm.html#vanilla-svm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will begin by implementing a vanilla kernel SVM. We suspect that this may result in lower accuracy compared to RBF due to our dataset’s complexity and less straightforward nature.</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="support-vector-machine-svm.html#cb145-1" tabindex="-1"></a><span class="co"># Build a vanilla model</span></span>
-<span id="cb145-2"><a href="support-vector-machine-svm.html#cb145-2" tabindex="-1"></a>model_svm_vanilla <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(</span>
-<span id="cb145-3"><a href="support-vector-machine-svm.html#cb145-3" tabindex="-1"></a>  obesity_leveloverweight <span class="sc">~</span> .,</span>
-<span id="cb145-4"><a href="support-vector-machine-svm.html#cb145-4" tabindex="-1"></a>  <span class="at">data =</span> train_svm,</span>
-<span id="cb145-5"><a href="support-vector-machine-svm.html#cb145-5" tabindex="-1"></a>  <span class="at">kernel =</span> <span class="st">&#39;vanilladot&#39;</span></span>
-<span id="cb145-6"><a href="support-vector-machine-svm.html#cb145-6" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="support-vector-machine-svm.html#cb146-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
-<span id="cb146-2"><a href="support-vector-machine-svm.html#cb146-2" tabindex="-1"></a><span class="fu">summary</span>(model_svm_vanilla)</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="support-vector-machine-svm.html#cb143-1" tabindex="-1"></a><span class="co"># Build a vanilla model</span></span>
+<span id="cb143-2"><a href="support-vector-machine-svm.html#cb143-2" tabindex="-1"></a>model_svm_vanilla <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(</span>
+<span id="cb143-3"><a href="support-vector-machine-svm.html#cb143-3" tabindex="-1"></a>  obesity_leveloverweight <span class="sc">~</span> .,</span>
+<span id="cb143-4"><a href="support-vector-machine-svm.html#cb143-4" tabindex="-1"></a>  <span class="at">data =</span> train_svm,</span>
+<span id="cb143-5"><a href="support-vector-machine-svm.html#cb143-5" tabindex="-1"></a>  <span class="at">kernel =</span> <span class="st">&#39;vanilladot&#39;</span></span>
+<span id="cb143-6"><a href="support-vector-machine-svm.html#cb143-6" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="support-vector-machine-svm.html#cb144-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
+<span id="cb144-2"><a href="support-vector-machine-svm.html#cb144-2" tabindex="-1"></a><span class="fu">summary</span>(model_svm_vanilla)</span></code></pre></div>
 <pre><code>## Length  Class   Mode 
 ##      1   ksvm     S4</code></pre>
 </div>
 <div id="rbf-svm" class="section level3 hasAnchor" number="7.3.2">
 <h3><span class="header-section-number">7.3.2</span> RBF SVM<a href="support-vector-machine-svm.html#rbf-svm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="support-vector-machine-svm.html#cb148-1" tabindex="-1"></a><span class="co"># Build a rbf model</span></span>
-<span id="cb148-2"><a href="support-vector-machine-svm.html#cb148-2" tabindex="-1"></a>model_svm_rbf <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(</span>
-<span id="cb148-3"><a href="support-vector-machine-svm.html#cb148-3" tabindex="-1"></a>  obesity_leveloverweight <span class="sc">~</span> .,</span>
-<span id="cb148-4"><a href="support-vector-machine-svm.html#cb148-4" tabindex="-1"></a>  <span class="at">data =</span> train_svm,</span>
-<span id="cb148-5"><a href="support-vector-machine-svm.html#cb148-5" tabindex="-1"></a>  <span class="at">kernel =</span> <span class="st">&#39;rbfdot&#39;</span></span>
-<span id="cb148-6"><a href="support-vector-machine-svm.html#cb148-6" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="support-vector-machine-svm.html#cb149-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
-<span id="cb149-2"><a href="support-vector-machine-svm.html#cb149-2" tabindex="-1"></a><span class="fu">summary</span>(model_svm_rbf)</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="support-vector-machine-svm.html#cb146-1" tabindex="-1"></a><span class="co"># Build a rbf model</span></span>
+<span id="cb146-2"><a href="support-vector-machine-svm.html#cb146-2" tabindex="-1"></a>model_svm_rbf <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(</span>
+<span id="cb146-3"><a href="support-vector-machine-svm.html#cb146-3" tabindex="-1"></a>  obesity_leveloverweight <span class="sc">~</span> .,</span>
+<span id="cb146-4"><a href="support-vector-machine-svm.html#cb146-4" tabindex="-1"></a>  <span class="at">data =</span> train_svm,</span>
+<span id="cb146-5"><a href="support-vector-machine-svm.html#cb146-5" tabindex="-1"></a>  <span class="at">kernel =</span> <span class="st">&#39;rbfdot&#39;</span></span>
+<span id="cb146-6"><a href="support-vector-machine-svm.html#cb146-6" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="support-vector-machine-svm.html#cb147-1" tabindex="-1"></a><span class="co"># Display summary</span></span>
+<span id="cb147-2"><a href="support-vector-machine-svm.html#cb147-2" tabindex="-1"></a><span class="fu">summary</span>(model_svm_rbf)</span></code></pre></div>
 <pre><code>## Length  Class   Mode 
 ##      1   ksvm     S4</code></pre>
 </div>
@@ -526,10 +550,10 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 <h2><span class="header-section-number">7.4</span> Evaluate SVM<a href="support-vector-machine-svm.html#evaluate-svm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="vanilla-svm-1" class="section level3 hasAnchor" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> Vanilla SVM<a href="support-vector-machine-svm.html#vanilla-svm-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="support-vector-machine-svm.html#cb151-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
-<span id="cb151-2"><a href="support-vector-machine-svm.html#cb151-2" tabindex="-1"></a>prediction_svm_vanilla_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_svm_vanilla, test_svm)</span>
-<span id="cb151-3"><a href="support-vector-machine-svm.html#cb151-3" tabindex="-1"></a>prediction_svm_vanilla <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_svm_vanilla_probability <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb151-4"><a href="support-vector-machine-svm.html#cb151-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_svm_vanilla_probability)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="support-vector-machine-svm.html#cb149-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
+<span id="cb149-2"><a href="support-vector-machine-svm.html#cb149-2" tabindex="-1"></a>prediction_svm_vanilla_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_svm_vanilla, test_svm)</span>
+<span id="cb149-3"><a href="support-vector-machine-svm.html#cb149-3" tabindex="-1"></a>prediction_svm_vanilla <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_svm_vanilla_probability <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb149-4"><a href="support-vector-machine-svm.html#cb149-4" tabindex="-1"></a><span class="fu">summary</span>(prediction_svm_vanilla_probability)</span></code></pre></div>
 <pre><code>##        V1         
 ##  Min.   :-0.1660  
 ##  1st Qu.: 0.8624  
@@ -537,13 +561,13 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##  Mean   : 0.7994  
 ##  3rd Qu.: 0.9936  
 ##  Max.   : 1.1455</code></pre>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="support-vector-machine-svm.html#cb153-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
-<span id="cb153-2"><a href="support-vector-machine-svm.html#cb153-2" tabindex="-1"></a>cm_svm_vanilla <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
-<span id="cb153-3"><a href="support-vector-machine-svm.html#cb153-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_svm_vanilla),</span>
-<span id="cb153-4"><a href="support-vector-machine-svm.html#cb153-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_svm<span class="sc">$</span>obesity_leveloverweight),</span>
-<span id="cb153-5"><a href="support-vector-machine-svm.html#cb153-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
-<span id="cb153-6"><a href="support-vector-machine-svm.html#cb153-6" tabindex="-1"></a>  )</span>
-<span id="cb153-7"><a href="support-vector-machine-svm.html#cb153-7" tabindex="-1"></a>cm_svm_vanilla</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="support-vector-machine-svm.html#cb151-1" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
+<span id="cb151-2"><a href="support-vector-machine-svm.html#cb151-2" tabindex="-1"></a>cm_svm_vanilla <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
+<span id="cb151-3"><a href="support-vector-machine-svm.html#cb151-3" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_svm_vanilla),</span>
+<span id="cb151-4"><a href="support-vector-machine-svm.html#cb151-4" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_svm<span class="sc">$</span>obesity_leveloverweight),</span>
+<span id="cb151-5"><a href="support-vector-machine-svm.html#cb151-5" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
+<span id="cb151-6"><a href="support-vector-machine-svm.html#cb151-6" tabindex="-1"></a>  )</span>
+<span id="cb151-7"><a href="support-vector-machine-svm.html#cb151-7" tabindex="-1"></a>cm_svm_vanilla</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -572,40 +596,40 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##        &#39;Positive&#39; Class : 1               
 ## </code></pre>
 <p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8114</code>, sensitivity of <code>0.9313</code>, and a Kappa coefficient of <code>0.4607</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="support-vector-machine-svm.html#cb155-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
-<span id="cb155-2"><a href="support-vector-machine-svm.html#cb155-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(</span>
-<span id="cb155-3"><a href="support-vector-machine-svm.html#cb155-3" tabindex="-1"></a>  prediction_svm_vanilla_probability,</span>
-<span id="cb155-4"><a href="support-vector-machine-svm.html#cb155-4" tabindex="-1"></a>  test_svm<span class="sc">$</span>obesity_leveloverweight</span>
-<span id="cb155-5"><a href="support-vector-machine-svm.html#cb155-5" tabindex="-1"></a>  )</span>
-<span id="cb155-6"><a href="support-vector-machine-svm.html#cb155-6" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb155-7"><a href="support-vector-machine-svm.html#cb155-7" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb155-8"><a href="support-vector-machine-svm.html#cb155-8" tabindex="-1"></a></span>
-<span id="cb155-9"><a href="support-vector-machine-svm.html#cb155-9" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
-<span id="cb155-10"><a href="support-vector-machine-svm.html#cb155-10" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
-<span id="cb155-11"><a href="support-vector-machine-svm.html#cb155-11" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
-<span id="cb155-12"><a href="support-vector-machine-svm.html#cb155-12" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
-<span id="cb155-13"><a href="support-vector-machine-svm.html#cb155-13" tabindex="-1"></a></span>
-<span id="cb155-14"><a href="support-vector-machine-svm.html#cb155-14" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
-<span id="cb155-15"><a href="support-vector-machine-svm.html#cb155-15" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb155-16"><a href="support-vector-machine-svm.html#cb155-16" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb155-17"><a href="support-vector-machine-svm.html#cb155-17" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb155-18"><a href="support-vector-machine-svm.html#cb155-18" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Vanilla SVM ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
-<span id="cb155-19"><a href="support-vector-machine-svm.html#cb155-19" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="support-vector-machine-svm.html#cb153-1" tabindex="-1"></a><span class="co"># Plot AUC</span></span>
+<span id="cb153-2"><a href="support-vector-machine-svm.html#cb153-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(</span>
+<span id="cb153-3"><a href="support-vector-machine-svm.html#cb153-3" tabindex="-1"></a>  prediction_svm_vanilla_probability,</span>
+<span id="cb153-4"><a href="support-vector-machine-svm.html#cb153-4" tabindex="-1"></a>  test_svm<span class="sc">$</span>obesity_leveloverweight</span>
+<span id="cb153-5"><a href="support-vector-machine-svm.html#cb153-5" tabindex="-1"></a>  )</span>
+<span id="cb153-6"><a href="support-vector-machine-svm.html#cb153-6" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb153-7"><a href="support-vector-machine-svm.html#cb153-7" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb153-8"><a href="support-vector-machine-svm.html#cb153-8" tabindex="-1"></a></span>
+<span id="cb153-9"><a href="support-vector-machine-svm.html#cb153-9" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
+<span id="cb153-10"><a href="support-vector-machine-svm.html#cb153-10" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
+<span id="cb153-11"><a href="support-vector-machine-svm.html#cb153-11" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
+<span id="cb153-12"><a href="support-vector-machine-svm.html#cb153-12" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
+<span id="cb153-13"><a href="support-vector-machine-svm.html#cb153-13" tabindex="-1"></a></span>
+<span id="cb153-14"><a href="support-vector-machine-svm.html#cb153-14" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
+<span id="cb153-15"><a href="support-vector-machine-svm.html#cb153-15" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb153-16"><a href="support-vector-machine-svm.html#cb153-16" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb153-17"><a href="support-vector-machine-svm.html#cb153-17" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb153-18"><a href="support-vector-machine-svm.html#cb153-18" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;Vanilla SVM ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
+<span id="cb153-19"><a href="support-vector-machine-svm.html#cb153-19" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/plot_auc_svm_vanilla_06-1.png" width="672" /></p>
 </div>
 <div id="rbf-svm-1" class="section level3 hasAnchor" number="7.4.2">
 <h3><span class="header-section-number">7.4.2</span> RBF SVM<a href="support-vector-machine-svm.html#rbf-svm-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="support-vector-machine-svm.html#cb156-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
-<span id="cb156-2"><a href="support-vector-machine-svm.html#cb156-2" tabindex="-1"></a>prediction_svm_rbf_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_svm_rbf, test_svm)</span>
-<span id="cb156-3"><a href="support-vector-machine-svm.html#cb156-3" tabindex="-1"></a>prediction_svm_rbf <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_svm_rbf_probability <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb156-4"><a href="support-vector-machine-svm.html#cb156-4" tabindex="-1"></a></span>
-<span id="cb156-5"><a href="support-vector-machine-svm.html#cb156-5" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
-<span id="cb156-6"><a href="support-vector-machine-svm.html#cb156-6" tabindex="-1"></a>cm_svm_rbf <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
-<span id="cb156-7"><a href="support-vector-machine-svm.html#cb156-7" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_svm_rbf),</span>
-<span id="cb156-8"><a href="support-vector-machine-svm.html#cb156-8" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_svm<span class="sc">$</span>obesity_leveloverweight),</span>
-<span id="cb156-9"><a href="support-vector-machine-svm.html#cb156-9" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
-<span id="cb156-10"><a href="support-vector-machine-svm.html#cb156-10" tabindex="-1"></a>  )</span>
-<span id="cb156-11"><a href="support-vector-machine-svm.html#cb156-11" tabindex="-1"></a>cm_svm_rbf</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="support-vector-machine-svm.html#cb154-1" tabindex="-1"></a><span class="co"># Make a prediction</span></span>
+<span id="cb154-2"><a href="support-vector-machine-svm.html#cb154-2" tabindex="-1"></a>prediction_svm_rbf_probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_svm_rbf, test_svm)</span>
+<span id="cb154-3"><a href="support-vector-machine-svm.html#cb154-3" tabindex="-1"></a>prediction_svm_rbf <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(prediction_svm_rbf_probability <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb154-4"><a href="support-vector-machine-svm.html#cb154-4" tabindex="-1"></a></span>
+<span id="cb154-5"><a href="support-vector-machine-svm.html#cb154-5" tabindex="-1"></a><span class="co"># Perform confusion matrix</span></span>
+<span id="cb154-6"><a href="support-vector-machine-svm.html#cb154-6" tabindex="-1"></a>cm_svm_rbf <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(</span>
+<span id="cb154-7"><a href="support-vector-machine-svm.html#cb154-7" tabindex="-1"></a>  <span class="fu">as.factor</span>(prediction_svm_rbf),</span>
+<span id="cb154-8"><a href="support-vector-machine-svm.html#cb154-8" tabindex="-1"></a>  <span class="fu">as.factor</span>(test_svm<span class="sc">$</span>obesity_leveloverweight),</span>
+<span id="cb154-9"><a href="support-vector-machine-svm.html#cb154-9" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">&#39;1&#39;</span></span>
+<span id="cb154-10"><a href="support-vector-machine-svm.html#cb154-10" tabindex="-1"></a>  )</span>
+<span id="cb154-11"><a href="support-vector-machine-svm.html#cb154-11" tabindex="-1"></a>cm_svm_rbf</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -634,24 +658,24 @@ title="TO 628 Group Project" style="width:100%;"></a></li>
 ##        &#39;Positive&#39; Class : 1               
 ## </code></pre>
 <p>Based on the confusion matrix, we observe that the model achieves an accuracy of <code>0.8665</code>, sensitivity of <code>0.9308</code>, and a Kappa coefficient of <code>0.6446</code>. We will assess these results towards the conclusion of the assignment when we have completed stacked models.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="support-vector-machine-svm.html#cb158-1" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(</span>
-<span id="cb158-2"><a href="support-vector-machine-svm.html#cb158-2" tabindex="-1"></a>  prediction_svm_rbf_probability,</span>
-<span id="cb158-3"><a href="support-vector-machine-svm.html#cb158-3" tabindex="-1"></a>  test_svm<span class="sc">$</span>obesity_leveloverweight</span>
-<span id="cb158-4"><a href="support-vector-machine-svm.html#cb158-4" tabindex="-1"></a>  )</span>
-<span id="cb158-5"><a href="support-vector-machine-svm.html#cb158-5" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb158-6"><a href="support-vector-machine-svm.html#cb158-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb158-7"><a href="support-vector-machine-svm.html#cb158-7" tabindex="-1"></a></span>
-<span id="cb158-8"><a href="support-vector-machine-svm.html#cb158-8" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
-<span id="cb158-9"><a href="support-vector-machine-svm.html#cb158-9" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
-<span id="cb158-10"><a href="support-vector-machine-svm.html#cb158-10" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
-<span id="cb158-11"><a href="support-vector-machine-svm.html#cb158-11" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
-<span id="cb158-12"><a href="support-vector-machine-svm.html#cb158-12" tabindex="-1"></a></span>
-<span id="cb158-13"><a href="support-vector-machine-svm.html#cb158-13" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
-<span id="cb158-14"><a href="support-vector-machine-svm.html#cb158-14" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb158-15"><a href="support-vector-machine-svm.html#cb158-15" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb158-16"><a href="support-vector-machine-svm.html#cb158-16" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb158-17"><a href="support-vector-machine-svm.html#cb158-17" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;RBF SVM ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
-<span id="cb158-18"><a href="support-vector-machine-svm.html#cb158-18" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="support-vector-machine-svm.html#cb156-1" tabindex="-1"></a>pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(</span>
+<span id="cb156-2"><a href="support-vector-machine-svm.html#cb156-2" tabindex="-1"></a>  prediction_svm_rbf_probability,</span>
+<span id="cb156-3"><a href="support-vector-machine-svm.html#cb156-3" tabindex="-1"></a>  test_svm<span class="sc">$</span>obesity_leveloverweight</span>
+<span id="cb156-4"><a href="support-vector-machine-svm.html#cb156-4" tabindex="-1"></a>  )</span>
+<span id="cb156-5"><a href="support-vector-machine-svm.html#cb156-5" tabindex="-1"></a>perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb156-6"><a href="support-vector-machine-svm.html#cb156-6" tabindex="-1"></a>auc <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="at">measure=</span><span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb156-7"><a href="support-vector-machine-svm.html#cb156-7" tabindex="-1"></a></span>
+<span id="cb156-8"><a href="support-vector-machine-svm.html#cb156-8" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">round</span>(auc<span class="sc">@</span>y.values[[<span class="dv">1</span>]],<span class="dv">3</span>)</span>
+<span id="cb156-9"><a href="support-vector-machine-svm.html#cb156-9" tabindex="-1"></a>roc.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>x.values),</span>
+<span id="cb156-10"><a href="support-vector-machine-svm.html#cb156-10" tabindex="-1"></a>                       <span class="at">tpr=</span><span class="fu">unlist</span>(perf<span class="sc">@</span>y.values),</span>
+<span id="cb156-11"><a href="support-vector-machine-svm.html#cb156-11" tabindex="-1"></a>                       <span class="at">model=</span><span class="st">&quot;GLM&quot;</span>)</span>
+<span id="cb156-12"><a href="support-vector-machine-svm.html#cb156-12" tabindex="-1"></a></span>
+<span id="cb156-13"><a href="support-vector-machine-svm.html#cb156-13" tabindex="-1"></a><span class="fu">ggplot</span>(roc.data, <span class="fu">aes</span>(<span class="at">x=</span>fpr, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>tpr)) <span class="sc">+</span></span>
+<span id="cb156-14"><a href="support-vector-machine-svm.html#cb156-14" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb156-15"><a href="support-vector-machine-svm.html#cb156-15" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>tpr), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb156-16"><a href="support-vector-machine-svm.html#cb156-16" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb156-17"><a href="support-vector-machine-svm.html#cb156-17" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">&quot;RBF SVM ROC Curve w/ AUC=&quot;</span>, auc)) <span class="sc">+</span></span>
+<span id="cb156-18"><a href="support-vector-machine-svm.html#cb156-18" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/plot_auc_svm_rbf_06-1.png" width="672" /></p>
 
 </div>
